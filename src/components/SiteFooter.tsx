@@ -20,7 +20,7 @@ export default function SiteFooter(){
         <div>
           <h4 className="text-white font-semibold mb-4">Products</h4>
           <ul className="space-y-2 text-sm">
-            {['Motorcycle','Bike','Car','Run','Accessories'].map(i => <li key={i}><a href="#" className="hover:text-white transition">{i}</a></li>)}
+            {['Motorcycle','Bike','Car','Run','Accessories','MagSafe Bike','MagSafe Desk','Hagsafe Gym & Stream'].map(i => <li key={i}><a href="#" className="hover:text-white transition">{i}</a></li>)}
           </ul>
         </div>
         <div>
