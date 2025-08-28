@@ -29,6 +29,8 @@ export default function ProductPage({ params }: Props) {
   <ProductAssembly slug={product.slug} />
   <ProductCompatibility slug={product.slug} />
   <ProductReviews slug={product.slug} />
+  <ProductMoreQuestions />
+  <ProductBottomFeatures />
     </div>
   );
 }
@@ -483,6 +485,60 @@ function ProductReviews({ slug }: { slug: string }) {
             ))}
           </div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+// Final small FAQ
+function ProductMoreQuestions() {
+  const items = [
+    {q: 'Does it really hold up? Can the phone fall?', a: 'The magnetic system has been wind‑tunnel tested and validated by thousands of users. Properly centered, it will not drop your phone under normal riding conditions.'},
+    {q: 'Can someone steal my phone?', a: 'Like any accessory, a motivated thief could grab it. The strong magnetic hold resists casual bumps, but we recommend removing your phone when leaving the vehicle unattended.'},
+    {q: 'Are magnets dangerous for my phone?', a: 'Modern smartphones are safe: magnets are placed so that they do not affect memory or signal. Wireless charging works with MagSafe-ready setups (see compatibility).'},
+    {q: 'Which version to choose?', a: 'Pick the support that matches your activity (bike, moto, etc.) and the adapter or sleeve size matching your phone/case thickness.'},
+    {q: 'Is there a guarantee ?', a: 'Yes, register your product to benefit from the 10 year warranty on magnetic mounts.'},
+    {q: 'Is it compatible with induction charging and/or MagSafe?', a: 'With MagSafe phones you can use it directly. For adhesive plate usage, remove the plate when placing on a wireless/MagSafe charger if charging performance is reduced.'},
+  ];
+  const [open,setOpen]=useState<number|null>(null);
+  return (
+    <section className="bg-white border-t border-gray-200">
+      <div className="max-w-4xl mx-auto px-4 py-20">
+        <h2 className="text-center text-lg font-semibold mb-10">Do you still have questions?</h2>
+        <div className="divide-y divide-gray-200">
+          {items.map((it,i)=>(
+            <div key={i}>
+              <button onClick={()=>setOpen(o=>o===i?null:i)} className="w-full flex items-center justify-between py-4 text-left group">
+                <span className="flex items-center gap-3 text-sm"><span className="text-gray-400">?</span>{it.q}</span>
+                <span className="text-gray-400 group-hover:text-black transition text-xs" style={{transform: open===i? 'rotate(180deg)':'rotate(0deg)'}}>▾</span>
+              </button>
+              {open===i && <div className="pb-6 -mt-2 text-gray-600 text-sm leading-relaxed">{it.a}</div>}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Bottom feature bar (mirrors site-wide icons)
+function ProductBottomFeatures() {
+  const feats = [
+    {label:'Free delivery', sub:'from €49 and shipping within 24 to 48 hours', icon:<svg width="30" height="30" stroke="currentColor" strokeWidth="2" fill="none" viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h5v7h-5z"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="18.5" cy="17" r="1.5"/></svg>},
+    {label:'Secure payments', sub:'Visa, Mastercard, Paypal, Apple Pay', icon:<svg width="30" height="30" stroke="currentColor" strokeWidth="2" fill="none" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>},
+    {label:'At your service 7/7 days', sub:'After‑sales service: contact@adamcotech.com', icon:<svg width="30" height="30" stroke="currentColor" strokeWidth="2" fill="none" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4V5a4 4 0 1 0-8 0v3c0 2.21 1.79 4 4 4Zm6 0a6 6 0 0 1-12 0H3a9 9 0 0 0 18 0h-3Z"/></svg>},
+    {label:'Product warranty', sub:'10 years by registering your product!', icon:<svg width="30" height="30" stroke="currentColor" strokeWidth="2" fill="none" viewBox="0 0 24 24"><path d="M12 2 3 6v6c0 5 3.6 9.4 9 10 5.4-.6 9-5 9-10V6l-9-4Z"/><path d="m9 12 2 2 4-4"/></svg>},
+  ];
+  return (
+    <section className="bg-gray-100">
+      <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
+        {feats.map(f => (
+          <div key={f.label} className="flex flex-col items-center gap-3">
+            <div className="text-black">{f.icon}</div>
+            <div className="font-semibold text-sm">{f.label}</div>
+            <div className="text-[11px] text-gray-500 max-w-[180px] leading-snug">{f.sub}</div>
+          </div>
+        ))}
       </div>
     </section>
   );
