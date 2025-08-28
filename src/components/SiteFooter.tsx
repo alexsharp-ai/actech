@@ -38,7 +38,7 @@ export default function SiteFooter(){
         <div>
           <h4 className="text-white font-semibold mb-4">Company</h4>
             <ul className="space-y-2 text-sm">
-              {['About Us','Sustainability','Careers','Blog','Press'].map(i => <li key={i}><a href="#" className="hover:text-white transition">{i}</a></li>)}
+              {[{label:'About Us',href:'/about'},{label:'Sustainability',href:'/sustainability'},{label:'Careers',href:'/careers'},{label:'Blog',href:'/blog'},{label:'Press',href:'/press'}].map(i => <li key={i.label}><a href={i.href} className="hover:text-white transition">{i.label}</a></li>)}
             </ul>
         </div>
       </div>
@@ -47,9 +47,9 @@ export default function SiteFooter(){
           <span>© {new Date().getFullYear()} AdamCoTech. All rights reserved.</span>
           <div className="flex gap-4">
             <a href="/privacy-policy" className="hover:text-gray-300">Privacy</a>
-            <a href="#" className="hover:text-gray-300">Terms</a>
-            <a href="#" className="hover:text-gray-300">Cookies</a>
-            <a href="#" className="hover:text-gray-300">Imprint</a>
+            <a href="/terms" className="hover:text-gray-300">Terms</a>
+            <a href="/cookies" className="hover:text-gray-300">Cookies</a>
+            <a href="/imprint" className="hover:text-gray-300">Imprint</a>
           </div>
         </div>
       </div>
