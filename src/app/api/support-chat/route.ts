@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { requestHuman } from '@/lib/supportStore';
 
 // Simple in-memory FAQ patterns (mirror those in the client for SSR fallback)
 const faq: { pattern: RegExp; answer: string }[] = [
@@ -31,7 +32,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { message } = await req.json();
+  const { message, conversationId } = await req.json();
     const text: string = (message || "").toString().trim();
 
     if (!text) {
@@ -39,6 +40,12 @@ export async function POST(req: NextRequest) {
         JSON.stringify({ reply: "Please enter a question." }),
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
+    }
+
+    // Human agent request detection
+    if(/human|agent|representative|person/i.test(text)){
+      if(conversationId){ await requestHuman(conversationId).catch(()=>{}); }
+      return new Response(JSON.stringify({ answer: "We'll connect you with a human agent now. Please hold on a moment." }), { status: 200, headers: { 'Content-Type':'application/json' } });
     }
 
     const hit = faq.find(f => f.pattern.test(text));
@@ -62,7 +69,8 @@ export async function POST(req: NextRequest) {
           body: JSON.stringify({
             model: process.env.OPENAI_MODEL || "gpt-4o-mini",
             messages: [
-              { role: "system", content: "You are AdamCoTech's helpful support assistant. Be concise, friendly, and only answer questions related to the products (magnetic mounts, accessories), shipping, returns, warranty, and general site info. If unsure, ask the user to clarify." },
+              { role: "system", content: "You are AdamCoTech's support assistant. STRICT SCOPE: Only answer if the question concerns AdamCoTech products (magnetic mounts and accessories), their features, installation, safety for phones, warranty length, shipping times, or returns. If the user asks anything outside this scope, respond: 'I can help with product, shipping, returns, warranty or installation questions. Could you rephrase related to those topics?'. Keep answers under 70 words."
+              },
               { role: "user", content: text },
             ],
             temperature: 0.3,

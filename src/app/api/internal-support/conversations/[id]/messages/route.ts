@@ -1,21 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { listMessages, addMessage, getConversation } from '@/lib/supportStore';
 
-export async function GET(req: NextRequest, context: Promise<{ params: { id: string } }>){
-  const { params } = await context;
-  const messages = await listMessages(params.id);
-  return NextResponse.json({ ok: true, messages });
+interface ParamsContext { params?: { id?: string } }
+
+// This route reads/writes the filesystem (JSON store). Disable static optimization.
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+export async function GET(_req: NextRequest, context: ParamsContext){
+  const id = context.params?.id;
+  if(!id){
+    if(process.env.NODE_ENV !== 'production') console.warn('[support] GET messages missing id');
+    return NextResponse.json({ ok: true, messages: [] });
+  }
+  const convo = await getConversation(id);
+  const messages = await listMessages(id);
+  if(process.env.NODE_ENV !== 'production') console.log('[support] GET messages', id, 'count=', messages.length, 'status=', convo?.status);
+  return NextResponse.json({ ok: true, messages, status: convo?.status });
 }
 
-export async function POST(req: NextRequest, context: Promise<{ params: { id: string } }>){
+export async function POST(req: NextRequest, context: ParamsContext){
   try {
-    const { params } = await context;
     const { content, role } = await req.json();
     if(!content) return NextResponse.json({ error: 'Missing content' }, { status: 400 });
     if(role !== 'assistant' && role !== 'user') return NextResponse.json({ error: 'Invalid role' }, { status: 400 });
-    const convo = await getConversation(params.id);
+  const id = context.params?.id;
+    if(!id) return NextResponse.json({ error: 'Missing id' }, { status: 400 });
+    const convo = await getConversation(id);
     if(!convo) return NextResponse.json({ error: 'Conversation not found' }, { status: 404 });
-    const { message } = await addMessage({ conversationId: params.id, role, content });
+    const { message } = await addMessage({ conversationId: id, role, content });
     return NextResponse.json({ ok: true, message });
   } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });

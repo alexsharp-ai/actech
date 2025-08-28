@@ -1,0 +1,58 @@
+{
+  "conversations": [
+    {
+      "id": "00f32549-0f75-4a66-bc57-e5ac54202a00",
+      "createdAt": 1756403734713,
+      "updatedAt": 1756403836475,
+      "status": "closed",
+      "needsHuman": false,
+      "humanActive": true,
+      "unread": false,
+      "source": "chat",
+      "messages": [
+        {
+          "id": "f6b3f1d9-1da9-4381-95d5-8e40e8b7b0c4",
+          "role": "user",
+          "content": "I want to talk to a human agent",
+          "ts": 1756403734713
+        },
+        {
+          "id": "3f385477-bc5f-4ccb-b003-99b6c57308c8",
+          "role": "assistant",
+          "content": "We'll connect you with a human agent now. Please hold on a moment.",
+          "ts": 1756403735489
+        },
+        {
+          "id": "e4035a15-fd2c-4ee9-b74f-de06036a991c",
+          "role": "assistant",
+          "content": "hello",
+          "ts": 1756403756287
+        },
+        {
+          "id": "a318b285-ce7b-44f6-aa32-112c3e2ad44e",
+          "role": "user",
+          "content": "nice that u are here",
+          "ts": 1756403769122
+        },
+        {
+          "id": "f57a3db6-4645-4ee3-9000-bf9b700ded51",
+          "role": "assistant",
+          "content": "how can i help you ?",
+          "ts": 1756403780566
+        },
+        {
+          "id": "964509a2-f590-4814-9ec5-4dd2d38ec541",
+          "role": "user",
+          "content": "i need a fast delivery",
+          "ts": 1756403791143
+        },
+        {
+          "id": "e6d6bb07-d1fb-40d3-8b3e-2d97a691db11",
+          "role": "assistant",
+          "content": "oh thats great",
+          "ts": 1756403802455
+        }
+      ]
+    }
+  ]
+}
