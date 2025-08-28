@@ -22,6 +22,7 @@ export default function ProductPage({ params }: Props) {
           <VariantSelectors productSlug={product.slug} />
           <AddToCartBlock slug={product.slug} />
           <UpsellSection slug={product.slug} />
+          <ProductFAQ />
         </div>
       </div>
     </div>
@@ -156,6 +157,124 @@ function UpsellSection({ slug }: { slug: string }) {
           );
         })}
       </div>
+    </div>
+  );
+}
+
+// FAQ Accordion
+function ProductFAQ() {
+  const items: { title: string; content: React.ReactNode }[] = [
+    {
+      title: 'What does my product contain?',
+      content: (
+        <ul className="list-disc ml-6 space-y-1 text-sm md:text-[15px]">
+          <li>Everything is included in the pack which includes:</li>
+          <li className="ml-4 list-none">- The screwed support</li>
+          <li className="ml-4 list-none">- The metal plate</li>
+            <li className="ml-4 list-none">- 3 adapters for different handlebar diameters</li>
+            <li className="ml-4 list-none">- The Allen key</li>
+            <li className="ml-4 list-none">- The carrying bag</li>
+        </ul>
+      )
+    },
+    {
+      title: 'How does it work?',
+      content: (
+        <div className="space-y-3 text-sm md:text-[15px]">
+          <p><strong>Step 1:</strong> Screw your support to the handlebars by choosing the adapter adapted to your diameter (22 to 32 mm).</p>
+          <p><strong>Step 2:</strong> Stick the metal plate on your phone case.</p>
+          <p><strong>Step 3:</strong> Clap the metal plate by centering them on the support. There you go, your phone won&apos;t move.</p>
+        </div>
+      )
+    },
+    {
+      title: 'Does it hold?',
+      content: (
+        <div className="space-y-4 text-sm md:text-[15px]">
+          <p><strong>Yes it holds. And it holds very strong!</strong></p>
+          <div>
+            <p className="mb-2">But rather than a long speech here are some important points:</p>
+            <ul className="list-disc ml-6 space-y-1">
+              <li>Pavements, potholes, sidewalks, mountain bikes... the support holds!</li>
+              <li>The magnetic system supports up to 50 times the weight of your smartphone.</li>
+              <li>Tested in a wind tunnel up to 140 km/h (maximum power of the wind tunnel) Stable even at high speed (tested up to 225 km/h on a circuit)</li>
+              <li>The phone does not move on the handlebars, it does not work.</li>
+              <li>The system is validated by more than 5,000 stores.</li>
+            </ul>
+          </div>
+          <p>And you can imagine that, for 5 years, if our supports did not work, we would no longer be there and the most beautiful brands would not sell to us.</p>
+        </div>
+      )
+    },
+    {
+      title: 'The advantages of the product',
+      content: (
+        <ul className="list-disc ml-6 space-y-1 text-sm md:text-[15px]">
+          <li>Avoids reflections in direct sunlight</li>
+          <li>Adjustable landscape/portrait without tools</li>
+          <li>Powerful adhesive</li>
+        </ul>
+      )
+    },
+    {
+      title: 'Technical characteristics',
+      content: (
+        <ul className="list-disc ml-6 space-y-1 text-sm md:text-[15px]">
+          <li>Compatible with almost all handlebars</li>
+          <li>Plate 1.5 mm thick and 48 mm in diameter</li>
+          <li>Universal, compatible with all brands of phones</li>
+          <li>Harmless to the phone: magnets located between two iron plates cut the magnetic field at the phone (patent registered)</li>
+          <li>The adhesive metal plates do not protect the phone from vibrations and are not directly compatible with induction charging</li>
+          <li>Remove the case from your phone to charge it on your MagSafe charger.</li>
+          <li>Do not stick to leather, textured, textile or non-slip cases</li>
+        </ul>
+      )
+    },
+    {
+      title: 'Vibration incompatibility',
+      content: (
+        <div className="space-y-4 text-sm md:text-[15px]">
+          <p><strong>Attention!</strong> Unlike our pouches, the adhesive metal plate does not completely protect against engine and road vibrations. The 2 wheels listed below can damage the optical stabilizer of your smartphone through vibration.</p>
+          <ul className="list-disc ml-6 space-y-1">
+            <li><strong>BMW</strong> 310GS, F800 R/GS/GT, R nine T, R1200GS/RT, S1000R</li>
+            <li><strong>Ducati</strong> Hypermotard, Monster, Multistrada, Supersport</li>
+            <li><strong>Harley Davidson</strong> Fat Bob, Low Rider S, Street Bob, Wide Glide</li>
+            <li><strong>Honda</strong> CB, CBR, CRF, Grom, Shadow</li>
+            <li><strong>Kawasaki</strong> Er-6n, KLX, Ninja, Versys, Z650, Z900RS</li>
+            <li><strong>KTM & Husqvarna</strong> Tous les modèles</li>
+            <li><strong>MV Agusta</strong> Brutale</li>
+            <li><strong>Suzuki</strong> DRZ, GSF, GSX-R, GSX-S</li>
+            <li><strong>Triumph</strong> Bonneville, Rocket 3, Scrambler, Speed Triple, Speed Twin, Thruxton</li>
+            <li>Non-exhaustive list</li>
+          </ul>
+        </div>
+      )
+    }
+  ];
+  const [open, setOpen] = useState<number[]>([]);
+  const toggle = (i:number) => setOpen(o => o.includes(i) ? o.filter(x=>x!==i) : [...o,i]);
+  return (
+    <div className="mt-10 border-t border-gray-200">
+      {items.map((it,i) => {
+        const expanded = open.includes(i);
+        return (
+          <div key={it.title} className="border-b border-gray-200">
+            <button onClick={()=>toggle(i)} className="w-full flex items-center justify-between py-4 text-left group">
+              <span className="font-medium text-[15px]">{it.title}</span>
+              <span className="text-gray-400 group-hover:text-black transition transform" style={{transform: expanded? 'rotate(180deg)':'rotate(0deg)'}}>▾</span>
+            </button>
+            {expanded && (
+              <div className="pb-6 -mt-2 text-gray-700 leading-relaxed animate-fadeIn">
+                {it.content}
+              </div>
+            )}
+          </div>
+        );
+      })}
+      <style jsx>{`
+        @keyframes fadeIn { from { opacity:0; transform:translateY(-4px);} to { opacity:1; transform:translateY(0);} }
+        .animate-fadeIn{animation:fadeIn .25s ease;}
+      `}</style>
     </div>
   );
 }
