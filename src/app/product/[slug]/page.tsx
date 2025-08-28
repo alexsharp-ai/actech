@@ -23,6 +23,7 @@ export default function ProductPage({ params }: Props) {
           <AddToCartBlock slug={product.slug} />
           <UpsellSection slug={product.slug} />
           <ProductFAQ />
+          <FeaturesAndTrust />
         </div>
       </div>
     </div>
@@ -275,6 +276,60 @@ function ProductFAQ() {
         @keyframes fadeIn { from { opacity:0; transform:translateY(-4px);} to { opacity:1; transform:translateY(0);} }
         .animate-fadeIn{animation:fadeIn .25s ease;}
       `}</style>
+    </div>
+  );
+}
+
+// Features + Trust logos (placeholder logos if real assets missing)
+function FeaturesAndTrust() {
+  const features = [
+    { title: 'Patented magnetic system', desc: 'Harmless for your phone', icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 3v6a6 6 0 0 0 12 0V3"/><path d="M6 21v-3"/><path d="M18 21v-3"/></svg>
+    )},
+    { title: 'Compatible', desc: 'Handlebars 22–32mm', icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="8"/><path d="M4 12h16"/></svg>
+    )},
+    { title: 'Universal support', desc: 'Works with all phones', icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="7" y="2" width="10" height="20" rx="2"/></svg>
+    )},
+    { title: 'Simple use', desc: 'Optimal visibility', icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="4"/><path d="M4 12a8 8 0 0 1 16 0 8 8 0 0 1-16 0Z"/></svg>
+    )},
+  ];
+  const logos = [
+    { name: 'Motoblouz' },
+    { name: 'Dafy' },
+    { name: 'Maxxess' },
+    { name: 'Speedway' },
+    { name: 'TeamAxe' },
+  ];
+  return (
+    <div className="mt-16">
+      <div className="bg-gray-100 rounded py-10 px-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto text-center">
+          {features.map(f => (
+            <div key={f.title} className="flex flex-col items-center gap-3">
+              <div className="text-black">{f.icon}</div>
+              <div className="font-semibold text-sm md:text-base text-black leading-snug text-center max-w-[180px]">{f.title}</div>
+              <div className="text-[11px] md:text-xs text-gray-600">{f.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="mt-14">
+        <h3 className="text-xl font-semibold mb-6 text-center md:text-left">They trust us:</h3>
+        <div className="flex flex-wrap gap-6 items-center justify-center md:justify-start">
+          {logos.map(l => (
+            <div key={l.name} className="h-28 w-40 flex items-center justify-center border rounded bg-white shadow-sm p-4 text-sm font-medium text-gray-700">
+              {l.name}
+            </div>
+          ))}
+          <div className="h-28 w-40 flex flex-col items-center justify-center border rounded bg-gray-50 shadow-sm p-4 text-[11px] text-gray-700 text-center gap-2">
+            <span>And more than 5000 resellers in Europe</span>
+            <span className="text-xs">→</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
