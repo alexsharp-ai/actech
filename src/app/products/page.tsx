@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 // Simple Products listing page that leads to existing product detail (pro-moto-holder)
 export default function ProductsPage(){
-  const list = products.slice(0,3);
+  const list = products.filter(p=>['pro-moto-holder','magsafe-desk-stand','pro-boost-moto-holder'].includes(p.slug));
   return (
     <div className="bg-white text-black w-full min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-16 pb-28">

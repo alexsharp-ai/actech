@@ -138,6 +138,35 @@ export const products: Product[] = [
       { amount: 80, label: '5€ offered' }
     ]
   }
+  ,{
+    slug: 'magsafe-desk-stand',
+    id: 'prod_4',
+    title: 'MagSafe Desk Stand – Adjustable Magnetic Phone Mount',
+    subtitle: 'Clean, stable and adjustable MagSafe desk stand for calls, content and charging.',
+    media: [
+      { type: 'image', src: '/a3.png' }, // main hero image
+      { type: 'image', src: '/a1.png' },
+      { type: 'image', src: '/a2.png' }
+    ],
+    basePrice: 34.95,
+    reviewCount: 128,
+    rating: 5,
+    variantGroups: [
+      { id: 'color', name: 'Choose color:', options: [
+        { id: 'black', label: 'Matte Black', image: '/a3.png' },
+        { id: 'silver', label: 'Space Silver', image: '/a2.png' }
+      ]}
+    ],
+    upsells: [
+      { id: 'upsell_cable_usb_c', name: 'USB‑C braided cable', price: 7.95, originalPrice: 12.95, image: '/p2.png' },
+      { id: 'upsell_wall_adapter', name: '20W wall adapter', price: 9.95, originalPrice: 14.95, image: '/p3.png' }
+    ],
+    thresholds: [
+      { amount: 35, label: '1 accessory -50%' },
+      { amount: 49, label: 'Free delivery' },
+      { amount: 65, label: '5€ offered' }
+    ]
+  }
 ];
 
 export function getProductBySlug(slug: string): Product | undefined {

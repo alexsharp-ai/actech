@@ -143,20 +143,20 @@ export default function Home() {
               </div>
               <Link href="/product/pro-moto-holder" className="w-full bg-black text-white py-3 rounded font-semibold text-lg hover:bg-gray-900 transition text-center">View product 39,95 €</Link>
             </div>
-            {/* Product 2 */}
+            {/* Product 2 (MagSafe Desk Stand) */}
             <div className="bg-white rounded-lg shadow p-4 flex flex-col h-full">
               <div className="relative w-full h-56 mb-4">
-                <Image src="/p2.png" alt="Bike phone mount (with steel plate)" width={600} height={336} className="w-full h-full object-contain p-2 rounded bg-gray-50" />
+                <Image src="/a3.png" alt="MagSafe Desk Stand" width={600} height={336} className="w-full h-full object-contain p-6 rounded bg-gray-50" />
               </div>
               <div className="flex-1 flex flex-col items-center text-center">
-                <div className="font-semibold text-lg min-h-[48px] flex items-start justify-center">Bike phone mount (with steel plate)</div>
-                <div className="text-sm text-gray-600 mt-1 mb-2 px-2 min-h-[72px] flex items-end">Magnetic system with elastic silicone fixation, metal plate included.</div>
+                <div className="font-semibold text-lg min-h-[48px] flex items-start justify-center">MagSafe Desk Stand – Adjustable</div>
+                <div className="text-sm text-gray-600 mt-1 mb-2 px-2 min-h-[72px] flex items-end">Stable adjustable metal stand for MagSafe phones. Perfect for calls, streaming & charging.</div>
                 <div className="mt-auto flex items-center justify-center mb-4">
                   <span className="text-red-500 text-xl mr-2">★★★★★</span>
-                  <span className="font-semibold">3315</span> <span className="text-gray-600 ml-1">reviews</span>
+                  <span className="font-semibold">128</span> <span className="text-gray-600 ml-1">reviews</span>
                 </div>
               </div>
-              <Link href="/product/pro-moto-holder" className="w-full bg-black text-white py-3 rounded font-semibold text-lg hover:bg-gray-900 transition text-center">View product 29,95 €</Link>
+              <Link href="/product/magsafe-desk-stand" className="w-full bg-black text-white py-3 rounded font-semibold text-lg hover:bg-gray-900 transition text-center">View product 34,95 €</Link>
             </div>
             {/* Product 3 */}
             <div className="bg-white rounded-lg shadow p-4 flex flex-col h-full">
