@@ -31,6 +31,7 @@ export default function ProductPage({ params }: Props) {
   <ProductReviews slug={product.slug} />
   <ProductMoreQuestions />
   <ProductBottomFeatures />
+  <RelatedProducts />
     </div>
   );
 }
@@ -539,6 +540,40 @@ function ProductBottomFeatures() {
             <div className="text-[11px] text-gray-500 max-w-[180px] leading-snug">{f.sub}</div>
           </div>
         ))}
+      </div>
+    </section>
+  );
+}
+
+// Related Products (reuse homepage top products)
+import Link from 'next/link';
+import { products } from '@/data/products';
+function RelatedProducts() {
+  const list = products.slice(0,3); // first three
+  return (
+    <section className="bg-white border-t border-gray-200">
+      <div className="max-w-7xl mx-auto px-4 py-20">
+        <h2 className="text-2xl font-semibold mb-10">You may also like</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {list.map(p => (
+            <div key={p.id} className="bg-white rounded-lg border border-gray-200 p-5 flex flex-col shadow-sm">
+              <div className="relative w-full aspect-[4/3] mb-4 rounded overflow-hidden bg-gray-50 flex items-center justify-center">
+                {p.media[0].type==='image' ? (
+                  <Image src={p.media[0].src} alt={p.title} width={600} height={450} className="object-contain w-full h-full" />
+                ) : (
+                  <video src={p.media[0].src} className="w-full h-full object-cover" muted autoPlay loop playsInline />
+                )}
+              </div>
+              <h3 className="font-semibold text-base mb-2 leading-snug min-h-[48px]">{p.title}</h3>
+              <p className="text-xs text-gray-600 mb-4 flex-1">{p.subtitle}</p>
+              <div className="flex items-center justify-between text-sm mb-4">
+                <span className="text-red-500">{'★★★★★'.slice(0,p.rating)}</span>
+                <span className="text-gray-500">{p.reviewCount} reviews</span>
+              </div>
+              <Link href={`/product/${p.slug}`} className="w-full bg-black text-white py-3 rounded font-semibold text-sm text-center hover:bg-gray-800 transition">View product {p.basePrice.toFixed(2).replace('.',',')} €</Link>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
