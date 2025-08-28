@@ -45,13 +45,49 @@ function Dashboard(){
   const [statusFilter, setStatusFilter] = React.useState<'all'|'open'|'closed'>('all');
   const [search, setSearch] = React.useState('');
   const pollRef = React.useRef<NodeJS.Timeout|null>(null);
+  // Track previous chat conversation ids to detect new ones
+  const prevChatIdsRef = React.useRef<Set<string>>(new Set());
+  interface Toast { id:string; text:string }
+  const [toasts, setToasts] = React.useState<Toast[]>([]);
+
+  function pushToast(text:string){
+    const id = Math.random().toString(36).slice(2);
+    setToasts(t=> [...t, { id, text }]);
+    setTimeout(()=> setToasts(t=> t.filter(x=> x.id!==id)), 6000);
+  }
+
+  function playBeep(){
+    try {
+      const w = window as unknown as { AudioContext?: typeof AudioContext; webkitAudioContext?: typeof AudioContext };
+      const Ctx = w.AudioContext || w.webkitAudioContext; if(!Ctx) return; const ctx = new Ctx();
+      const o = ctx.createOscillator(); const g = ctx.createGain();
+      o.type='sine'; o.frequency.value = 880; o.connect(g); g.connect(ctx.destination);
+      o.start(); g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.5); o.stop(ctx.currentTime + 0.5);
+    } catch {}
+  }
 
   const fetchList = React.useCallback(()=>{
     if(tab==='overview') return;
     setLoadingList(true);
   fetch(`/api/internal-support/conversations?source=${tab}`, { cache: 'no-store' })
       .then(r=>r.json())
-      .then(d=> { if(d.conversations){ setList(d.conversations); } })
+      .then(d=> { if(d.conversations){
+          // Detect new incoming chats only for chat tab
+          if(tab==='chat'){
+            const current = new Set<string>();
+            for(const c of d.conversations) current.add(c.id);
+            const prev = prevChatIdsRef.current;
+            const newOnes = d.conversations.filter((c:InternalConvo)=> !prev.has(c.id));
+            if(prev.size && newOnes.length){
+              for(const n of newOnes){
+                pushToast(`New chat: ${n.userName || n.userEmail || n.subject || 'Guest'}`);
+                playBeep();
+              }
+            }
+            prevChatIdsRef.current = current;
+          }
+          setList(d.conversations);
+        } })
       .catch(()=>{})
       .finally(()=> setLoadingList(false));
   }, [tab]);
@@ -112,8 +148,23 @@ function Dashboard(){
         <div className="flex gap-2">
           {(['overview','chat','email','contact'] as const).map(t=> {
             const active = tab===t;
+            const label = t==='chat'?'Bot Chats': t==='email'?'Emails': t==='contact'?'Contact Forms':'Overview';
+            const activeClass = t==='chat'
+              ? 'border-red-600 ring-1 ring-red-600 bg-red-50 text-red-700'
+              : t==='email'
+                ? 'border-orange-500 ring-1 ring-orange-500 bg-orange-50 text-orange-700'
+                : t==='contact'
+                  ? 'border-pink-500 ring-1 ring-pink-500 bg-pink-50 text-pink-700'
+                  : 'border-black ring-1 ring-black bg-white text-black';
+            const inactiveClass = t==='chat'
+              ? 'border-red-200 bg-white/80 hover:bg-red-50 text-red-600'
+              : t==='email'
+                ? 'border-orange-200 bg-white/80 hover:bg-orange-50 text-orange-600'
+                : t==='contact'
+                  ? 'border-pink-200 bg-white/80 hover:bg-pink-50 text-pink-600'
+                  : 'border-gray-300 bg-white hover:bg-gray-50 text-black';
             return (
-              <button key={t} onClick={()=> setTab(t)} className={`px-4 py-2 text-xs font-medium rounded-md border transition shadow-sm ${active? 'border-black bg-white text-black ring-1 ring-black':'border-gray-300 bg-white hover:bg-gray-50 text-black'}`}>{t==='chat'?'Bot Chats': t==='email'?'Emails': t==='contact'?'Contact Forms':'Overview'}</button>
+              <button key={t} onClick={()=> setTab(t)} className={`px-4 py-2 text-xs font-medium rounded-md border transition shadow-sm ${active? activeClass:inactiveClass}`}>{label}</button>
             );
           })}
         </div>
@@ -141,7 +192,7 @@ function Dashboard(){
       {tab!=='overview' && (
         <div className="flex flex-1 min-h-0 overflow-hidden">
           {/* Conversation list */}
-          <div className="w-72 border-r bg-white flex flex-col overflow-hidden">
+          <div className={`w-72 border-r flex flex-col overflow-hidden ${tab==='chat'? 'bg-red-25/40':'bg-white'} ${tab==='email'? 'bg-orange-25/40':''} ${tab==='contact'? 'bg-pink-25/40':''}`}> 
             <div className="px-4 py-2 text-[11px] font-semibold uppercase tracking-wide text-gray-700 border-b bg-gray-50">Conversations ({filteredList.length})</div>
             <div className="flex-1 overflow-y-auto custom-scroll">
               {loadingList && <div className="p-4 text-xs text-gray-600">Loading…</div>}
@@ -227,6 +278,14 @@ function Dashboard(){
         .custom-scroll::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.28);border-radius:4px}
         .custom-scroll::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,0.45)}
       `}</style>
+    {/* Toasts */}
+    <div className="fixed top-4 right-4 z-50 flex flex-col gap-2">
+      {toasts.map(t=> (
+        <div key={t.id} className="px-4 py-2 rounded-md text-xs shadow-lg bg-red-600/90 text-white font-medium animate-fade-in">
+          {t.text}
+        </div>
+      ))}
+    </div>
     </div>
   );
 }
