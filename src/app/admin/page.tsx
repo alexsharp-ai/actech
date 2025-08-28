@@ -53,7 +53,11 @@ function AdminDashboard(){
     if(tab !== 'conversations') return;
     setLoading(true); setError('');
     fetch('/api/support/conversations').then(r=>r.json()).then(d=>{
-      if(!d.ok) setError('Failed fetching conversations');
+      if(!d.ok){
+        const statusText = d.status ? ` (status ${d.status})` : '';
+        const apiMsg = d.data?.message || d.data?.error || '';
+        setError('Failed fetching conversations' + statusText + (apiMsg? `: ${apiMsg}`:''));
+      }
       const list = d.data?.payload || d.data?.data || [];
       setConvos(list);
     }).catch(e=> setError(String(e))).finally(()=> setLoading(false));

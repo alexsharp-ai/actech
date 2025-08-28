@@ -14,9 +14,14 @@ export async function GET(req: NextRequest){
 
   const url = `${base}/api/v1/accounts/${accountId}/conversations?status=${encodeURIComponent(status)}&page=${encodeURIComponent(page)}`;
   try {
-    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-    const data = await res.json();
-    return NextResponse.json({ ok: res.ok, data });
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' } });
+  interface ChatwootConversationResponse { payload?: unknown; data?: unknown; message?: string; error?: string; }
+  let data: ChatwootConversationResponse | null = null;
+  try { data = await res.json() as ChatwootConversationResponse; } catch { /* ignore json parse error */ }
+    if(!res.ok){
+      console.error('Chatwoot conversations fetch failed', res.status, data);
+    }
+    return NextResponse.json({ ok: res.ok, status: res.status, data });
   } catch (e){
     const msg = e instanceof Error ? e.message : 'Unknown error';
     return NextResponse.json({ error: msg }, { status: 500 });
