@@ -25,7 +25,8 @@ export default function ProductPage({ params }: Props) {
       <ProductFAQ />
         </div>
       </div>
-    <FeaturesAndTrust />
+  <FeaturesAndTrust />
+  <ProductAssembly slug={product.slug} />
     </div>
   );
 }
@@ -314,6 +315,66 @@ function FeaturesAndTrust() {
             <span>And more than 5000 resellers in Europe</span>
             <span className="text-xs">→</span>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Assembly / What's Inside Section
+function ProductAssembly({ slug }: { slug: string }) {
+  const product = getProductBySlug(slug);
+  const mediaImages = (product?.media || []).filter(m => m.type === 'image').slice(0,4);
+  const [tab,setTab]=useState<'assembly'|'inside'>('assembly');
+  const [idx,setIdx]=useState(0);
+  const next = ()=> setIdx(i => (i+1) % mediaImages.length);
+  const prev = ()=> setIdx(i => (i-1+mediaImages.length) % mediaImages.length);
+  return (
+    <section className="max-w-7xl mx-auto px-4 py-24">
+      <div className="grid md:grid-cols-2 gap-12 items-start">
+        {/* Left text / tabs */}
+        <div className="order-2 md:order-1 flex flex-col gap-6">
+          <div className="text-[11px] tracking-[2px] font-medium text-red-600 uppercase">Handlebar and stem</div>
+          <h2 className="text-2xl md:text-3xl font-semibold">Turnkey assembly</h2>
+          <div className="flex gap-2 text-[11px] tracking-wide">
+            <button onClick={()=>setTab('assembly')} className={`px-4 py-2 border text-[11px] font-semibold ${tab==='assembly'? 'bg-black text-white border-black':'bg-white text-gray-600 border-gray-300 hover:border-black'}`}>ASSEMBLY</button>
+            <button onClick={()=>setTab('inside')} className={`px-4 py-2 border text-[11px] font-semibold ${tab==='inside'? 'bg-black text-white border-black':'bg-white text-gray-600 border-gray-300 hover:border-black'}`}>WHAT&apos;S INSIDE</button>
+          </div>
+          {tab==='assembly' && (
+            <ol className="space-y-5 text-[13px] leading-relaxed max-w-md list-decimal ml-4">
+              <li>Choose the adapter according to the diameter of your handlebar: 31.8mm diameter handlebar: no adapter. 28.6mm diameter handlebar: 1.7mm adapter. 25.4mm diameter handlebar: 3.5mm adapter. 22.2mm diameter handlebar: 5.1mm adapter.</li>
+              <li>Position the adapter on the handlebars, then screw the support on top, using the Allen key.</li>
+              <li>Stick the metal plate on your phone case, snap it onto the support (making sure to center it) and off you go!</li>
+            </ol>
+          )}
+          {tab==='inside' && (
+            <ul className="space-y-2 text-[13px] leading-relaxed max-w-md list-disc ml-4">
+              <li>Screwed support</li>
+              <li>Magnetic metal plate</li>
+              <li>3 diameter adapters</li>
+              <li>Allen key</li>
+              <li>Carrying bag</li>
+            </ul>
+          )}
+        </div>
+        {/* Right carousel */}
+        <div className="order-1 md:order-2 relative w-full aspect-[4/3] bg-gray-100 rounded overflow-hidden">
+          {mediaImages.map((m,i) => (
+            <div key={m.src} className={`absolute inset-0 transition-opacity duration-500 ${i===idx? 'opacity-100':'opacity-0'}`} aria-hidden={i!==idx}>
+              <Image src={m.src} alt={`${product?.title || 'product'} image ${i+1}`} fill sizes="(max-width:768px) 100vw, 50vw" className="object-cover" />
+            </div>
+          ))}
+          {mediaImages.length>1 && (
+            <>
+              <button onClick={prev} aria-label="Previous image" className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-black flex items-center justify-center text-xl font-bold shadow">‹</button>
+              <button onClick={next} aria-label="Next image" className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-black flex items-center justify-center text-xl font-bold shadow">›</button>
+              <div className="absolute bottom-3 left-0 right-0 flex items-center justify-center gap-2">
+                {mediaImages.map((_,i)=>(
+                  <button key={i} onClick={()=>setIdx(i)} aria-label={`Go to image ${i+1}`} className={`w-2.5 h-2.5 rounded-full ${i===idx? 'bg-white ring-2 ring-black/50':'bg-black/30 hover:bg-black/50'}`} />
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </section>
