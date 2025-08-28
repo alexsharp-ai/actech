@@ -1,6 +1,6 @@
 
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -8,14 +8,8 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 
 export default function Home() {
   const isMobile = useIsMobile();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  useEffect(()=>{
-    if (mobileMenuOpen) {
-      const original = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-      return () => { document.body.style.overflow = original; };
-    }
-  },[mobileMenuOpen]);
+  // legacy mobile menu removed; ensure body scroll always enabled
+  useEffect(()=>{ document.body.style.overflow = ''; },[]);
   return (
     <div className="font-sans bg-black text-white min-h-screen flex flex-col">
   {/* Main site content */}
@@ -25,7 +19,7 @@ export default function Home() {
       </div>
 
       {/* Header */}
-      <header className="w-full flex items-center justify-between px-4 sm:px-8 py-4 bg-black/90 z-20 relative backdrop-blur supports-[backdrop-filter]:bg-black/70">
+  <header className="w-full flex items-center justify-between px-4 sm:px-8 py-4 bg-black/90 z-20 relative backdrop-blur supports-[backdrop-filter]:bg-black/70">
         {/* Logo */}
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3 group">
@@ -33,8 +27,8 @@ export default function Home() {
             <span className="text-white font-semibold text-xl tracking-wide group-hover:text-red-500 transition-colors">AdamCoTech</span>
           </Link>
         </div>
-        {/* Desktop Menu */}
-        <nav className="hidden lg:flex gap-6 text-sm font-medium">
+  {/* Desktop Menu */}
+  <nav className="hidden lg:flex gap-6 text-sm font-medium">
           {['Motorcycle / Scooter','Bike','Car','Run','Accessories'].map(i => (
             <a key={i} href="#" className="hover:text-red-500 transition">{i}</a>
           ))}
@@ -52,34 +46,29 @@ export default function Home() {
             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">0</span>
           </button>
         </div>
-        {/* Mobile controls */}
+        {/* Mobile compact icons */}
         <div className="flex md:hidden items-center gap-4">
           <button aria-label="Search" className="hover:text-red-500 transition">
             <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </button>
-            <button aria-label="Basket" className="hover:text-red-500 transition relative">
-              <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full px-1">0</span>
-            </button>
-          <button
-            aria-label="Toggle menu"
-            onClick={() => setMobileMenuOpen(o => !o)}
-            className="relative w-9 h-9 flex flex-col items-center justify-center group"
-          >
-            <span className={`h-0.5 w-6 bg-white transition-all ${mobileMenuOpen ? 'rotate-45 translate-y-[5px]' : ''}`}></span>
-            <span className={`h-0.5 w-6 bg-white my-[5px] transition-opacity ${mobileMenuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
-            <span className={`h-0.5 w-6 bg-white transition-all ${mobileMenuOpen ? '-rotate-45 -translate-y-[5px]' : ''}`}></span>
+          <button aria-label="Basket" className="hover:text-red-500 transition relative">
+            <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full px-1">0</span>
           </button>
         </div>
       </header>
-      {/* Mobile slide-down menu */}
+      {/* Mobile horizontal (landscape) nav bar */}
       {isMobile && (
-        <div className={`lg:hidden px-4 sm:px-6 bg-black/95 backdrop-blur border-b border-white/10 overflow-hidden transition-[max-height] duration-300 ${mobileMenuOpen ? 'max-h-[420px]' : 'max-h-0'}`}>
-          <div className="py-4 grid grid-cols-2 gap-4 text-sm">
-            {['Motorcycle / Scooter','Bike','Car','Run','Accessories','Retailers','Warranty','FAQ'].map(item => (
-              <a key={item} href="#" className="block px-2 py-2 rounded bg-white/5 hover:bg-white/10 text-white/90 text-center font-medium" onClick={() => setMobileMenuOpen(false)}>{item}</a>
-            ))}
-          </div>
+        <div className="lg:hidden flex gap-4 overflow-x-auto no-scrollbar px-4 py-2 bg-black/80 border-b border-white/10">
+          {['Motorcycle / Scooter','Bike','Car','Run','Accessories','Retailers','Warranty','FAQ'].map(item => (
+            <a key={item} href="#" className="flex-shrink-0 px-3 py-2 rounded-md bg-white/5 hover:bg-white/10 text-xs font-medium whitespace-nowrap">
+              {item}
+            </a>
+          ))}
+          <style jsx>{`
+            .no-scrollbar::-webkit-scrollbar{display:none}
+            .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+          `}</style>
         </div>
       )}
 
@@ -115,7 +104,28 @@ export default function Home() {
           </h1>
           <h2 className="text-base sm:text-xl md:text-2xl font-light mb-8 text-center px-4 max-w-3xl">the most strong, safe and universal magnetic holder is here!</h2>
           {/* Product Boxes */}
-          <div className="mt-8 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 w-full max-w-5xl px-4">
+          {/* Mobile: single horizontal row of 4 category boxes */}
+          <div className="mt-8 flex md:hidden gap-4 w-full max-w-5xl px-4 overflow-x-auto snap-x snap-mandatory no-scrollbar">
+            {[
+              {src:'/IMG_8007.webp', label:'E-Bikes & Scooters'},
+              {src:'/b1.webp', label:'Bikes & Strollers'},
+              {src:'/IMG_7742-2.webp', label:'Gym & Lifestyle'},
+              {src:'/l1.webp', label:'Endless possibilities'}
+            ].map(cat => (
+              <a key={cat.src} href="#" className="relative rounded-lg overflow-hidden shadow-lg group flex-shrink-0 w-60 h-40 snap-start">
+                <Image src={cat.src} alt={cat.label} width={240} height={160} className="w-full h-full object-cover group-hover:scale-105 transition" />
+                <div className="absolute inset-0 bg-black/40 flex items-end p-3">
+                  <span className="text-sm font-semibold text-white leading-snug">{cat.label}</span>
+                </div>
+              </a>
+            ))}
+            <style jsx>{`
+              .no-scrollbar::-webkit-scrollbar{display:none}
+              .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+            `}</style>
+          </div>
+          {/* Desktop / tablet: grid */}
+          <div className="mt-8 hidden md:grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 w-full max-w-5xl px-4">
             {/* Box 1 */}
             <a href="#" className="relative rounded-lg overflow-hidden shadow-lg group">
               <Image src="/IMG_8007.webp" alt="E-Bikes & Scooters" width={400} height={160} className="w-full h-40 object-cover group-hover:scale-105 transition" />
