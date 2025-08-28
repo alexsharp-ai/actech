@@ -10,7 +10,8 @@ export function middleware(req: NextRequest) {
   const target = isMobile ? 'mobile' : 'desktop';
   if (existing !== target) res.cookies.set('device', target, { path: '/', sameSite: 'lax' });
   // Basic security headers (most also added by Vercel edge, but kept here if self-hosted)
-  res.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
+  // Temporary low HSTS max-age while diagnosing SSL issue; increase after cert stable
+  res.headers.set('Strict-Transport-Security', 'max-age=300; includeSubDomains');
   res.headers.set('X-Content-Type-Options', 'nosniff');
   res.headers.set('X-Frame-Options', 'SAMEORIGIN');
   res.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
