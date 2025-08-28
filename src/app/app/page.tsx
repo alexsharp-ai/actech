@@ -23,7 +23,7 @@ export default function FreeAppPage(){
         }].map(card => (
           <div key={card.title} className="bg-gray-50 border rounded-xl p-6 flex flex-col gap-3">
             <h2 className="font-semibold text-lg">{card.title}</h2>
-            <p className="text-sm text-gray-700 leading-relaxed flex-1">{card.body}</p>
+              <p className="text-sm text-gray-700 leading-relaxed flex-1 text-black">{card.body}</p>
             <div className="text-[11px] uppercase tracking-wide text-gray-500">Coming soon</div>
           </div>
         ))}

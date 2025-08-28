@@ -145,7 +145,7 @@ export default function Home() {
                 )}
               </div>
               <div className="flex-1 flex flex-col items-center text-center">
-                <div className="font-semibold text-lg min-h-[48px] flex items-start justify-center leading-snug">{p.title}</div>
+                <div className="font-semibold text-lg min-h-[48px] flex items-start justify-center leading-snug text-black">{p.title}</div>
                 <div className="text-sm text-gray-600 mt-1 mb-2 px-2 min-h-[72px] flex items-end leading-relaxed">{p.subtitle}</div>
                 <div className="mt-auto flex items-center justify-center mb-4">
                   <span className="text-red-500 text-xl mr-2">{'★★★★★'.slice(0,p.rating)}</span>

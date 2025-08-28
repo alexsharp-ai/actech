@@ -303,3 +303,7 @@ Error: Route "/product/[slug]" used `params.slug`. `params` should be awaited be
  GET /accessories 200 in 327ms
  GET /products 200 in 164ms
  GET / 200 in 128ms
+ GET /app 200 in 2731ms
+ GET /app 200 in 375ms
+ GET /app 200 in 1835ms
+ GET / 200 in 324ms
