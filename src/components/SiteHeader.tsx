@@ -22,10 +22,10 @@ export default function SiteHeader(){
           </Link>
         </div>
         {/* Desktop Menu */}
-        <nav className="hidden lg:flex gap-6 text-sm font-medium">
-          {['Motorcycle / Scooter','Bike','Car','Run','Accessories'].map(i => (
-            <a key={i} href="#" className="hover:text-red-500 transition text-white">{i}</a>
-          ))}
+        <nav className="hidden lg:flex gap-8 text-sm font-medium">
+          <Link href="/" className="hover:text-red-500 transition text-white">Home</Link>
+          <Link href="/products" className="hover:text-red-500 transition text-white">Products</Link>
+          <Link href="/#accessories" className="hover:text-red-500 transition text-white">Accessories</Link>
         </nav>
         {/* Desktop Right */}
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-white">
@@ -54,10 +54,14 @@ export default function SiteHeader(){
       {/* Mobile horizontal (landscape) nav bar */}
       {isMobile && (
         <div className="lg:hidden flex gap-4 overflow-x-auto no-scrollbar px-4 py-2 bg-black/80 border-b border-white/10 text-white">
-          {['Motorcycle / Scooter','Bike','Car','Run','Accessories','Retailers','Warranty','FAQ'].map(item => (
-            <a key={item} href="#" className="flex-shrink-0 px-3 py-2 rounded-md bg-white/5 hover:bg-white/10 text-xs font-medium whitespace-nowrap">
-              {item}
-            </a>
+          {[
+            {label:'Home', href:'/'},
+            {label:'Products', href:'/products'},
+            {label:'Accessories', href:'/#accessories'}
+          ].map(item => (
+            <Link key={item.label} href={item.href} className="flex-shrink-0 px-4 py-2 rounded-md bg-white/5 hover:bg-white/10 text-xs font-medium whitespace-nowrap">
+              {item.label}
+            </Link>
           ))}
           <style jsx>{`
             .no-scrollbar::-webkit-scrollbar{display:none}
