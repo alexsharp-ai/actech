@@ -48,6 +48,35 @@ async function askBackend(message: string): Promise<string> {
   }
 }
 
+interface BridgeState {
+  conversationId?: number;
+  contactId?: number;
+  clientId: string;
+}
+
+function getClientId(): string {
+  if (typeof window === 'undefined') return 'server';
+  let id = localStorage.getItem('support_chat_client');
+  if(!id){
+    id = (globalThis.crypto?.randomUUID?.() || Math.random().toString(36).slice(2));
+    localStorage.setItem('support_chat_client', id);
+  }
+  return id;
+}
+
+async function sendToChatwoot(opts: { message: string; name?: string; email?: string; conversationId?: number; contactId?: number; clientId: string; senderRole?: 'user' | 'assistant'; }): Promise<{ conversationId?: number; contactId?: number; ok: boolean; }> {
+  try {
+    const res = await fetch('/api/support/chatwoot', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify(opts)
+    });
+    const data = await res.json();
+    if(!res.ok) return { ok: false };
+    return { ok: true, conversationId: data.conversationId, contactId: data.contactId };
+  } catch { return { ok: false }; }
+}
+
 export default function SupportChat() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([{
@@ -60,6 +89,7 @@ export default function SupportChat() {
   const [leaveMsgMode, setLeaveMsgMode] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [bridge, setBridge] = useState<BridgeState>(()=> ({ clientId: typeof window !== 'undefined' ? (localStorage.getItem('support_chat_client') || getClientId()) : 'server' }));
   const endRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages, open]);
@@ -93,8 +123,44 @@ export default function SupportChat() {
     setMessages(m => [...m, { role: "user", content: text, ts }]);
     setInput("");
     setLoading(true);
+
+    // Fire-and-forget log to Chatwoot (user message)
+    (async ()=>{
+      const r = await sendToChatwoot({
+        message: text,
+        name: name || 'Guest',
+        email: email || undefined,
+        conversationId: bridge.conversationId,
+        contactId: bridge.contactId,
+        clientId: bridge.clientId,
+        senderRole: 'user'
+      });
+      if(r.ok && (r.conversationId || r.contactId)){
+        setBridge(b => {
+          const next = { ...b, conversationId: r.conversationId || b.conversationId, contactId: r.contactId || b.contactId };
+          if(typeof window !== 'undefined'){
+            if(next.conversationId) localStorage.setItem('support_chat_conversation', String(next.conversationId));
+            if(next.contactId) localStorage.setItem('support_chat_contact', String(next.contactId));
+          }
+          return next;
+        });
+      }
+    })();
+
     const answer = await askBackend(text);
     setMessages(m => [...m, { role: "assistant", content: answer, ts: Date.now() }]);
+
+    // Optionally log assistant response to Chatwoot as outgoing (so agents see context)
+    (async ()=>{
+      if(!bridge.conversationId && !bridge.contactId) return; // wait until first send finishes
+      await sendToChatwoot({
+        message: answer,
+        conversationId: bridge.conversationId,
+        contactId: bridge.contactId,
+        clientId: bridge.clientId,
+        senderRole: 'assistant'
+      });
+    })();
     setLoading(false);
   }
 
