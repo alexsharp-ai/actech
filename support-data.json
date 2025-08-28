@@ -1,9 +1,9 @@
 {
   "conversations": [
     {
-      "id": "00f32549-0f75-4a66-bc57-e5ac54202a00",
-      "createdAt": 1756403734713,
-      "updatedAt": 1756403836475,
+      "id": "d8334724-0dcd-474e-bc51-834bdaee6648",
+      "createdAt": 1756407335093,
+      "updatedAt": 1756407393995,
       "status": "closed",
       "needsHuman": false,
       "humanActive": true,
@@ -11,46 +11,148 @@
       "source": "chat",
       "messages": [
         {
-          "id": "f6b3f1d9-1da9-4381-95d5-8e40e8b7b0c4",
+          "id": "e3ebd776-30da-42a5-bcf1-a3337cb22fc8",
           "role": "user",
           "content": "I want to talk to a human agent",
-          "ts": 1756403734713
+          "ts": 1756407335093
         },
         {
-          "id": "3f385477-bc5f-4ccb-b003-99b6c57308c8",
+          "id": "eb976346-1484-459a-b165-ffebbb894873",
           "role": "assistant",
           "content": "We'll connect you with a human agent now. Please hold on a moment.",
-          "ts": 1756403735489
+          "ts": 1756407335591
         },
         {
-          "id": "e4035a15-fd2c-4ee9-b74f-de06036a991c",
+          "id": "e3b29fd2-045a-4927-976a-016b136f1a40",
           "role": "assistant",
-          "content": "hello",
-          "ts": 1756403756287
+          "content": "go ahead how can i help you",
+          "ts": 1756407377953
         },
         {
-          "id": "a318b285-ce7b-44f6-aa32-112c3e2ad44e",
+          "id": "685b60d4-c232-41ec-b69e-ac2ba12002d7",
           "role": "user",
-          "content": "nice that u are here",
-          "ts": 1756403769122
-        },
+          "content": "delivery",
+          "ts": 1756407386459
+        }
+      ]
+    },
+    {
+      "id": "498b7f15-0251-4b36-a216-ad8937bee0c0",
+      "createdAt": 1756405937191,
+      "updatedAt": 1756405957119,
+      "status": "closed",
+      "needsHuman": false,
+      "humanActive": false,
+      "unread": true,
+      "source": "chat",
+      "messages": [
         {
-          "id": "f57a3db6-4645-4ee3-9000-bf9b700ded51",
-          "role": "assistant",
-          "content": "how can i help you ?",
-          "ts": 1756403780566
-        },
-        {
-          "id": "964509a2-f590-4814-9ec5-4dd2d38ec541",
+          "id": "8fb9cf8e-9af6-4b11-a24f-a72a431def1a",
           "role": "user",
-          "content": "i need a fast delivery",
-          "ts": 1756403791143
+          "content": "How do I install the mount?",
+          "ts": 1756405937191
         },
         {
-          "id": "e6d6bb07-d1fb-40d3-8b3e-2d97a691db11",
+          "id": "713c39e5-0c9e-423b-a6f0-d08cb6d9952f",
           "role": "assistant",
-          "content": "oh thats great",
-          "ts": 1756403802455
+          "content": "To install the AdamCoTech magnetic mount, clean the surface where you want to attach it, peel off the adhesive backing, and press it firmly onto the surface for about 30 seconds. Ensure it's secure before attaching your device. For best results, allow the adhesive to set for 24 hours before use.",
+          "ts": 1756405939778
+        }
+      ]
+    },
+    {
+      "id": "f171126f-9bf8-4ccc-b575-94c42bd0e7f4",
+      "createdAt": 1756405841206,
+      "updatedAt": 1756405926013,
+      "status": "closed",
+      "needsHuman": false,
+      "humanActive": true,
+      "unread": false,
+      "source": "chat",
+      "messages": [
+        {
+          "id": "caea51d0-0a54-4682-9b93-8fc5bcb69683",
+          "role": "user",
+          "content": "What are the shipping times?",
+          "ts": 1756405841206
+        },
+        {
+          "id": "95147fcc-c61d-4fc1-a97e-b4b4a77b1dd0",
+          "role": "assistant",
+          "content": "We ship orders within 24h. Delivery typically takes 2-5 business days in the EU.",
+          "ts": 1756405841711
+        },
+        {
+          "id": "56a365b9-35db-4795-8f3d-539b2d0b3a58",
+          "role": "user",
+          "content": "Is it safe for my phone?",
+          "ts": 1756405861091
+        },
+        {
+          "id": "8df0fb3a-30cb-471d-a35e-e6514693ed8c",
+          "role": "assistant",
+          "content": "Yes, AdamCoTech's magnetic mounts are designed to be safe for your phone. They use strong magnets that securely hold your device without causing any damage. Always ensure proper installation for optimal safety.",
+          "ts": 1756405863989
+        },
+        {
+          "id": "8fedebd3-c6fe-403f-bdb3-d98dca789d11",
+          "role": "user",
+          "content": "I want to talk to a human agent",
+          "ts": 1756405889173
+        },
+        {
+          "id": "3eb2118b-aed6-4b65-a899-d51ffc094a71",
+          "role": "assistant",
+          "content": "We'll connect you with a human agent now. Please hold on a moment.",
+          "ts": 1756405889717
+        },
+        {
+          "id": "528ed9ff-2ad7-4104-9fe1-a16d8f0e2ed5",
+          "role": "assistant",
+          "content": "hello im the human",
+          "ts": 1756405909547
+        },
+        {
+          "id": "2855e165-a481-4724-bdd0-aa623002b6d8",
+          "role": "user",
+          "content": "thanks human suck mi hahah",
+          "ts": 1756405916711
+        }
+      ]
+    },
+    {
+      "id": "215b9877-dd6b-4bbb-a95b-18831a4350dd",
+      "createdAt": 1756405766143,
+      "updatedAt": 1756405832353,
+      "status": "closed",
+      "needsHuman": false,
+      "humanActive": true,
+      "unread": false,
+      "source": "chat",
+      "messages": [
+        {
+          "id": "22b26c26-a9d0-4d56-9376-56b20e718f70",
+          "role": "user",
+          "content": "I want to talk to a human agent",
+          "ts": 1756405766143
+        },
+        {
+          "id": "70573563-328a-441c-b649-5be66eb380f8",
+          "role": "assistant",
+          "content": "We'll connect you with a human agent now. Please hold on a moment.",
+          "ts": 1756405767586
+        },
+        {
+          "id": "88689300-dd08-4561-80f9-39bb69a47acb",
+          "role": "assistant",
+          "content": "hello i,m alex and im here to help you",
+          "ts": 1756405799473
+        },
+        {
+          "id": "c78adc86-c36b-4086-a240-eeb06dd91b4f",
+          "role": "user",
+          "content": "nice tomeet you can u help me",
+          "ts": 1756405814498
         }
       ]
     }
