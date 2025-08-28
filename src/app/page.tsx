@@ -1,77 +1,15 @@
 
 "use client";
 import React, { useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
-import { useIsMobile } from "@/hooks/useIsMobile";
 import LazyVideo from "@/components/LazyVideo";
 
 
 export default function Home() {
-  const isMobile = useIsMobile();
   // legacy mobile menu removed; ensure body scroll always enabled
   useEffect(()=>{ document.body.style.overflow = ''; },[]);
   return (
-    <div className="font-sans bg-black text-white min-h-screen flex flex-col">
-  {/* Main site content */}
-      {/* Top Bar */}
-      <div className="w-full bg-[#181c1c] text-xs py-1 px-2 flex justify-center items-center border-b border-[#222]">
-        <span className="text-gray-200">Free delivery from €49, dispatch within 24-48 hours. Customer service available.</span>
-      </div>
-
-      {/* Header */}
-  <header className="w-full flex items-center justify-between px-4 sm:px-8 py-4 bg-black/90 z-20 relative backdrop-blur supports-[backdrop-filter]:bg-black/70">
-        {/* Logo */}
-        <div className="flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-3 group">
-            <Image src="/adamcotech-logo.png" alt="AdamCoTech Logo" width={42} height={42} priority className="invert drop-shadow" />
-            <span className="text-white font-semibold text-xl tracking-wide group-hover:text-red-500 transition-colors">AdamCoTech</span>
-          </Link>
-        </div>
-  {/* Desktop Menu */}
-  <nav className="hidden lg:flex gap-6 text-sm font-medium">
-          {['Motorcycle / Scooter','Bike','Car','Run','Accessories'].map(i => (
-            <a key={i} href="#" className="hover:text-red-500 transition">{i}</a>
-          ))}
-        </nav>
-        {/* Desktop Right */}
-        <div className="hidden md:flex items-center gap-6 text-sm font-medium">
-          {['Retailers','Warranty','FAQ'].map(i => (
-            <a key={i} href="#" className="hover:text-red-500 transition">{i}</a>
-          ))}
-          <button className="hover:text-red-500 transition" aria-label="Search">
-            <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </button>
-          <button className="hover:text-red-500 transition relative" aria-label="Basket">
-            <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">0</span>
-          </button>
-        </div>
-        {/* Mobile compact icons */}
-        <div className="flex md:hidden items-center gap-4">
-          <button aria-label="Search" className="hover:text-red-500 transition">
-            <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </button>
-          <button aria-label="Basket" className="hover:text-red-500 transition relative">
-            <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full px-1">0</span>
-          </button>
-        </div>
-      </header>
-      {/* Mobile horizontal (landscape) nav bar */}
-      {isMobile && (
-        <div className="lg:hidden flex gap-4 overflow-x-auto no-scrollbar px-4 py-2 bg-black/80 border-b border-white/10">
-          {['Motorcycle / Scooter','Bike','Car','Run','Accessories','Retailers','Warranty','FAQ'].map(item => (
-            <a key={item} href="#" className="flex-shrink-0 px-3 py-2 rounded-md bg-white/5 hover:bg-white/10 text-xs font-medium whitespace-nowrap">
-              {item}
-            </a>
-          ))}
-          <style jsx>{`
-            .no-scrollbar::-webkit-scrollbar{display:none}
-            .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
-          `}</style>
-        </div>
-      )}
+  <div className="font-sans bg-black text-white min-h-screen flex flex-col">
 
       {/* Hero Section with video on all devices (optimized) */}
       <section className="relative flex flex-col items-center justify-center min-h-[60vh] md:min-h-[70vh] w-full overflow-hidden">
@@ -364,76 +302,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer Section (Enhanced) */}
-      <footer className="bg-[#0f0f0f] text-gray-300 mt-auto border-t border-[#1e1e1e]">
-        <div className="max-w-7xl mx-auto px-6 py-16 grid gap-12 lg:grid-cols-3">
-          {/* Left: Logo & Social */}
-          <div className="flex flex-col gap-6">
-            <div className="flex items-center gap-3">
-              <Image src="/adamcotech-logo.png" alt="AdamCoTech Logo" width={140} height={40} className="invert" />
-            </div>
-            <div>
-              <h5 className="uppercase tracking-wide text-xs font-semibold text-gray-400 mb-3">Social Media</h5>
-              <div className="flex items-center gap-5 text-white text-xl">
-                <a aria-label="YouTube" href="https://www.youtube.com/channel/UCcgUDNaKI14ETJRonwaiPPQ" target="_blank" rel="noopener noreferrer" className="hover:text-red-500 transition">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2s-.2-1.7-.9-2.4c-.9-.9-1.9-.9-2.4-1C16.6 2.4 12 2.4 12 2.4h0s-4.6 0-8.2.4c-.5.1-1.5.1-2.4 1C.7 4.5.5 6.2.5 6.2S.3 8.3.3 10.5v1.9c0 2.2.2 4.3.2 4.3s.2 1.7.9 2.4c.9.9 2.1.9 2.7 1 2 .2 8 .4 8 .4s4.6 0 8.2-.4c.5-.1 1.5-.1 2.4-1 .7-.7.9-2.4.9-2.4s.2-2.2.2-4.3v-1.9c0-2.2-.2-4.3-.2-4.3ZM9.8 14.9V8.1l6.4 3.4-6.4 3.4Z"/></svg>
-                </a>
-                <a aria-label="Facebook" href="https://www.facebook.com/weareshapeheart/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.07C22 6.48 17.52 2 11.93 2S1.86 6.48 1.86 12.07c0 4.98 3.63 9.11 8.38 9.93v-7.03H7.9v-2.9h2.34V9.89c0-2.31 1.37-3.58 3.47-3.58.99 0 2.02.18 2.02.18v2.22h-1.14c-1.12 0-1.47.7-1.47 1.42v1.7h2.5l-.4 2.9h-2.1V22c4.75-.82 8.38-4.95 8.38-9.93Z"/></svg>
-                </a>
-                <a aria-label="Instagram" href="https://www.instagram.com/adamcotech" target="_blank" rel="noopener noreferrer" className="hover:text-pink-500 transition">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7Zm10 2c1.66 0 3 1.34 3 3v10c0 1.66-1.34 3-3 3H7c-1.66 0-3-1.34-3-3V7c0-1.66 1.34-3 3-3h10Zm-5 3.5A5.5 5.5 0 1 0 17.5 13 5.51 5.51 0 0 0 12 7.5Zm0 2a3.5 3.5 0 1 1-3.5 3.5A3.5 3.5 0 0 1 12 9.5Zm5.75-4.25a1.25 1.25 0 1 0 1.25 1.25 1.25 1.25 0 0 0-1.25-1.25Z"/></svg>
-                </a>
-                <a aria-label="TikTok" href="https://www.tiktok.com/@adamcotech" target="_blank" rel="noopener noreferrer" className="hover:text-fuchsia-400 transition">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 3c.3 2 1.6 3.6 3.6 3.7v2.2c-1.3 0-2.5-.4-3.6-1.1l.1 6.6c0 2.9-2.3 5.3-5.2 5.4H8c-2.9 0-5.3-2.3-5.4-5.2v-.2c0-2.9 2.3-5.3 5.2-5.4h.2c.6 0 1.1.1 1.6.3v2.4c-.5-.3-1-.4-1.6-.4-1.6 0-2.9 1.3-2.9 2.9S7.4 19 9 19s2.9-1.3 2.9-2.9l-.1-13.1h1.7Z"/></svg>
-                </a>
-                <a aria-label="Vimeo" href="https://vimeo.com" target="_blank" rel="noopener noreferrer" className="hover:text-sky-400 transition">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M23.8 6.7c-.1 1.6-1.2 3.9-3.4 6.9-2.3 3.2-4.2 4.8-5.9 4.8-.99 0-1.84-.91-2.53-2.72l-1.38-5.01c-.51-1.85-1.06-2.78-1.66-2.78-.13 0-.59.28-1.39.84L6 8.3c.87-.76 1.73-1.53 2.6-2.29 1.17-1.02 2.05-1.56 2.64-1.62 1.38-.13 2.23.81 2.57 2.81.35 2.17.6 3.51.74 4.01.41 1.86.86 2.79 1.36 2.79.38 0 .97-.61 1.78-1.83.81-1.22 1.25-2.15 1.32-2.79.12-1.06-.31-1.6-1.29-1.6-.46 0-.93.1-1.41.29 0-1.47.85-2.18 2.55-2.13 1.75-.05 2.57 1.09 2.46 3.22Z"/></svg>
-                </a>
-              </div>
-              <p className="mt-4 text-xs text-gray-500">Tag @AdamCoTech / #AdamCoTech to appear in our stories</p>
-            </div>
-          </div>
-
-          {/* Middle: Menu Links */}
-          <div className="grid grid-cols-2 gap-x-12 gap-y-6 text-sm">
-            <div className="flex flex-col gap-3">
-              <h6 className="uppercase tracking-wide text-xs font-semibold text-gray-400">Menu</h6>
-              <a href="#" className="hover:text-white transition">Our Story</a>
-              <a href="#" className="hover:text-white transition">Press</a>
-              <a href="#" className="hover:text-white transition">Warranty</a>
-              <a href="#" className="hover:text-white transition">Choose Your Mount</a>
-              <a href="#" className="hover:text-white transition">Retailers</a>
-              <a href="#" className="hover:text-white transition">Our Policies</a>
-            </div>
-            <div className="flex flex-col gap-3 pt-8 md:pt-7">
-              <a href="#" className="hover:text-white transition">Our Commitments</a>
-              <a href="#" className="hover:text-white transition">FAQ</a>
-              <a href="#" className="hover:text-white transition">User Manuals</a>
-              <a href="#" className="hover:text-white transition">Blog</a>
-              <a href="#" className="hover:text-white transition">Become a Reseller</a>
-            </div>
-          </div>
-
-          {/* Right: Newsletter */}
-            <div className="flex flex-col gap-6 max-w-md">
-              <div>
-                <h5 className="uppercase tracking-wide text-xs font-semibold text-gray-400 mb-4">Newsletter</h5>
-                <form onSubmit={(e)=>{e.preventDefault(); const f=e.currentTarget; const email=(f.elements.namedItem('email') as HTMLInputElement).value; alert(`Subscribed: ${email}`); f.reset();}} className="flex w-full">
-                  <input name="email" required type="email" placeholder="Email address" className="flex-1 bg-black/60 border border-black focus:border-gray-600 outline-none px-4 text-sm py-3 rounded-l" />
-                  <button type="submit" className="px-5 bg-[#2b2b2b] hover:bg-[#3a3a3a] text-xs font-semibold tracking-wide rounded-r">REGISTER</button>
-                </form>
-                <p className="text-[11px] text-gray-500 mt-4 leading-relaxed">Subscribe to our newsletter*, get 10% off your next order and stay informed about the latest offers.</p>
-                <p className="text-[11px] text-gray-500 mt-4 leading-relaxed">*By providing your email address, you acknowledge and accept our privacy policy. You can update your preferences or unsubscribe at any time.</p>
-              </div>
-            </div>
-        </div>
-        {/* Bottom Bar */}
-        <div className="border-t border-[#1e1e1e] px-6 py-6 text-[11px] text-gray-500 flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto gap-4">
-          <div>Copyright © 2025 AdamCoTech</div>
-          <div>e-commerce développé par MOON MOON (Agence Shopify)</div>
-        </div>
-      </footer>
+  {/* Footer removed (now global) */}
     </div>
   );
 }
