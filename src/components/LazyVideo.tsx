@@ -17,17 +17,21 @@ export const LazyVideo: React.FC<LazyVideoProps> = ({ src, poster, inline = true
       entries => {
         entries.forEach(e => {
           if (e.isIntersecting) {
+            // lazy load source only once
             if (!loaded) {
-              el.src = src; // assign real source when visible
+              el.src = src;
               setLoaded(true);
-              el.play().catch(()=>{});
             }
+            // always attempt to play when (re)entering viewport
+            el.play().catch(()=>{});
           } else {
+            // Do NOT permanently stop playback; optionally pause to save resources
+            // Comment out next line to allow continuous background playback
             el.pause();
           }
         });
       },
-      { threshold: 0.25 }
+      { threshold: 0.2 }
     );
     observer.observe(el);
     return () => observer.disconnect();

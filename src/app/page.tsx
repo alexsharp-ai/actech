@@ -306,7 +306,6 @@ export default function Home() {
             {/* Brand story media: static image on mobile, video on md+ */}
             <LazyVideo
               src="/v2.mp4"
-              poster="/head.png"
               className="absolute inset-0 w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-white/15" />
