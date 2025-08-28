@@ -49,8 +49,8 @@ async function askBackend(message: string): Promise<string> {
 }
 
 interface BridgeState {
-  conversationId?: number;
-  contactId?: number;
+  conversationId?: string; // internal conversation id (uuid)
+  contactId?: number; // chatwoot (legacy)
   clientId: string;
 }
 
@@ -64,7 +64,28 @@ function getClientId(): string {
   return id;
 }
 
-async function sendToChatwoot(opts: { message: string; name?: string; email?: string; conversationId?: number; contactId?: number; clientId: string; senderRole?: 'user' | 'assistant'; }): Promise<{ conversationId?: number; contactId?: number; ok: boolean; }> {
+// Internal support persistence
+const sendToInternal = async (conversationId: string | undefined, role: 'user'|'assistant', content: string, meta: { name?: string; email?: string; }): Promise<string> => {
+  try {
+    if(!conversationId && role === 'user'){
+      const res = await fetch('/api/internal-support/conversations', {
+        method: 'POST', headers: { 'Content-Type':'application/json' },
+        body: JSON.stringify({ content, userName: meta.name, userEmail: meta.email })
+      });
+      const data = await res.json();
+      if(res.ok) return data.conversation?.id as string;
+      return conversationId || '';
+    } else if(conversationId){
+      await fetch(`/api/internal-support/conversations/${conversationId}/messages`, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ content, role })
+      });
+      return conversationId;
+    }
+  } catch { /* ignore */ }
+  return conversationId || '';
+};
+async function sendToChatwoot(opts: { message: string; name?: string; email?: string; conversationId?: string | number; contactId?: number; clientId: string; senderRole?: 'user' | 'assistant'; }): Promise<{ conversationId?: number; contactId?: number; ok: boolean; }> {
   try {
     const res = await fetch('/api/support/chatwoot', {
       method: 'POST',
@@ -126,6 +147,9 @@ export default function SupportChat() {
 
     // Fire-and-forget log to Chatwoot (user message)
     (async ()=>{
+      // Save internally first
+  const internalId = await sendToInternal(typeof bridge.conversationId === 'string' ? bridge.conversationId : undefined, 'user', text, { name, email });
+      // Keep Chatwoot bridging (optional) if configured
       const r = await sendToChatwoot({
         message: text,
         name: name || 'Guest',
@@ -135,16 +159,14 @@ export default function SupportChat() {
         clientId: bridge.clientId,
         senderRole: 'user'
       });
-      if(r.ok && (r.conversationId || r.contactId)){
-        setBridge(b => {
-          const next = { ...b, conversationId: r.conversationId || b.conversationId, contactId: r.contactId || b.contactId };
-          if(typeof window !== 'undefined'){
-            if(next.conversationId) localStorage.setItem('support_chat_conversation', String(next.conversationId));
-            if(next.contactId) localStorage.setItem('support_chat_contact', String(next.contactId));
-          }
-          return next;
-        });
-      }
+      setBridge(b => {
+        const next = { ...b, conversationId: internalId || b.conversationId, contactId: r.ok ? (r.contactId || b.contactId) : b.contactId };
+        if(typeof window !== 'undefined'){
+          if(next.conversationId) localStorage.setItem('support_chat_conversation', String(next.conversationId));
+          if(next.contactId) localStorage.setItem('support_chat_contact', String(next.contactId));
+        }
+        return next;
+      });
     })();
 
     const answer = await askBackend(text);
@@ -152,14 +174,20 @@ export default function SupportChat() {
 
     // Optionally log assistant response to Chatwoot as outgoing (so agents see context)
     (async ()=>{
-      if(!bridge.conversationId && !bridge.contactId) return; // wait until first send finishes
-      await sendToChatwoot({
-        message: answer,
-        conversationId: bridge.conversationId,
-        contactId: bridge.contactId,
-        clientId: bridge.clientId,
-        senderRole: 'assistant'
-      });
+      // Save assistant reply internally
+      if(bridge.conversationId){
+        await sendToInternal(typeof bridge.conversationId === 'string' ? bridge.conversationId : undefined, 'assistant', answer, { name, email });
+      }
+      // Mirror to Chatwoot if bridging established
+      if(bridge.conversationId || bridge.contactId){
+        await sendToChatwoot({
+          message: answer,
+          conversationId: bridge.conversationId,
+          contactId: bridge.contactId,
+          clientId: bridge.clientId,
+          senderRole: 'assistant'
+        });
+      }
     })();
     setLoading(false);
   }
