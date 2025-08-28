@@ -75,7 +75,7 @@ export default function Home() {
 
       {/* Hero Section with video on all devices (optimized) */}
       <section className="relative flex flex-col items-center justify-center min-h-[60vh] md:min-h-[70vh] w-full overflow-hidden">
-        <video
+  <video
           className="absolute inset-0 w-full h-full object-cover z-0"
           autoPlay
           loop
@@ -86,7 +86,8 @@ export default function Home() {
         >
           <source src="/v2.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-black/55 z-10" />
+  {/* Lightened overlay for higher video visibility */}
+  <div className="absolute inset-0 bg-black/25 z-10" />
         {/* Hero Content */}
         <div className="relative z-20 flex flex-col items-center justify-center w-full h-full pt-24 pb-12">
           <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 text-center px-4">
@@ -95,17 +96,17 @@ export default function Home() {
           <h2 className="text-base sm:text-xl md:text-2xl font-light mb-8 text-center px-4 max-w-3xl">the most strong, safe and universal magnetic holder is here!</h2>
           {/* Product Boxes */}
           {/* Mobile: single horizontal row of 4 category boxes */}
-          <div className="mt-8 flex md:hidden gap-4 w-full max-w-5xl px-4 overflow-x-auto snap-x snap-mandatory no-scrollbar">
+          <div className="mt-6 flex md:hidden gap-3 w-full max-w-5xl px-4 overflow-x-auto snap-x snap-mandatory no-scrollbar">
             {[
               {src:'/IMG_8007.webp', label:'E-Bikes & Scooters'},
               {src:'/b1.webp', label:'Bikes & Strollers'},
               {src:'/IMG_7742-2.webp', label:'Gym & Lifestyle'},
               {src:'/l1.webp', label:'Endless possibilities'}
             ].map(cat => (
-              <a key={cat.src} href="#" className="relative rounded-lg overflow-hidden shadow-lg group flex-shrink-0 w-60 h-40 snap-start">
-                <Image src={cat.src} alt={cat.label} width={240} height={160} className="w-full h-full object-cover group-hover:scale-105 transition" />
-                <div className="absolute inset-0 bg-black/40 flex items-end p-3">
-                  <span className="text-sm font-semibold text-white leading-snug">{cat.label}</span>
+              <a key={cat.src} href="#" className="relative rounded-lg overflow-hidden shadow-lg group flex-shrink-0 w-48 h-32 snap-start">
+                <Image src={cat.src} alt={cat.label} width={192} height={128} className="w-full h-full object-cover group-hover:scale-105 transition" />
+                <div className="absolute inset-0 bg-black/35 flex items-end p-2">
+                  <span className="text-[11px] font-semibold text-white leading-snug">{cat.label}</span>
                 </div>
               </a>
             ))}
