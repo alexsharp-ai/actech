@@ -1,11 +1,21 @@
 
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 
 export default function Home() {
+  const isMobile = useIsMobile();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  useEffect(()=>{
+    if (mobileMenuOpen) {
+      const original = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => { document.body.style.overflow = original; };
+    }
+  },[mobileMenuOpen]);
   return (
     <div className="font-sans bg-black text-white min-h-screen flex flex-col">
   {/* Main site content */}
@@ -15,7 +25,7 @@ export default function Home() {
       </div>
 
       {/* Header */}
-      <header className="w-full flex items-center justify-between px-8 py-4 bg-black/90 z-10 relative">
+      <header className="w-full flex items-center justify-between px-4 sm:px-8 py-4 bg-black/90 z-20 relative backdrop-blur supports-[backdrop-filter]:bg-black/70">
         {/* Logo */}
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3 group">
@@ -23,19 +33,17 @@ export default function Home() {
             <span className="text-white font-semibold text-xl tracking-wide group-hover:text-red-500 transition-colors">AdamCoTech</span>
           </Link>
         </div>
-        {/* Menu */}
-        <nav className="hidden md:flex gap-6 text-sm font-medium">
-          <a href="#" className="hover:text-red-500 transition">Motorcycle / Scooter</a>
-          <a href="#" className="hover:text-red-500 transition">Bike</a>
-          <a href="#" className="hover:text-red-500 transition">Car</a>
-          <a href="#" className="hover:text-red-500 transition">Run</a>
-          <a href="#" className="hover:text-red-500 transition">Accessories</a>
+        {/* Desktop Menu */}
+        <nav className="hidden lg:flex gap-6 text-sm font-medium">
+          {['Motorcycle / Scooter','Bike','Car','Run','Accessories'].map(i => (
+            <a key={i} href="#" className="hover:text-red-500 transition">{i}</a>
+          ))}
         </nav>
-        {/* Right Side */}
-        <div className="flex items-center gap-6 text-sm font-medium">
-          <a href="#" className="hover:text-red-500 transition">Retailers</a>
-          <a href="#" className="hover:text-red-500 transition">Warranty</a>
-          <a href="#" className="hover:text-red-500 transition">FAQ</a>
+        {/* Desktop Right */}
+        <div className="hidden md:flex items-center gap-6 text-sm font-medium">
+          {['Retailers','Warranty','FAQ'].map(i => (
+            <a key={i} href="#" className="hover:text-red-500 transition">{i}</a>
+          ))}
           <button className="hover:text-red-500 transition" aria-label="Search">
             <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </button>
@@ -44,13 +52,53 @@ export default function Home() {
             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">0</span>
           </button>
         </div>
+        {/* Mobile controls */}
+        <div className="flex md:hidden items-center gap-4">
+          <button aria-label="Search" className="hover:text-red-500 transition">
+            <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </button>
+            <button aria-label="Basket" className="hover:text-red-500 transition relative">
+              <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full px-1">0</span>
+            </button>
+          <button
+            aria-label="Toggle menu"
+            onClick={() => setMobileMenuOpen(o => !o)}
+            className="relative w-9 h-9 flex flex-col items-center justify-center group"
+          >
+            <span className={`h-0.5 w-6 bg-white transition-all ${mobileMenuOpen ? 'rotate-45 translate-y-[5px]' : ''}`}></span>
+            <span className={`h-0.5 w-6 bg-white my-[5px] transition-opacity ${mobileMenuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
+            <span className={`h-0.5 w-6 bg-white transition-all ${mobileMenuOpen ? '-rotate-45 -translate-y-[5px]' : ''}`}></span>
+          </button>
+        </div>
       </header>
+      {/* Mobile slide-down menu */}
+      {isMobile && (
+        <div className={`lg:hidden px-4 sm:px-6 bg-black/95 backdrop-blur border-b border-white/10 overflow-hidden transition-[max-height] duration-300 ${mobileMenuOpen ? 'max-h-[420px]' : 'max-h-0'}`}>
+          <div className="py-4 grid grid-cols-2 gap-4 text-sm">
+            {['Motorcycle / Scooter','Bike','Car','Run','Accessories','Retailers','Warranty','FAQ'].map(item => (
+              <a key={item} href="#" className="block px-2 py-2 rounded bg-white/5 hover:bg-white/10 text-white/90 text-center font-medium" onClick={() => setMobileMenuOpen(false)}>{item}</a>
+            ))}
+          </div>
+        </div>
+      )}
 
-      {/* Hero Section with Video Background */}
+      {/* Hero Section with responsive video/image */}
       <section className="relative flex flex-col items-center justify-center min-h-[60vh] md:min-h-[70vh] w-full overflow-hidden">
-        {/* Video background (replace src with real video if available) */}
+        {/* Mobile: static image (no autoplay video for perf/data) */}
+        <div className="absolute inset-0 w-full h-full sm:hidden">
+          <Image
+            src="/head.png"
+            alt="AdamCoTech hero"
+            fill
+            priority
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-black/55" />
+        </div>
+        {/* Desktop / tablet: video */}
         <video
-          className="absolute inset-0 w-full h-full object-cover z-0"
+          className="hidden sm:block absolute inset-0 w-full h-full object-cover z-0"
           autoPlay
           loop
           muted
@@ -59,15 +107,15 @@ export default function Home() {
         >
           <source src="/v2.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-black/60 z-10" />
+        <div className="absolute inset-0 bg-black/60 z-10 hidden sm:block" />
         {/* Hero Content */}
         <div className="relative z-20 flex flex-col items-center justify-center w-full h-full pt-24 pb-12">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 text-center">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 text-center px-4">
             MagSafe on <span className="bg-red-500 px-2 rounded text-white inline-block">STEROIDS</span>
           </h1>
-          <h2 className="text-xl md:text-2xl font-light mb-8 text-center">the most strong, safe and universal magnetic holder is here!</h2>
+          <h2 className="text-base sm:text-xl md:text-2xl font-light mb-8 text-center px-4 max-w-3xl">the most strong, safe and universal magnetic holder is here!</h2>
           {/* Product Boxes */}
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-5xl px-4">
+          <div className="mt-8 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 w-full max-w-5xl px-4">
             {/* Box 1 */}
             <a href="#" className="relative rounded-lg overflow-hidden shadow-lg group">
               <Image src="/IMG_8007.webp" alt="E-Bikes & Scooters" width={400} height={160} className="w-full h-40 object-cover group-hover:scale-105 transition" />
@@ -131,10 +179,10 @@ export default function Home() {
       </section>
 
       {/* Top of the moment Products Section */}
-      <section className="w-full bg-white py-12 px-2 flex flex-col items-center">
+    <section className="w-full bg-white py-12 px-2 flex flex-col items-center">
         <div className="max-w-6xl w-full">
-          <h2 className="text-3xl font-bold mb-8 text-left">Top of the moment</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-left px-2 sm:px-0">Top of the moment</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 px-2 sm:px-0">
             {/* Product 1 */}
             <div className="bg-white rounded-lg shadow p-4 flex flex-col h-full">
               <div className="relative w-full h-56 mb-4">
@@ -186,9 +234,9 @@ export default function Home() {
       </section>
 
       {/* Reviews Carousel Section (moved BELOW products) */}
-      <section className="w-full bg-white py-12 px-2 flex flex-col items-center">
+    <section className="w-full bg-white py-12 px-2 flex flex-col items-center">
         <div className="max-w-7xl w-full">
-          <h2 className="text-3xl font-bold mb-2 text-center">Let customers speak for us</h2>
+      <h2 className="text-2xl sm:text-3xl font-bold mb-2 text-center px-2">Let customers speak for us</h2>
           <div className="text-center text-gray-600 mb-8">from 6590 reviews <span className="inline-block align-middle text-green-500">✔️</span></div>
           <div className="relative overflow-hidden">
             <div className="flex gap-8 animate-scroll-x whitespace-nowrap will-change-transform min-w-max" style={{ width: 'max-content' }}>
@@ -250,17 +298,22 @@ export default function Home() {
         {/* Story Split Panel */}
         <div className="grid md:grid-cols-2 min-h-[380px]">
           <div className="relative flex items-center justify-center p-8 overflow-hidden">
-            <video className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline poster="/head.png">
+            {/* Brand story media: static image on mobile, video on md+ */}
+            <div className="absolute inset-0 md:hidden">
+              <Image src="/head.png" alt="Brand story" fill className="object-cover" />
+              <div className="absolute inset-0 bg-white/20" />
+            </div>
+            <video className="hidden md:block absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline poster="/head.png">
               <source src="/v2.mp4" type="video/mp4" />
             </video>
             <div className="absolute inset-0 bg-white/15" />
             <div className="relative p-6 md:p-10 max-w-xl w-full rounded bg-white/80 shadow">
-              <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-6 text-black">Simple, effective, long-lasting products</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6 text-black">Simple, effective, long-lasting products</h2>
               <button className="px-6 py-3 bg-black text-white font-semibold rounded shadow hover:bg-gray-800 transition">OUR STORY</button>
             </div>
           </div>
           <div className="flex flex-col items-start justify-center p-10 bg-gray-50">
-            <h3 className="text-3xl font-semibold mb-6 text-black">A unique and simple concept</h3>
+            <h3 className="text-2xl sm:text-3xl font-semibold mb-6 text-black">A unique and simple concept</h3>
             <div className="w-12 h-[3px] bg-black mb-6" />
             <p className="text-gray-800 font-medium mb-6">AdamCoTech is a forward-thinking brand crafting magnetic accessories to keep your devices secure on the move.</p>
             <p className="text-gray-600 leading-relaxed">A unique patented magnetic system that holds strong, whatever your activity or phone.</p>
