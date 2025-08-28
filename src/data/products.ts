@@ -146,7 +146,8 @@ export const products: Product[] = [
     media: [
       { type: 'image', src: '/a3.png' }, // main hero image
       { type: 'image', src: '/a1.png' },
-      { type: 'image', src: '/a2.png' }
+  { type: 'image', src: '/a2.png' },
+  { type: 'image', src: '/a4.png' }
     ],
     basePrice: 34.95,
     reviewCount: 128,
