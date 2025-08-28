@@ -31,6 +31,34 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 1. Import the project
+Go to https://vercel.com/new and import this Git repository (push it to GitHub first if you haven't).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 2. Set environment variables
+Add (Settings → Environment Variables):
+
+```
+OPENAI_API_KEY=sk-...your real key...
+OPENAI_MODEL=gpt-4o-mini
+```
+
+You can also copy `.env.example` to set them locally as `.env.local`.
+
+### 3. Build settings
+No custom settings needed. Vercel auto-detects Next.js 15. Leave build command empty (defaults to `next build`).
+
+### 4. Deploy
+Click Deploy. After build finishes, open the production URL. The floating support chat widget will call the `/api/support-chat` route and leverage OpenAI if the key is present.
+
+### 5. (Optional) Preview & protection
+Use Preview deployments for QA. Protect production by enabling Password Protection or GitHub approvals if needed.
+
+### 6. Rate limits & persistence
+Current rate limiting and message storage are in-memory only (reset per serverless instance). For production resilience, plan a persistent store (e.g., Vercel KV, Redis, or a database) if you need to keep 'Leave a message' submissions. For now you can view them temporarily via the GET endpoint at `/api/support-leave-message` (remove before going live).
+
+### 7. Custom domain
+Add your domain in Vercel → Domains and set DNS as prompted.
+
+---
+
+Need streaming answers, DB storage, or email notifications for messages? Extend the API routes accordingly.
