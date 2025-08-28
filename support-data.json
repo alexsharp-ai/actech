@@ -1,9 +1,9 @@
 {
   "conversations": [
     {
-      "id": "d8334724-0dcd-474e-bc51-834bdaee6648",
-      "createdAt": 1756407335093,
-      "updatedAt": 1756407393995,
+      "id": "23fc7a72-8793-41fb-a48d-34879385b003",
+      "createdAt": 1756415627259,
+      "updatedAt": 1756419274163,
       "status": "closed",
       "needsHuman": false,
       "humanActive": true,
@@ -11,148 +11,91 @@
       "source": "chat",
       "messages": [
         {
-          "id": "e3ebd776-30da-42a5-bcf1-a3337cb22fc8",
+          "id": "fb72003e-9495-4a13-95f6-0289094b8999",
           "role": "user",
           "content": "I want to talk to a human agent",
-          "ts": 1756407335093
+          "ts": 1756415627259
         },
         {
-          "id": "eb976346-1484-459a-b165-ffebbb894873",
+          "id": "b1a421ff-90c9-43a7-ad9d-f1c12877aa2a",
           "role": "assistant",
           "content": "We'll connect you with a human agent now. Please hold on a moment.",
-          "ts": 1756407335591
+          "ts": 1756415627771
         },
         {
-          "id": "e3b29fd2-045a-4927-976a-016b136f1a40",
+          "id": "01b3e71e-e4fe-4b01-a29d-29442150df04",
           "role": "assistant",
-          "content": "go ahead how can i help you",
-          "ts": 1756407377953
+          "content": "hello im here to help you",
+          "ts": 1756415647316
         },
         {
-          "id": "685b60d4-c232-41ec-b69e-ac2ba12002d7",
+          "id": "04f61ed2-bff1-4662-a00b-c743c9c9e502",
           "role": "user",
-          "content": "delivery",
-          "ts": 1756407386459
+          "content": "thanks",
+          "ts": 1756415651500
         }
       ]
     },
     {
-      "id": "498b7f15-0251-4b36-a216-ad8937bee0c0",
-      "createdAt": 1756405937191,
-      "updatedAt": 1756405957119,
-      "status": "closed",
+      "id": "545f85d6-522a-456d-928a-57b63934e318",
+      "createdAt": 1756415585088,
+      "updatedAt": 1756419277872,
+      "userName": "alex hent",
+      "userEmail": "alex@hent.com",
+      "status": "open",
       "needsHuman": false,
       "humanActive": false,
-      "unread": true,
-      "source": "chat",
+      "unread": false,
+      "source": "contact",
+      "subject": "Warranty Registration #A234",
       "messages": [
         {
-          "id": "8fb9cf8e-9af6-4b11-a24f-a72a431def1a",
+          "id": "8872a1f7-2708-4e33-8958-4210ef19cdc0",
           "role": "user",
-          "content": "How do I install the mount?",
-          "ts": 1756405937191
-        },
-        {
-          "id": "713c39e5-0c9e-423b-a6f0-d08cb6d9952f",
-          "role": "assistant",
-          "content": "To install the AdamCoTech magnetic mount, clean the surface where you want to attach it, peel off the adhesive backing, and press it firmly onto the surface for about 30 seconds. Ensure it's secure before attaching your device. For best results, allow the adhesive to set for 24 hours before use.",
-          "ts": 1756405939778
+          "content": "WARRANTY REGISTRATION\nName: alex hent\nEmail: alex@hent.com\nOrder: #A234\nProduct: Ultra‑strong universal magnetic phone mount\nMessage: sorry it broke\n---",
+          "ts": 1756415585088
         }
       ]
     },
     {
-      "id": "f171126f-9bf8-4ccc-b575-94c42bd0e7f4",
-      "createdAt": 1756405841206,
-      "updatedAt": 1756405926013,
-      "status": "closed",
+      "id": "6da26be2-b325-4177-ad3e-bb54a274443e",
+      "createdAt": 1756415549251,
+      "updatedAt": 1756415611923,
+      "userName": "alex cont",
+      "userEmail": "alex@cont.com",
+      "status": "open",
       "needsHuman": false,
-      "humanActive": true,
+      "humanActive": false,
       "unread": false,
-      "source": "chat",
+      "source": "contact",
+      "subject": "greetings",
       "messages": [
         {
-          "id": "caea51d0-0a54-4682-9b93-8fc5bcb69683",
+          "id": "676ad523-407d-4148-ae98-0058a774015d",
           "role": "user",
-          "content": "What are the shipping times?",
-          "ts": 1756405841206
-        },
-        {
-          "id": "95147fcc-c61d-4fc1-a97e-b4b4a77b1dd0",
-          "role": "assistant",
-          "content": "We ship orders within 24h. Delivery typically takes 2-5 business days in the EU.",
-          "ts": 1756405841711
-        },
-        {
-          "id": "56a365b9-35db-4795-8f3d-539b2d0b3a58",
-          "role": "user",
-          "content": "Is it safe for my phone?",
-          "ts": 1756405861091
-        },
-        {
-          "id": "8df0fb3a-30cb-471d-a35e-e6514693ed8c",
-          "role": "assistant",
-          "content": "Yes, AdamCoTech's magnetic mounts are designed to be safe for your phone. They use strong magnets that securely hold your device without causing any damage. Always ensure proper installation for optimal safety.",
-          "ts": 1756405863989
-        },
-        {
-          "id": "8fedebd3-c6fe-403f-bdb3-d98dca789d11",
-          "role": "user",
-          "content": "I want to talk to a human agent",
-          "ts": 1756405889173
-        },
-        {
-          "id": "3eb2118b-aed6-4b65-a899-d51ffc094a71",
-          "role": "assistant",
-          "content": "We'll connect you with a human agent now. Please hold on a moment.",
-          "ts": 1756405889717
-        },
-        {
-          "id": "528ed9ff-2ad7-4104-9fe1-a16d8f0e2ed5",
-          "role": "assistant",
-          "content": "hello im the human",
-          "ts": 1756405909547
-        },
-        {
-          "id": "2855e165-a481-4724-bdd0-aa623002b6d8",
-          "role": "user",
-          "content": "thanks human suck mi hahah",
-          "ts": 1756405916711
+          "content": "CONTACT FORM\nSubject: greetings\nFrom: alex cont <alex@cont.com>\n---\nx",
+          "ts": 1756415549251
         }
       ]
     },
     {
-      "id": "215b9877-dd6b-4bbb-a95b-18831a4350dd",
-      "createdAt": 1756405766143,
-      "updatedAt": 1756405832353,
-      "status": "closed",
+      "id": "ccb8ed22-d449-478f-b5f6-23d642ca0a9e",
+      "createdAt": 1756415524686,
+      "updatedAt": 1756415608883,
+      "userName": "alex",
+      "userEmail": "alex.hent@gmail.com",
+      "status": "open",
       "needsHuman": false,
-      "humanActive": true,
+      "humanActive": false,
       "unread": false,
-      "source": "chat",
+      "source": "contact",
+      "subject": "Return Request #AC342",
       "messages": [
         {
-          "id": "22b26c26-a9d0-4d56-9376-56b20e718f70",
+          "id": "328d7e18-fa86-4dbe-af56-53f02f6b0d69",
           "role": "user",
-          "content": "I want to talk to a human agent",
-          "ts": 1756405766143
-        },
-        {
-          "id": "70573563-328a-441c-b649-5be66eb380f8",
-          "role": "assistant",
-          "content": "We'll connect you with a human agent now. Please hold on a moment.",
-          "ts": 1756405767586
-        },
-        {
-          "id": "88689300-dd08-4561-80f9-39bb69a47acb",
-          "role": "assistant",
-          "content": "hello i,m alex and im here to help you",
-          "ts": 1756405799473
-        },
-        {
-          "id": "c78adc86-c36b-4086-a240-eeb06dd91b4f",
-          "role": "user",
-          "content": "nice tomeet you can u help me",
-          "ts": 1756405814498
+          "content": "RETURNS FORM\nOrder: AC342\nCustomer: alex <alex.hent@gmail.com>\nReason: Wrong item received\nDetails: Sorry\n---",
+          "ts": 1756415524686
         }
       ]
     }

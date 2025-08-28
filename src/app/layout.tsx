@@ -27,12 +27,12 @@ export default function RootLayout({
 }>) {
   return (
   <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white` }>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white flex flex-col min-h-screen` }>
         <link rel="preload" as="video" href="/v2.mp4" />
         <link rel="preload" as="image" href="/head.png" />
         <SiteHeader />
-        <main className="min-h-screen">{children}</main>
-        <SiteFooter />
+  <main className="flex-1 w-full">{children}</main>
+  <SiteFooter compact />
         <SupportChat />
       </body>
     </html>

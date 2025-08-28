@@ -5,16 +5,29 @@ export default function ContactForm({ light }: { light?: boolean }){
   const [status, setStatus] = useState<string|null>(null);
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent){
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
-    const fd = new FormData(e.currentTarget as HTMLFormElement);
+    // Capture the form element early so we don't rely on the event after awaits
+    const form = e.currentTarget;
+    const fd = new FormData(form);
     const payload = Object.fromEntries(fd.entries());
     setLoading(true); setStatus(null);
     try {
       const res = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-      const json = await res.json();
-  if(json.ok){ setStatus('Message sent. Conversation created.'); (e.currentTarget as HTMLFormElement).reset(); } else { setStatus(json.error||'Failed'); }
-    } catch { setStatus('Network error'); } finally { setLoading(false); }
+  let json: unknown = null;
+      try { json = await res.json(); } catch (parseErr){
+        console.error('Contact form JSON parse error', parseErr);
+        throw new Error('Invalid server response');
+      }
+  interface ApiResp { ok?: boolean; error?: string; conversationId?: string }
+  const isApiResp = (v: unknown): v is ApiResp => typeof v === 'object' && v !== null && ('ok' in v || 'error' in v || 'conversationId' in v);
+      if(isApiResp(json) && json.ok){
+        setStatus('Message sent. Conversation created.');
+        if(form) form.reset();
+      }
+  else if(isApiResp(json) && json.error){ setStatus(json.error); }
+  else { setStatus(`Failed (${res.status})`); }
+    } catch (err) { const msg = err instanceof Error ? err.message : ''; setStatus(msg? `Network error: ${msg}`:'Network error'); } finally { setLoading(false); }
   }
 
   return (

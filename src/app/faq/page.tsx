@@ -12,21 +12,23 @@ const faqs: { q: string; a: string }[] = [
 
 export default function FAQPage(){
   return (
-    <div className="max-w-3xl mx-auto px-6 py-16">
-      <h1 className="text-3xl font-bold text-white mb-8">Frequently Asked Questions</h1>
-      <div className="space-y-4">
-        {faqs.map(item => (
-          <details key={item.q} className="group border border-white/10 rounded-md p-4 bg-black/40">
-            <summary className="cursor-pointer select-none font-medium text-white flex items-center justify-between">
-              <span>{item.q}</span>
-              <span className="ml-4 text-xs text-gray-400 group-open:hidden">+</span>
-              <span className="ml-4 text-xs text-gray-400 hidden group-open:inline">−</span>
-            </summary>
-            <div className="mt-3 text-sm text-gray-300 leading-relaxed">{item.a}</div>
-          </details>
-        ))}
+    <div className="w-full bg-white text-gray-900 py-20 px-6 md:px-12">
+      <div className="max-w-5xl mx-auto">
+        <h1 className="text-4xl font-bold mb-10 tracking-tight">Frequently Asked Questions</h1>
+        <div className="space-y-4">
+          {faqs.map(item => (
+            <details key={item.q} className="group border border-gray-200 rounded-lg p-5 bg-gray-50 hover:bg-gray-100 transition">
+              <summary className="cursor-pointer select-none font-medium text-gray-900 flex items-center justify-between">
+                <span>{item.q}</span>
+                <span className="ml-4 text-xs text-gray-400 group-open:hidden">+</span>
+                <span className="ml-4 text-xs text-gray-400 hidden group-open:inline">−</span>
+              </summary>
+              <div className="mt-3 text-sm text-gray-700 leading-relaxed">{item.a}</div>
+            </details>
+          ))}
+        </div>
+        <p className="mt-16 text-sm text-gray-600">Still need help? <a href="/contact" className="text-red-600 hover:text-red-500 font-medium">Contact us</a>.</p>
       </div>
-      <p className="mt-12 text-sm text-gray-400">Still need help? <a href="/contact" className="text-red-400 hover:text-red-300">Contact us</a>.</p>
     </div>
   );
 }

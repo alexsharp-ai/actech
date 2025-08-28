@@ -1,9 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
 
-export default function SiteFooter(){
+export default function SiteFooter({ compact = false }: { compact?: boolean }){
   return (
-    <footer className="bg-black text-gray-300 mt-24 border-t border-white/10">
+    <footer className={`bg-black text-gray-300 ${compact ? 'mt-0' : 'mt-24'} border-t border-white/10`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-16 grid gap-12 md:gap-8 md:grid-cols-5">
         <div className="md:col-span-2 space-y-4">
           <div className="flex items-center gap-3">
@@ -32,23 +32,15 @@ export default function SiteFooter(){
         <div>
           <h4 className="text-white font-semibold mb-4">Support</h4>
             <ul className="space-y-2 text-sm">
-              {[{label:'FAQ',href:'/faq'},{label:'Warranty',href:'/warranty'},{label:'Returns',href:'/returns'},{label:'Contact',href:'/contact'}].map(i => {
-                const highlight = ['FAQ','Returns','Contact'].includes(i.label);
-                const base = 'transition';
-                const normal = 'hover:text-white';
-                const pill = 'bg-white text-black rounded px-2 py-1 font-medium hover:bg-white hover:text-black shadow-sm';
-                return (
-                  <li key={i.label}>
-                    <a href={i.href} className={base + ' ' + (highlight ? pill : normal)}>{i.label}</a>
-                  </li>
-                );
-              })}
+              {[{label:'FAQ',href:'/faq'},{label:'Warranty',href:'/warranty'},{label:'Returns',href:'/returns'},{label:'Contact',href:'/contact'}].map(i => (
+                <li key={i.label}><a href={i.href} className="hover:text-white transition">{i.label}</a></li>
+              ))}
             </ul>
         </div>
         <div>
           <h4 className="text-white font-semibold mb-4">Company</h4>
             <ul className="space-y-2 text-sm">
-              {[{label:'About Us',href:'/about'},{label:'Sustainability',href:'/sustainability'},{label:'Careers',href:'/careers'},{label:'Blog',href:'/blog'},{label:'Press',href:'/press'}].map(i => <li key={i.label}><a href={i.href} className="hover:text-white transition">{i.label}</a></li>)}
+              {[{label:'About Us',href:'/about'},{label:'Sustainability',href:'/sustainability'}].map(i => <li key={i.label}><a href={i.href} className="hover:text-white transition">{i.label}</a></li>)}
             </ul>
         </div>
       </div>
