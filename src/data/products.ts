@@ -144,10 +144,11 @@ export const products: Product[] = [
     title: 'MagSafe Desk Stand – Adjustable Magnetic Phone Mount',
     subtitle: 'Clean, stable and adjustable MagSafe desk stand for calls, content and charging.',
     media: [
-      { type: 'image', src: '/a3.png' }, // main hero image
-      { type: 'image', src: '/a1.png' },
-  { type: 'image', src: '/a2.png' },
-  { type: 'image', src: '/a4.png' }
+  { type: 'image', src: '/a3.png' }, // 1 main
+  { type: 'image', src: '/a2.png' }, // 2
+  { type: 'image', src: '/a4.png' }, // 3
+  { type: 'image', src: '/a5.png' }, // 4 new
+  { type: 'image', src: '/a1.png' }, // 5 last
     ],
     basePrice: 34.95,
     reviewCount: 128,
