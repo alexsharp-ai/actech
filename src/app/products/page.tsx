@@ -7,8 +7,8 @@ import Image from 'next/image';
 export default function ProductsPage(){
   const featured = getProductBySlug('pro-moto-holder');
   return (
-    <div className="bg-white text-black w-full">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-16">
+    <div className="bg-white text-black w-full min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-16 pb-28">
         <h1 className="text-3xl sm:text-4xl font-bold mb-2">Products</h1>
         <p className="text-gray-600 mb-12 max-w-2xl">Explore our flagship magnetic mounting system. More products coming soon.</p>
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
