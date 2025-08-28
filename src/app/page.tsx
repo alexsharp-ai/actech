@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import LazyVideo from "@/components/LazyVideo";
+import { products as allProducts } from '@/data/products';
 
 
 export default function Home() {
@@ -29,8 +30,10 @@ export default function Home() {
   <div className="absolute inset-0 bg-black/25 z-10" />
         {/* Hero Content */}
         <div className="relative z-20 flex flex-col items-center justify-center w-full h-full pt-24 pb-12">
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 text-center px-4">
-            MagSafe on <span className="bg-red-500 px-2 rounded text-white inline-block">STEROIDS</span>
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 text-center px-4 leading-tight">
+            <span className="block">MagSafe</span>
+            <span className="block">on</span>
+            <span className="inline-block bg-red-500 px-3 rounded text-white mt-1">STEROIDS</span>
           </h1>
           <h2 className="text-base sm:text-xl md:text-2xl font-light mb-8 text-center px-4 max-w-3xl">the most strong, safe and universal magnetic holder is here!</h2>
           {/* Product Boxes */}
@@ -127,53 +130,33 @@ export default function Home() {
         <div className="max-w-6xl w-full">
       <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-left px-2 sm:px-0">Top of the moment</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 px-2 sm:px-0">
-            {/* Product 1 */}
-            <div className="bg-white rounded-lg shadow p-4 flex flex-col h-full">
+  {['pro-moto-holder','magsafe-desk-stand','magsafe-gym-stream'].map((slug,idx)=>{
+          const p = allProducts.find(pr=>pr.slug===slug)!;
+          const media = p.media[0];
+          const price = p.basePrice.toFixed(2).replace('.',',');
+          return (
+            <div key={p.id} className="bg-white rounded-lg shadow p-4 flex flex-col h-full">
               <div className="relative w-full h-56 mb-4">
-                <span className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded">New</span>
-                <Image src="/p1.png" alt="Professional motorcycle phone holder with metal plate" width={600} height={336} className="w-full h-full object-contain p-2 rounded bg-gray-50" />
+                {idx===0 && <span className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded">New</span>}
+                {media.type==='image' ? (
+                  <Image src={media.src} alt={p.title} width={600} height={336} className="w-full h-full object-contain p-4 rounded bg-gray-50" />
+                ) : (
+                  <video src={media.src} className="w-full h-full object-cover rounded bg-gray-50" muted autoPlay loop playsInline />
+                )}
               </div>
               <div className="flex-1 flex flex-col items-center text-center">
-                <div className="font-semibold text-lg min-h-[48px] flex items-start justify-center">Professional motorcycle phone holder with metal plate</div>
-                <div className="text-sm text-gray-600 mt-1 mb-2 px-2 min-h-[72px] flex items-end">Magnetic system with screwed fixing for motorcycle handlebars, steel plate included.</div>
+                <div className="font-semibold text-lg min-h-[48px] flex items-start justify-center leading-snug">{p.title}</div>
+                <div className="text-sm text-gray-600 mt-1 mb-2 px-2 min-h-[72px] flex items-end leading-relaxed">{p.subtitle}</div>
                 <div className="mt-auto flex items-center justify-center mb-4">
-                  <span className="text-red-500 text-xl mr-2">★★★★★</span>
-                  <span className="font-semibold">3769</span> <span className="text-gray-600 ml-1">reviews</span>
+                  <span className="text-red-500 text-xl mr-2">{'★★★★★'.slice(0,p.rating)}</span>
+                  <span className="font-semibold">{p.reviewCount}</span> <span className="text-gray-600 ml-1">reviews</span>
                 </div>
               </div>
-              <Link href="/product/pro-moto-holder" className="w-full bg-black text-white py-3 rounded font-semibold text-lg hover:bg-gray-900 transition text-center">View product 39,95 €</Link>
+              <Link href={`/product/${p.slug}`} className="w-full bg-black text-white py-3 rounded font-semibold text-lg hover:bg-gray-900 transition text-center">View product {price} €</Link>
             </div>
-            {/* Product 2 (MagSafe Desk Stand) */}
-            <div className="bg-white rounded-lg shadow p-4 flex flex-col h-full">
-              <div className="relative w-full h-56 mb-4">
-                <Image src="/a3.png" alt="MagSafe Desk Stand" width={600} height={336} className="w-full h-full object-contain p-6 rounded bg-gray-50" />
-              </div>
-              <div className="flex-1 flex flex-col items-center text-center">
-                <div className="font-semibold text-lg min-h-[48px] flex items-start justify-center">MagSafe Desk Stand – Adjustable</div>
-                <div className="text-sm text-gray-600 mt-1 mb-2 px-2 min-h-[72px] flex items-end">Stable adjustable metal stand for MagSafe phones. Perfect for calls, streaming & charging.</div>
-                <div className="mt-auto flex items-center justify-center mb-4">
-                  <span className="text-red-500 text-xl mr-2">★★★★★</span>
-                  <span className="font-semibold">128</span> <span className="text-gray-600 ml-1">reviews</span>
-                </div>
-              </div>
-              <Link href="/product/magsafe-desk-stand" className="w-full bg-black text-white py-3 rounded font-semibold text-lg hover:bg-gray-900 transition text-center">View product 34,95 €</Link>
-            </div>
-            {/* Product 3 */}
-            <div className="bg-white rounded-lg shadow p-4 flex flex-col h-full">
-              <div className="relative w-full h-56 mb-4">
-                <Image src="/p3.png" alt="PRO BOOST motorcycle phone holder with metal plate" width={600} height={336} className="w-full h-full object-contain p-2 rounded bg-gray-50" />
-              </div>
-              <div className="flex-1 flex flex-col items-center text-center">
-                <div className="font-semibold text-lg min-h-[48px] flex items-start justify-center">PRO BOOST motorcycle phone holder with metal plate</div>
-                <div className="text-sm text-gray-600 mt-1 mb-2 px-2 min-h-[72px] flex items-end">Magnetic system with screwed handlebar attachment and 360° arm, metal plate included.</div>
-                <div className="mt-auto flex items-center justify-center mb-4">
-                  <span className="text-red-500 text-xl mr-2">★★★★★</span>
-                  <span className="font-semibold">3235</span> <span className="text-gray-600 ml-1">reviews</span>
-                </div>
-              </div>
-              <Link href="/product/pro-moto-holder" className="w-full bg-black text-white py-3 rounded font-semibold text-lg hover:bg-gray-900 transition text-center">View product 49,95 €</Link>
-            </div>
-          </div>
+          );
+        })}
+      </div>
         </div>
       </section>
 
@@ -186,45 +169,77 @@ export default function Home() {
             <div className="flex gap-8 animate-scroll-x whitespace-nowrap will-change-transform min-w-max" style={{ width: 'max-content' }}>
               {[1,2].map((_,i) => (
                 <React.Fragment key={i}>
+                  {/* 1 */}
                   <div className="bg-white rounded-xl shadow p-6 min-w-[320px] max-w-xs flex flex-col items-center mx-2">
                     <Image src="/IMG_8007.webp" alt="E-Bikes & Scooters use case" width={400} height={160} className="w-full h-40 object-cover rounded mb-4" />
-                    <div className="flex items-center justify-center mb-2">
-                      <span className="text-red-500 text-xl mr-2">★★★★★</span>
-                    </div>
+                    <div className="flex items-center justify-center mb-2"><span className="text-red-500 text-xl mr-2">★★★★★</span></div>
                     <div className="font-semibold">David Bass <span className="bg-black text-white text-xs px-2 py-0.5 rounded ml-1 align-middle">Verified</span></div>
                     <div className="text-sm text-gray-700">iPhone 13 cb125r</div>
                     <div className="text-base mb-2">Très solide</div>
                     <div className="text-xs text-gray-400 mt-2">22/08/2025</div>
                   </div>
+                  {/* 2 */}
                   <div className="bg-white rounded-xl shadow p-6 min-w-[320px] max-w-xs flex flex-col items-center mx-2">
                     <Image src="/b1.webp" alt="Bikes & Strollers use case" width={400} height={160} className="w-full h-40 object-cover rounded mb-4" />
-                    <div className="flex items-center justify-center mb-2">
-                      <span className="text-red-500 text-xl mr-2">★★★★★</span>
-                    </div>
+                    <div className="flex items-center justify-center mb-2"><span className="text-red-500 text-xl mr-2">★★★★★</span></div>
                     <div className="font-semibold">Denis TURPLIN <span className="bg-black text-white text-xs px-2 py-0.5 rounded ml-1 align-middle">Verified</span></div>
                     <div className="text-sm text-gray-700">Support téléphone voiture</div>
-                    <div className="text-base mb-2"></div>
+                    <div className="text-base mb-2" />
                     <div className="text-xs text-gray-400 mt-2">21/08/2025</div>
                   </div>
+                  {/* Inserted a5 image card */}
+                  <div className="bg-white rounded-xl shadow p-6 min-w-[320px] max-w-xs flex flex-col items-center mx-2">
+                    <Image src="/a5.png" alt="Desk stand angle view" width={400} height={160} className="w-full h-40 object-cover rounded mb-4" />
+                    <div className="flex items-center justify-center mb-2"><span className="text-red-500 text-xl mr-2">★★★★★</span></div>
+                    <div className="font-semibold">Maria L. <span className="bg-black text-white text-xs px-2 py-0.5 rounded ml-1 align-middle">Verified</span></div>
+                    <div className="text-sm text-gray-700">MagSafe desk use</div>
+                    <div className="text-base mb-2">Great stability & viewing angle.</div>
+                    <div className="text-xs text-gray-400 mt-2">21/08/2025</div>
+                  </div>
+                  {/* 3 */}
                   <div className="bg-white rounded-xl shadow p-6 min-w-[320px] max-w-xs flex flex-col items-center mx-2">
                     <Image src="/IMG_7742-2.webp" alt="Gym & Lifestyle use case" width={400} height={160} className="w-full h-40 object-cover rounded mb-4" />
-                    <div className="flex items-center justify-center mb-2">
-                      <span className="text-red-500 text-xl mr-2">★★★★★</span>
-                    </div>
+                    <div className="flex items-center justify-center mb-2"><span className="text-red-500 text-xl mr-2">★★★★★</span></div>
                     <div className="font-semibold">Antoine Gicquel <span className="bg-black text-white text-xs px-2 py-0.5 rounded ml-1 align-middle">Verified</span></div>
                     <div className="text-sm text-gray-700">Brassard de sport magnétique</div>
-                    <div className="text-base mb-2"></div>
+                    <div className="text-base mb-2" />
                     <div className="text-xs text-gray-400 mt-2">20/08/2025</div>
                   </div>
+                  {/* Inserted a1 image card */}
+                  <div className="bg-white rounded-xl shadow p-6 min-w-[320px] max-w-xs flex flex-col items-center mx-2">
+                    <Image src="/a1.png" alt="Desk stand close up" width={400} height={160} className="w-full h-40 object-cover rounded mb-4" />
+                    <div className="flex items-center justify-center mb-2"><span className="text-red-500 text-xl mr-2">★★★★★</span></div>
+                    <div className="font-semibold">Sven K. <span className="bg-black text-white text-xs px-2 py-0.5 rounded ml-1 align-middle">Verified</span></div>
+                    <div className="text-sm text-gray-700">Remote work setup</div>
+                    <div className="text-base mb-2">Perfect for video calls.</div>
+                    <div className="text-xs text-gray-400 mt-2">19/08/2025</div>
+                  </div>
+                  {/* New gym g4 image card */}
+                  <div className="bg-white rounded-xl shadow p-6 min-w-[320px] max-w-xs flex flex-col items-center mx-2">
+                    <Image src="/g4.png" alt="Gym mount filming a workout" width={400} height={160} className="w-full h-40 object-cover rounded mb-4" />
+                    <div className="flex items-center justify-center mb-2"><span className="text-red-500 text-xl mr-2">★★★★★</span></div>
+                    <div className="font-semibold">Laura P. <span className="bg-black text-white text-xs px-2 py-0.5 rounded ml-1 align-middle">Verified</span></div>
+                    <div className="text-sm text-gray-700">Gym rack filming</div>
+                    <div className="text-base mb-2">Stays put even on heavy sets.</div>
+                    <div className="text-xs text-gray-400 mt-2">19/08/2025</div>
+                  </div>
+                  {/* 4 */}
                   <div className="bg-white rounded-xl shadow p-6 min-w-[320px] max-w-xs flex flex-col items-center mx-2">
                     <Image src="/l1.webp" alt="Endless possibilities use case" width={400} height={160} className="w-full h-40 object-cover rounded mb-4" />
-                    <div className="flex items-center justify-center mb-2">
-                      <span className="text-red-500 text-xl mr-2">★★★★★</span>
-                    </div>
+                    <div className="flex items-center justify-center mb-2"><span className="text-red-500 text-xl mr-2">★★★★★</span></div>
                     <div className="font-semibold">Estelle Thiers <span className="bg-black text-white text-xs px-2 py-0.5 rounded ml-1 align-middle">Verified</span></div>
                     <div className="text-sm text-gray-700">iPhone 15 + Moto</div>
                     <div className="text-base mb-2">Incroyable. J&apos;ai rien à dire vraiment. C&apos;est génial, et ça tient vraiment très très bien. Merci pour ce produit</div>
                     <div className="text-xs text-gray-400 mt-2">19/08/2025</div>
+                  </div>
+                  {/* New gym g2 image card */}
+                  <div className="bg-white rounded-xl shadow p-6 min-w-[320px] max-w-xs flex flex-col items-center mx-2">
+                    <Image src="/g2.png" alt="Gym mount live streaming" width={400} height={160} className="w-full h-40 object-cover rounded mb-4" />
+                    <div className="flex items-center justify-center mb-2"><span className="text-red-500 text-xl mr-2">★★★★★</span></div>
+                    <div className="font-semibold">Marc D. <span className="bg-black text-white text-xs px-2 py-0.5 rounded ml-1 align-middle">Verified</span></div>
+                    <div className="text-sm text-gray-700">Live stream session</div>
+                    <div className="text-base mb-2">Super stable for filming workouts.</div>
+                    <div className="text-xs text-gray-400 mt-2">18/08/2025</div>
                   </div>
                 </React.Fragment>
               ))}
@@ -237,8 +252,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Brand Story & Trust Section */}
-      <section className="w-full bg-white">
+  {/* Brand Story & Trust Section */}
+  <section className="w-full bg-white" id="faq">
         {/* Story Split Panel */}
         <div className="grid md:grid-cols-2 min-h-[380px]">
           <div className="relative flex items-center justify-center p-8 overflow-hidden">

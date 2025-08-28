@@ -25,13 +25,13 @@ export default function SiteHeader(){
         <nav className="hidden lg:flex gap-8 text-sm font-medium">
           <Link href="/" className="hover:text-red-500 transition text-white">Home</Link>
           <Link href="/products" className="hover:text-red-500 transition text-white">Products</Link>
-          <Link href="/#accessories" className="hover:text-red-500 transition text-white">Accessories</Link>
+          <Link href="/accessories" className="hover:text-red-500 transition text-white">Accessories</Link>
+          <Link href="/app" className="hover:text-red-500 transition text-white">FREE APP</Link>
         </nav>
         {/* Desktop Right */}
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-white">
-          {['Retailers','Warranty','FAQ'].map(i => (
-            <a key={i} href="#" className="hover:text-red-500 transition">{i}</a>
-          ))}
+          <Link href="/warranty" className="hover:text-red-500 transition">Warranty</Link>
+          <Link href="/#faq" className="hover:text-red-500 transition">FAQ</Link>
           <button className="hover:text-red-500 transition" aria-label="Search">
             <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </button>
@@ -57,7 +57,8 @@ export default function SiteHeader(){
           {[
             {label:'Home', href:'/'},
             {label:'Products', href:'/products'},
-            {label:'Accessories', href:'/#accessories'}
+            {label:'Accessories', href:'/accessories'},
+            {label:'FREE APP', href:'/app'}
           ].map(item => (
             <Link key={item.label} href={item.href} className="flex-shrink-0 px-4 py-2 rounded-md bg-white/5 hover:bg-white/10 text-xs font-medium whitespace-nowrap">
               {item.label}

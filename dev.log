@@ -49,3 +49,257 @@ Error: Route "/product/[slug]" used `params.slug`. `params` should be awaited be
  GET /product/pro-moto-holder 200 in 582ms
  GET /product/pro-moto-holder 200 in 1165ms
  GET /favicon.ico?favicon.0b3bf435.ico 200 in 259ms
+ ✓ Compiled / in 53ms
+ GET / 200 in 183ms
+Error: Route "/product/[slug]" used `params.slug`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ProductPage (src/app/product/[slug]/page.tsx:9:43)
+   7 |
+   8 | export default function ProductPage({ params }: Props) {
+>  9 |   const product = getProductBySlug(params.slug);
+     |                                           ^
+  10 |   if(!product) return <div className='p-10 text-white'>Product not found.</div>;
+  11 |   return (
+  12 |     <div className="min-h-screen bg-white text-black">
+ GET /product/pro-moto-holder 200 in 257ms
+ ✓ Compiled in 175ms
+ ✓ Compiled middleware in 7ms
+ GET /product/pro-moto-holder 200 in 271ms
+ ✓ Compiled in 180ms
+ GET / 200 in 242ms
+ ✓ Compiled /products in 419ms
+ GET /products 200 in 475ms
+ GET /product/pro-moto-holder 200 in 72ms
+ GET /products 200 in 87ms
+ GET / 200 in 138ms
+ GET /products 200 in 75ms
+ ✓ Compiled in 234ms
+ ✓ Compiled /products in 76ms
+ GET /products 200 in 265ms
+ GET /product/pro-moto-holder 200 in 137ms
+ GET /products 200 in 73ms
+ ✓ Compiled in 350ms
+ ✓ Compiled /products in 147ms
+ GET /products 200 in 271ms
+ GET / 200 in 141ms
+ ✓ Compiled in 213ms
+ GET / 200 in 153ms
+ ✓ Compiled /products in 51ms
+ GET /products 200 in 168ms
+ ✓ Compiled in 288ms
+ ✓ Compiled in 200ms
+ ✓ Compiled in 131ms
+ GET /products 200 in 325ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 305ms
+ GET /product/pro-moto-holder 200 in 320ms
+ GET /products 200 in 81ms
+ ✓ Compiled in 183ms
+ ✓ Compiled /products in 108ms
+ GET /products 200 in 317ms
+ GET / 200 in 165ms
+ GET /products 200 in 128ms
+ GET / 200 in 82ms
+Error: Route "/product/[slug]" used `params.slug`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ProductPage (src/app/product/[slug]/page.tsx:9:43)
+   7 |
+   8 | export default function ProductPage({ params }: Props) {
+>  9 |   const product = getProductBySlug(params.slug);
+     |                                           ^
+  10 |   if(!product) return <div className='p-10 text-white'>Product not found.</div>;
+  11 |   return (
+  12 |     <div className="min-h-screen bg-white text-black">
+ GET /product/pro-moto-holder 200 in 716ms
+ GET /products 200 in 94ms
+ GET / 200 in 74ms
+ GET /products 200 in 149ms
+ ✓ Compiled in 573ms
+ ✓ Compiled /products in 31ms
+ GET /products 200 in 291ms
+ ✓ Compiled in 866ms
+ ✓ Compiled in 111ms
+ ✓ Compiled /products in 42ms
+ GET /products 200 in 315ms
+ ✓ Compiled in 983ms
+ ✓ Compiled in 2ms
+ ✓ Compiled /products in 170ms
+ GET /products 200 in 607ms
+ ✓ Compiled in 511ms
+ ✓ Compiled in 114ms
+ ✓ Compiled /products in 56ms
+ GET /products 200 in 375ms
+ GET /products 200 in 99ms
+ GET / 200 in 162ms
+ GET /products 200 in 83ms
+ GET /product/magsafe-desk-stand 200 in 153ms
+ GET /products 200 in 98ms
+ ✓ Compiled in 230ms
+ ✓ Compiled /products in 38ms
+ GET /products 200 in 520ms
+ GET /product/magsafe-desk-stand 200 in 217ms
+ ✓ Compiled in 365ms
+ GET /product/magsafe-desk-stand 200 in 666ms
+ GET / 200 in 323ms
+ GET /product/magsafe-desk-stand 200 in 83ms
+ ✓ Compiled in 367ms
+ GET /product/magsafe-desk-stand 200 in 508ms
+ ✓ Compiled /products in 53ms
+ GET /products 200 in 401ms
+ GET /product/pro-moto-holder 200 in 102ms
+ GET /products 200 in 106ms
+ GET /product/magsafe-desk-stand 200 in 77ms
+ ✓ Compiled in 428ms
+ GET /product/magsafe-desk-stand 200 in 363ms
+Error: Route "/product/[slug]" used `params.slug`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ProductPage (src/app/product/[slug]/page.tsx:9:43)
+   7 |
+   8 | export default function ProductPage({ params }: Props) {
+>  9 |   const product = getProductBySlug(params.slug);
+     |                                           ^
+  10 |   if(!product) return <div className='p-10 text-white'>Product not found.</div>;
+  11 |   return (
+  12 |     <div className="min-h-screen bg-white text-black">
+ GET /product/magsafe-desk-stand 200 in 967ms
+ ✓ Compiled /products in 47ms
+ GET /products 200 in 181ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 264ms
+ GET /product/pro-moto-holder 200 in 70ms
+ GET /products 200 in 76ms
+ GET /product/magsafe-desk-stand 200 in 72ms
+ ✓ Compiled in 598ms
+ ✓ Compiled in 314ms
+ ✓ Compiled in 473ms
+ ✓ Compiled in 577ms
+ GET /products 200 in 104ms
+ GET /product/pro-moto-holder 200 in 412ms
+ ✓ Compiled in 480ms
+ GET /product/pro-moto-holder 200 in 549ms
+ ✓ Compiled in 145ms
+ GET /product/pro-moto-holder 200 in 176ms
+ ✓ Compiled in 224ms
+ ✓ Compiled in 351ms
+ ✓ Compiled /products in 81ms
+ GET /products 200 in 392ms
+ GET /product/magsafe-desk-stand 200 in 151ms
+ GET / 200 in 106ms
+ GET /products 200 in 90ms
+ GET / 200 in 67ms
+ GET / 200 in 111ms
+ ✓ Compiled middleware in 9ms
+ GET / 200 in 704ms
+ ✓ Compiled in 432ms
+ GET / 200 in 253ms
+ ✓ Compiled in 151ms
+ ○ Compiling /accessories ...
+ ✓ Compiled /accessories in 1166ms
+ GET /accessories 200 in 1595ms
+ GET /products 200 in 180ms
+ GET /accessories 200 in 105ms
+ GET /products 200 in 108ms
+ GET / 200 in 69ms
+ ✓ Compiled in 470ms
+ ✓ Compiled in 7ms
+ GET /products 200 in 271ms
+ GET /product/magsafe-desk-stand 200 in 375ms
+ GET /products 200 in 673ms
+ ✓ Compiled in 448ms
+ ✓ Compiled in 0ms
+ ✓ Compiled /products in 45ms
+ GET /products 200 in 890ms
+ ✓ Compiled in 184ms
+ ✓ Compiled in 131ms
+ ✓ Compiled /products in 68ms
+ GET /products 200 in 768ms
+ ✓ Compiled in 1293ms
+ ✓ Compiled in 351ms
+ ✓ Compiled in 374ms
+ ✓ Compiled in 682ms
+ GET /product/magsafe-gym-stream 200 in 811ms
+ ✓ Compiled in 661ms
+ ✓ Compiled in 10ms
+ GET /product/magsafe-gym-stream 200 in 841ms
+ ✓ Compiled in 416ms
+ GET /product/magsafe-gym-stream 200 in 556ms
+ ✓ Compiled /products in 56ms
+ GET /products 200 in 267ms
+ GET / 200 in 159ms
+ ✓ Compiled in 559ms
+ ✓ Compiled in 281ms
+ GET /accessories 200 in 145ms
+ GET /products 200 in 83ms
+ GET /product/magsafe-gym-stream 200 in 81ms
+ GET /products 200 in 78ms
+ GET /product/magsafe-desk-stand 200 in 77ms
+ ✓ Compiled in 341ms
+ ✓ Compiled middleware in 44ms
+ GET /products 200 in 848ms
+ ✓ Compiled in 203ms
+ ○ Compiling /warranty ...
+ ✓ Compiled /warranty in 698ms
+ GET /warranty 200 in 750ms
+ ✓ Compiled in 414ms
+ ✓ Compiled in 8ms
+ ✓ Compiled in 634ms
+ GET /warranty 200 in 738ms
+ GET /warranty 200 in 73ms
+ ✓ Compiled in 328ms
+ ✓ Compiled in 260ms
+ GET / 200 in 501ms
+ ✓ Compiled in 235ms
+ ✓ Compiled middleware in 13ms
+ GET / 200 in 809ms
+ GET / 200 in 160ms
+ ✓ Compiled in 228ms
+ ○ Compiling /app ...
+ ✓ Compiled /app in 1106ms
+ GET /app 200 in 1281ms
+ ✓ Compiled middleware in 72ms
+ GET /app 200 in 717ms
+ GET /app 200 in 149ms
+ ✓ Compiled in 341ms
+ GET /app 200 in 409ms
+ GET / 200 in 146ms
+ GET /app 200 in 137ms
+ GET /accessories 200 in 81ms
+ GET /app 200 in 67ms
+ GET /accessories 200 in 348ms
+ GET /products 200 in 280ms
+ GET / 200 in 107ms
+ GET /app 200 in 109ms
+ ✓ Compiled in 400ms
+ GET /app 200 in 108ms
+ GET /accessories 200 in 55ms
+ GET /products 200 in 175ms
+ GET / 200 in 134ms
+ GET /app 200 in 61ms
+ GET /app 200 in 1306ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 780ms
+ GET /accessories 200 in 78ms
+ GET /products 200 in 84ms
+ GET /app 200 in 71ms
+ ✓ Compiled in 615ms
+ ✓ Compiled in 317ms
+ ✓ Compiled in 488ms
+ ✓ Compiled in 1246ms
+ ✓ Compiled in 249ms
+ ✓ Compiled in 178ms
+ ✓ Compiled in 319ms
+ ✓ Compiled /app in 59ms
+ GET /app 200 in 1032ms
+ ✓ Compiled middleware in 388ms
+ GET /app 200 in 1162ms
+ GET /app 200 in 112ms
+ GET /app 200 in 94ms
+ GET /app 200 in 61ms
+ GET /app 200 in 1011ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 1186ms
+ ✓ Compiled in 421ms
+ ✓ Compiled in 273ms
+ ✓ Compiled in 9ms
+ GET /app 200 in 1490ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 343ms
+ ✓ Compiled in 1700ms
+ ✓ Compiled in 221ms
+ ✓ Compiled in 348ms
+ ✓ Compiled in 697ms
+ GET /accessories 200 in 327ms
+ GET /products 200 in 164ms
+ GET / 200 in 128ms

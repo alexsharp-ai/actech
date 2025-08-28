@@ -20,16 +20,16 @@ export default function ProductPage({ params }: Props) {
           <h1 className="text-2xl md:text-4xl font-semibold leading-tight">{product.title}</h1>
           <p className="text-gray-600 text-sm md:text-base max-w-xl">{product.subtitle}</p>
           <VariantSelectors productSlug={product.slug} />
-          <AddToCartBlock slug={product.slug} />
-      <UpsellSection slug={product.slug} />
-      <ProductFAQ />
+      <AddToCartBlock slug={product.slug} />
+    <UpsellSection slug={product.slug} />
+    <ProductFAQ slug={product.slug} />
         </div>
       </div>
   <FeaturesAndTrust />
   <ProductAssembly slug={product.slug} />
   <ProductCompatibility slug={product.slug} />
   <ProductReviews slug={product.slug} />
-  <ProductMoreQuestions />
+  <ProductMoreQuestions slug={product.slug} />
   <ProductBottomFeatures />
   <RelatedProducts />
     </div>
@@ -168,19 +168,22 @@ function UpsellSection({ slug }: { slug: string }) {
   );
 }
 
-// FAQ Accordion
-function ProductFAQ() {
-  const items: { title: string; content: React.ReactNode }[] = [
+// FAQ Accordion (dynamic per product)
+function ProductFAQ({ slug }: { slug: string }) {
+  const isDesk = slug === 'magsafe-desk-stand';
+  const isUniversal = slug === 'pro-moto-holder';
+  const isGym = slug === 'magsafe-gym-stream';
+  const items: { title: string; content: React.ReactNode }[] = isDesk ? [
     {
       title: 'What does my product contain?',
       content: (
         <ul className="list-disc ml-6 space-y-1 text-sm md:text-[15px]">
-          <li>Everything is included in the pack which includes:</li>
-          <li className="ml-4 list-none">- The screwed support</li>
-          <li className="ml-4 list-none">- The metal plate</li>
-            <li className="ml-4 list-none">- 3 adapters for different handlebar diameters</li>
-            <li className="ml-4 list-none">- The Allen key</li>
-            <li className="ml-4 list-none">- The carrying bag</li>
+          <li>Weighted anti‑slip base</li>
+          <li>Adjustable aluminum arm</li>
+          <li>MagSafe magnetic head</li>
+          <li>Cable management clip</li>
+          <li>Magnetic alignment ring (for non‑MagSafe phones)</li>
+          <li>Cleaning wipe + quick start guide</li>
         </ul>
       )
     },
@@ -188,9 +191,10 @@ function ProductFAQ() {
       title: 'How does it work?',
       content: (
         <div className="space-y-3 text-sm md:text-[15px]">
-          <p><strong>Step 1:</strong> Screw your support to the handlebars by choosing the adapter adapted to your diameter (22 to 32 mm).</p>
-          <p><strong>Step 2:</strong> Stick the metal plate on your phone case.</p>
-          <p><strong>Step 3:</strong> Clap the metal plate by centering them on the support. There you go, your phone won&apos;t move.</p>
+          <p><strong>Step 1:</strong> Place the base on a flat surface (the silicone pad prevents slipping).</p>
+          <p><strong>Step 2:</strong> Adjust arm and tilt for perfect eye level.</p>
+          <p><strong>Step 3:</strong> Snap your MagSafe phone (or phone with supplied ring) onto the head – it self‑centers.</p>
+          <p><strong>Optional:</strong> Route your charging cable through the rear clip for a clean setup.</p>
         </div>
       )
     },
@@ -198,18 +202,8 @@ function ProductFAQ() {
       title: 'Does it hold?',
       content: (
         <div className="space-y-4 text-sm md:text-[15px]">
-          <p><strong>Yes it holds. And it holds very strong!</strong></p>
-          <div>
-            <p className="mb-2">But rather than a long speech here are some important points:</p>
-            <ul className="list-disc ml-6 space-y-1">
-              <li>Pavements, potholes, sidewalks, mountain bikes... the support holds!</li>
-              <li>The magnetic system supports up to 50 times the weight of your smartphone.</li>
-              <li>Tested in a wind tunnel up to 140 km/h (maximum power of the wind tunnel) Stable even at high speed (tested up to 225 km/h on a circuit)</li>
-              <li>The phone does not move on the handlebars, it does not work.</li>
-              <li>The system is validated by more than 5,000 stores.</li>
-            </ul>
-          </div>
-          <p>And you can imagine that, for 5 years, if our supports did not work, we would no longer be there and the most beautiful brands would not sell to us.</p>
+          <p><strong>Yes, rock solid.</strong> The tuned magnetic array + anti‑slip pad let you tap and swipe without wobble.</p>
+          <p>Rated for all MagSafe iPhones and most MagSafe compatible cases. For heavier Pro Max models a direct MagSafe case or included ring delivers optimal grip.</p>
         </div>
       )
     },
@@ -217,9 +211,11 @@ function ProductFAQ() {
       title: 'The advantages of the product',
       content: (
         <ul className="list-disc ml-6 space-y-1 text-sm md:text-[15px]">
-          <li>Avoids reflections in direct sunlight</li>
-          <li>Adjustable landscape/portrait without tools</li>
-          <li>Powerful adhesive</li>
+          <li>30‑second setup, no tools</li>
+          <li>One‑hand magnetic snap on/off</li>
+          <li>Clean cable path, clutter free desk</li>
+          <li>Optimized viewing angle for calls & content</li>
+          <li>Compact & travel friendly</li>
         </ul>
       )
     },
@@ -227,34 +223,176 @@ function ProductFAQ() {
       title: 'Technical characteristics',
       content: (
         <ul className="list-disc ml-6 space-y-1 text-sm md:text-[15px]">
-          <li>Compatible with almost all handlebars</li>
-          <li>Plate 1.5 mm thick and 48 mm in diameter</li>
-          <li>Universal, compatible with all brands of phones</li>
-          <li>Harmless to the phone: magnets located between two iron plates cut the magnetic field at the phone (patent registered)</li>
-          <li>The adhesive metal plates do not protect the phone from vibrations and are not directly compatible with induction charging</li>
-          <li>Remove the case from your phone to charge it on your MagSafe charger.</li>
-          <li>Do not stick to leather, textured, textile or non-slip cases</li>
+          <li>CNC aluminum + weighted zinc core base</li>
+          <li>Silicone anti‑slip & device protection pads</li>
+          <li>Full MagSafe ring alignment (works with Qi2 chargers)</li>
+          <li>±45° tilt head / adjustable arm</li>
+          <li>Supports phones up to 300g</li>
+        </ul>
+      )
+    }
+  ] : isUniversal ? [
+    {
+      title: 'What does my product contain?',
+      content: (
+        <ul className="list-disc ml-6 space-y-1 text-sm md:text-[15px]">
+          <li>Universal magnetic mount body (5× strength)</li>
+          <li>2 magnetic safety rings</li>
+          <li>Silicone security band</li>
+          <li>Travel pouch</li>
+          <li>Quick start guide</li>
         </ul>
       )
     },
     {
-      title: 'Vibration incompatibility',
+      title: 'How does it work?',
+      content: (
+        <div className="space-y-3 text-sm md:text-[15px]">
+          <p><strong>Step 1:</strong> (Optional) Apply a safety ring to non‑MagSafe phone/case for maximum grip.</p>
+          <p><strong>Step 2:</strong> Stick to any ferrous metal surface OR loop the silicone band around a bar (bike, scooter, stroller, gym machine, shopping cart).</p>
+          <p><strong>Step 3:</strong> Snap phone onto the magnetic face. Adjust angle. Done.</p>
+        </div>
+      )
+    },
+    {
+      title: 'Does it hold?',
       content: (
         <div className="space-y-4 text-sm md:text-[15px]">
-          <p><strong>Attention!</strong> Unlike our pouches, the adhesive metal plate does not completely protect against engine and road vibrations. The 2 wheels listed below can damage the optical stabilizer of your smartphone through vibration.</p>
-          <ul className="list-disc ml-6 space-y-1">
-            <li><strong>BMW</strong> 310GS, F800 R/GS/GT, R nine T, R1200GS/RT, S1000R</li>
-            <li><strong>Ducati</strong> Hypermotard, Monster, Multistrada, Supersport</li>
-            <li><strong>Harley Davidson</strong> Fat Bob, Low Rider S, Street Bob, Wide Glide</li>
-            <li><strong>Honda</strong> CB, CBR, CRF, Grom, Shadow</li>
-            <li><strong>Kawasaki</strong> Er-6n, KLX, Ninja, Versys, Z650, Z900RS</li>
-            <li><strong>KTM & Husqvarna</strong> Tous les modèles</li>
-            <li><strong>MV Agusta</strong> Brutale</li>
-            <li><strong>Suzuki</strong> DRZ, GSF, GSX-R, GSX-S</li>
-            <li><strong>Triumph</strong> Bonneville, Rocket 3, Scrambler, Speed Triple, Speed Twin, Thruxton</li>
-            <li>Non-exhaustive list</li>
-          </ul>
+          <p><strong>Extreme retention.</strong> 5× stronger magnetic core + mechanical silicone band redundancy.</p>
+          <p>Tested on rough urban commutes, cobbles, off‑path rides and gym vibration environments. With ring + band engaged accidental drops are highly unlikely.</p>
         </div>
+      )
+    },
+    {
+      title: 'The advantages of the product',
+      content: (
+        <ul className="list-disc ml-6 space-y-1 text-sm md:text-[15px]">
+          <li>Multi‑surface: e‑bikes, scooters, strollers, gym & more</li>
+          <li>Installs / removes in under 30 seconds</li>
+          <li>Super compact for holidays & rentals</li>
+          <li>Magnetic + silicone dual security</li>
+          <li>Works with any phone via safety rings</li>
+        </ul>
+      )
+    },
+    {
+      title: 'Technical characteristics',
+      content: (
+        <ul className="list-disc ml-6 space-y-1 text-sm md:text-[15px]">
+          <li>5× strength neodymium magnet array</li>
+          <li>High‑elasticity silicone security band</li>
+          <li>Corrosion‑resistant alloy frame</li>
+          <li>Operating temp −10°C to 55°C</li>
+          <li>Compatible with MagSafe & supplied rings</li>
+        </ul>
+      )
+    }
+  ] : isGym ? [
+    {
+      title: 'What does my product contain?',
+      content: (
+        <ul className="list-disc ml-6 space-y-1 text-sm md:text-[15px]">
+          <li>MagSafe gym & stream mount body</li>
+          <li>Magnetic alignment ring (for non‑MagSafe phones)</li>
+          <li>Low‑profile nano‑suction pad (optional extra grip)</li>
+          <li>Cleaning wipe + positioning guide</li>
+          <li>Quick start guide</li>
+        </ul>
+      )
+    },
+    {
+      title: 'How does it work?',
+      content: (
+        <div className="space-y-3 text-sm md:text-[15px]">
+          <p><strong>Step 1:</strong> (Optional) Apply the magnetic ring to a non‑MagSafe case for full strength.</p>
+          <p><strong>Step 2:</strong> Press the mount onto any flat ferrous gym machine surface (rack upright, cable tower, treadmill frame) OR a smooth metal surface (fridge, filing cabinet, squat rack cross‑member).</p>
+          <p><strong>Step 3:</strong> Snap your phone – magnets auto‑center. Tilt / rotate for front camera streaming or rear camera filming.</p>
+          <p><strong>Bonus:</strong> The slim form factor lets you reposition mid‑set without tools.</p>
+        </div>
+      )
+    },
+    {
+      title: 'Does it hold?',
+      content: (
+        <div className="space-y-4 text-sm md:text-[15px]">
+          <p><strong>Yes.</strong> High‑grade neodymium array + optional nano‑suction friction layer prevent slip even on light vibration equipment.</p>
+          <p>Rated for all current MagSafe iPhones (Mini to Pro Max) and most Android phones using the included ring.</p>
+        </div>
+      )
+    },
+    {
+      title: 'The advantages of the product',
+      content: (
+        <ul className="list-disc ml-6 space-y-1 text-sm md:text-[15px]">
+          <li>Instant portrait ↔ landscape rotation</li>
+          <li>Ultra compact – pocket it between sets</li>
+          <li>Stable filming for workouts & live streams</li>
+          <li>Works on gym machines, racks, home metal surfaces</li>
+          <li>MagSafe + ring universal compatibility</li>
+        </ul>
+      )
+    },
+    {
+      title: 'Technical characteristics',
+      content: (
+        <ul className="list-disc ml-6 space-y-1 text-sm md:text-[15px]">
+          <li>Precision alloy chassis + polymer contact pad</li>
+          <li>High coercivity magnet array (MagSafe aligned)</li>
+          <li>Nano‑suction removable pad (washable)</li>
+          <li>Operating temp −10°C to 55°C</li>
+          <li>Supports devices up to 320g</li>
+        </ul>
+      )
+    }
+  ] : [
+    // Fallback: original generic content for remaining products
+    {
+      title: 'What does my product contain?',
+      content: (
+        <ul className="list-disc ml-6 space-y-1 text-sm md:text-[15px]">
+          <li>Support / mount</li>
+          <li>Adhesive metal plate</li>
+          <li>Diameter adapters (if applicable)</li>
+          <li>Allen key / tool</li>
+          <li>Carrying bag / guide</li>
+        </ul>
+      )
+    },
+    {
+      title: 'How does it work?',
+      content: (
+        <div className="space-y-3 text-sm md:text-[15px]">
+          <p>Mount the support, apply the plate or ring, then snap the phone on – magnets auto‑center.</p>
+          <p>Landscape / portrait switching takes one second.</p>
+        </div>
+      )
+    },
+    {
+      title: 'Does it hold?',
+      content: (
+        <div className="space-y-4 text-sm md:text-[15px]">
+          <p>Engineered magnetic array rated well above phone weight; validated by thousands of users.</p>
+        </div>
+      )
+    },
+    {
+      title: 'The advantages of the product',
+      content: (
+        <ul className="list-disc ml-6 space-y-1 text-sm md:text-[15px]">
+          <li>Quick magnetic mounting</li>
+          <li>Portrait / landscape tilt</li>
+          <li>Universal phone compatibility</li>
+        </ul>
+      )
+    },
+    {
+      title: 'Technical characteristics',
+      content: (
+        <ul className="list-disc ml-6 space-y-1 text-sm md:text-[15px]">
+          <li>Neodymium magnet array</li>
+          <li>Impact & vibration tested</li>
+          <li>Compatible with adhesive plates & rings</li>
+        </ul>
       )
     }
   ];
@@ -334,31 +472,76 @@ function ProductAssembly({ slug }: { slug: string }) {
   const [idx,setIdx]=useState(0);
   const next = ()=> setIdx(i => (i+1) % mediaImages.length);
   const prev = ()=> setIdx(i => (i-1+mediaImages.length) % mediaImages.length);
+  const isDesk = product?.slug === 'magsafe-desk-stand';
+  // Dynamic copy depending on product type
+  const isUniversal = product?.slug === 'pro-moto-holder';
+  const isGym = product?.slug === 'magsafe-gym-stream';
+  const smallLabel = isDesk ? 'Desk setup' : isUniversal ? 'Multi‑surface mounting' : isGym ? 'Gym & home surfaces' : 'Handlebar and stem';
+  const bigTitle = isDesk ? 'Ready in under 30 seconds' : isUniversal ? 'Attach anywhere in seconds' : isGym ? 'Film & stream instantly' : 'Turnkey assembly';
+  const assemblySteps: string[] = isDesk ? [
+    'Unbox the stand and place the weighted base on a flat surface – the non‑slip silicone keeps it stable.',
+    'Insert (or unfold, depending on version) the adjustable arm and set the desired height / tilt.',
+    'Bring your MagSafe iPhone (or MagSafe‑compatible case) close to the magnetic head – it auto‑aligns for secure holding and optimal charging.',
+    'Manage your charging cable through the rear channel (optional) for a clean desk aesthetic.'
+  ] : isUniversal ? [
+    'Center one of the included safety rings on your case for maximum magnetic grip (only needed for non‑MagSafe / smooth cases).',
+    'Snap the mount onto any steel or magnetic surface OR loop the silicone security band around the bar/handle (bike, e‑bike, scooter, stroller, gym machine, shopping cart).',
+    'Slide your phone onto the magnetic face – the 5× strength magnets lock instantly; adjust viewing angle as needed.',
+    'To move locations (holiday, gym, rental bike) just peel off and re‑attach – the compact body travels easily.'
+  ] : isGym ? [
+    'Clean (wipe) any dusty chalk or sweat residue from the metal surface of the machine or rack for best grip.',
+    'If using a non‑MagSafe phone/case apply the magnetic ring (center, press 30s, wait 2h for full adhesive cure before intense motion).',
+    'Place the mount flush against the chosen metal area (upright, cross‑member, plate); the magnetic + friction interface locks it in place.',
+    'Snap on your phone. Rotate / tilt to frame your workout or live stream. Reposition between sets in seconds.'
+  ] : [
+    'Choose the adapter according to the diameter of your handlebar: 31.8mm diameter handlebar: no adapter. 28.6mm diameter handlebar: 1.7mm adapter. 25.4mm diameter handlebar: 3.5mm adapter. 22.2mm diameter handlebar: 5.1mm adapter.',
+    'Position the adapter on the handlebars, then screw the support on top, using the Allen key.',
+    'Stick the metal plate on your phone case, snap it onto the support (making sure to center it) and off you go!'
+  ];
+  const insideItems: string[] = isDesk ? [
+    'Weighted anti‑slip base',
+    'Adjustable aluminum arm',
+    'MagSafe magnetic head (strong alignment ring)',
+    'Cable management clip',
+    'Quick start guide'
+  ] : isUniversal ? [
+    'Universal magnetic mount (5× strength core)',
+    '2 safety magnetic rings',
+    'Silicone security band',
+    'Travel pouch',
+    'Quick start guide'
+  ] : isGym ? [
+    'Gym & stream magnetic mount body',
+    'Magnetic alignment ring',
+    'Optional nano‑suction friction pad',
+    'Cleaning wipe & guide',
+    'Quick start guide'
+  ] : [
+    'Screwed support',
+    'Magnetic metal plate',
+    '3 diameter adapters',
+    'Allen key',
+    'Carrying bag'
+  ];
   return (
     <section className="max-w-7xl mx-auto px-4 py-24">
       <div className="grid md:grid-cols-2 gap-12 items-start">
         {/* Left text / tabs */}
         <div className="order-2 md:order-1 flex flex-col gap-6">
-          <div className="text-[11px] tracking-[2px] font-medium text-red-600 uppercase">Handlebar and stem</div>
-          <h2 className="text-2xl md:text-3xl font-semibold">Turnkey assembly</h2>
+          <div className="text-[11px] tracking-[2px] font-medium text-red-600 uppercase">{smallLabel}</div>
+          <h2 className="text-2xl md:text-3xl font-semibold">{bigTitle}</h2>
           <div className="flex gap-2 text-[11px] tracking-wide">
             <button onClick={()=>setTab('assembly')} className={`px-4 py-2 border text-[11px] font-semibold ${tab==='assembly'? 'bg-black text-white border-black':'bg-white text-gray-600 border-gray-300 hover:border-black'}`}>ASSEMBLY</button>
             <button onClick={()=>setTab('inside')} className={`px-4 py-2 border text-[11px] font-semibold ${tab==='inside'? 'bg-black text-white border-black':'bg-white text-gray-600 border-gray-300 hover:border-black'}`}>WHAT&apos;S INSIDE</button>
           </div>
           {tab==='assembly' && (
             <ol className="space-y-5 text-[13px] leading-relaxed max-w-md list-decimal ml-4">
-              <li>Choose the adapter according to the diameter of your handlebar: 31.8mm diameter handlebar: no adapter. 28.6mm diameter handlebar: 1.7mm adapter. 25.4mm diameter handlebar: 3.5mm adapter. 22.2mm diameter handlebar: 5.1mm adapter.</li>
-              <li>Position the adapter on the handlebars, then screw the support on top, using the Allen key.</li>
-              <li>Stick the metal plate on your phone case, snap it onto the support (making sure to center it) and off you go!</li>
+              {assemblySteps.map((s,i)=>(<li key={i}>{s}</li>))}
             </ol>
           )}
           {tab==='inside' && (
             <ul className="space-y-2 text-[13px] leading-relaxed max-w-md list-disc ml-4">
-              <li>Screwed support</li>
-              <li>Magnetic metal plate</li>
-              <li>3 diameter adapters</li>
-              <li>Allen key</li>
-              <li>Carrying bag</li>
+              {insideItems.map((s,i)=>(<li key={i}>{s}</li>))}
             </ul>
           )}
         </div>
@@ -392,6 +575,68 @@ function ProductCompatibility({ slug }: { slug: string }) {
   const product = getProductBySlug(slug);
   const images = (product?.media || []).filter(m=>m.type==='image').slice(0,4);
   const [tab,setTab]=useState<'assembly'|'inside'>('assembly');
+  const isDesk = product?.slug === 'magsafe-desk-stand';
+  const isUniversal = product?.slug === 'pro-moto-holder';
+  const isGym = product?.slug === 'magsafe-gym-stream';
+  const smallLabel = isDesk ? 'Universal compatibility' : isUniversal ? 'All activities' : isGym ? 'Cross‑environment filming' : 'Adhesive metal plate';
+  const bigTitle = isDesk ? 'Works with MagSafe & any phone (ring included)' : isUniversal ? 'One mount – bike, scooter, stroller, gym & more' : isGym ? 'Stream & record on racks, machines & at home' : 'Compatible with your phone';
+  const assemblyCopy = isDesk ? (
+    <div className="space-y-5 text-[13px] leading-relaxed max-w-md">
+      <p><strong>Included in the box:</strong> a slim magnetic metal ring you can stick on a non‑MagSafe case to instantly make it MagSafe‑ready.</p>
+      <p>If you already have an iPhone with MagSafe (12 and later) or a certified MagSafe case you can just snap your phone directly—no ring needed.</p>
+      <p>Want to upgrade another device? Center the ring using the guide sticker, press firmly for 30 seconds, then wait 2 hours before heavy use to let the adhesive fully cure.</p>
+      <p className="text-[11px] text-gray-500"><strong>Note:</strong> Adhesion is weaker on fabric / textured / anti‑dust (silicone powdery) finishes. Avoid leather grain, woven textiles and heavily rubberized coatings for best results.</p>
+    </div>
+  ) : isUniversal ? (
+    <div className="space-y-5 text-[13px] leading-relaxed max-w-md">
+      <p>Designed for <strong>e‑bikes, bikes, scooters, strollers, shopping carts, gym machines and any ferrous metal surface</strong>. Mount or remove in under 30 seconds.</p>
+      <p>The reinforced magnetic core delivers <strong>5× the holding force</strong> of typical mounts. The silicone security band adds a secondary mechanical hold on rough rides or vibration‑heavy environments.</p>
+      <p>Use the included rings for non‑MagSafe phones/cases to maximize magnetic contact. Ideal for holidays and rentals: compact, pocket‑friendly and fast to relocate.</p>
+      <p className="text-[11px] text-gray-500"><strong>Tip:</strong> For painted or delicate bars place a thin cloth under the band to avoid marks.</p>
+    </div>
+  ) : isGym ? (
+    <div className="space-y-5 text-[13px] leading-relaxed max-w-md">
+      <p>Attaches magnetically to <strong>gym machines, squat racks, cable towers, weight storage posts, home appliances and metal frames</strong>. Clean chalk / sweat for maximum friction.</p>
+      <p>For non‑MagSafe phones apply the included ring. After curing, you get snap‑on alignment for reliable filming while lifting.</p>
+      <p>Low profile size makes it pocketable between sets and unobtrusive during classes or live streams.</p>
+      <p className="text-[11px] text-gray-500"><strong>Note:</strong> Not suitable for rubber‑coated or thickly painted non‑ferrous surfaces (aluminum). Test hold before releasing your phone fully.</p>
+    </div>
+  ) : (
+    <div className="space-y-5 text-[13px] leading-relaxed max-w-md">
+      <p>The adhesive metal plate can be installed on the protective shell of any smartphone. Thanks to the adhesive metal plate, enjoy optimal visibility to use your phone during your activities.</p>
+      <p><strong>Please note:</strong> depending on the phone cases, the adhesive will stick more or less well (on textured cases), or not at all (on textile protections, anti-dust case).</p>
+    </div>
+  );
+  const insideCopy = isDesk ? (
+    <ul className="space-y-2 text-[13px] leading-relaxed max-w-md list-disc ml-4">
+      <li>MagSafe desk stand with weighted base</li>
+      <li>Magnetic alignment ring (for non‑MagSafe phones)</li>
+      <li>Cleaning wipe & positioning guide</li>
+      <li>Quick start guide</li>
+    </ul>
+  ) : isUniversal ? (
+    <ul className="space-y-2 text-[13px] leading-relaxed max-w-md list-disc ml-4">
+      <li>Universal magnetic mount body</li>
+      <li>2 magnetic safety rings</li>
+      <li>Silicone security band</li>
+      <li>Travel / holiday pouch</li>
+      <li>Quick start guide</li>
+    </ul>
+  ) : isGym ? (
+    <ul className="space-y-2 text-[13px] leading-relaxed max-w-md list-disc ml-4">
+      <li>Gym & stream magnetic mount</li>
+      <li>Magnetic alignment ring</li>
+      <li>Optional nano‑suction friction pad</li>
+      <li>Cleaning wipe + guide</li>
+      <li>Quick start guide</li>
+    </ul>
+  ) : (
+    <ul className="space-y-2 text-[13px] leading-relaxed max-w-md list-disc ml-4">
+      <li>1 x Adhesive metal plate</li>
+      <li>Cleaning wipe</li>
+      <li>Quick start guide</li>
+    </ul>
+  );
   return (
     <section className="max-w-7xl mx-auto px-4 pt-10 pb-24">
       <div className="grid md:grid-cols-2 gap-12 items-start">
@@ -405,25 +650,14 @@ function ProductCompatibility({ slug }: { slug: string }) {
         </div>
         {/* Right copy */}
         <div className="flex flex-col gap-6">
-          <div className="text-[11px] tracking-[2px] font-medium text-red-600 uppercase">Adhesive metal plate</div>
-          <h2 className="text-2xl md:text-3xl font-semibold">Compatible with your phone</h2>
+          <div className="text-[11px] tracking-[2px] font-medium text-red-600 uppercase">{smallLabel}</div>
+          <h2 className="text-2xl md:text-3xl font-semibold">{bigTitle}</h2>
           <div className="flex gap-2 text-[11px] tracking-wide">
             <button onClick={()=>setTab('assembly')} className={`px-4 py-2 border text-[11px] font-semibold ${tab==='assembly'? 'bg-black text-white border-black':'bg-white text-gray-600 border-gray-300 hover:border-black'}`}>ASSEMBLY</button>
             <button onClick={()=>setTab('inside')} className={`px-4 py-2 border text-[11px] font-semibold ${tab==='inside'? 'bg-black text-white border-black':'bg-white text-gray-600 border-gray-300 hover:border-black'}`}>WHAT&apos;S INSIDE</button>
           </div>
-          {tab==='assembly' && (
-            <div className="space-y-5 text-[13px] leading-relaxed max-w-md">
-              <p>The adhesive metal plate can be installed on the protective shell of any smartphone. Thanks to the adhesive metal plate, enjoy optimal visibility to use your phone during your activities.</p>
-              <p><strong>Please note:</strong> depending on the phone cases, the adhesive will stick more or less well (on textured cases), or not at all (on textile protections, anti-dust case).</p>
-            </div>
-          )}
-          {tab==='inside' && (
-            <ul className="space-y-2 text-[13px] leading-relaxed max-w-md list-disc ml-4">
-              <li>1 x Adhesive metal plate</li>
-              <li>Cleaning wipe</li>
-              <li>Quick start guide</li>
-            </ul>
-          )}
+          {tab==='assembly' && assemblyCopy}
+          {tab==='inside' && insideCopy}
         </div>
       </div>
     </section>
@@ -492,8 +726,32 @@ function ProductReviews({ slug }: { slug: string }) {
 }
 
 // Final small FAQ
-function ProductMoreQuestions() {
-  const items = [
+function ProductMoreQuestions({ slug }: { slug: string }) {
+  const isDesk = slug === 'magsafe-desk-stand';
+  const isUniversal = slug === 'pro-moto-holder';
+  const isGym = slug === 'magsafe-gym-stream';
+  const items = isDesk ? [
+    { q: 'Will my phone stay securely on the stand?', a: 'Yes. The high‑grade magnets align with the MagSafe ring and the silicone pad adds extra friction. Standard MagSafe iPhones lock with a noticeable snap and remain stable while tapping or swiping.' },
+    { q: 'Does it work with Android phones?', a: 'Any phone can work if you apply the included magnetic alignment ring (or use a MagSafe‑compatible case). Without a ring, purely non‑MagSafe phones will not attach strongly.' },
+    { q: 'Can I adjust height and angle?', a: 'You can tilt the head for ideal viewing and adjust the arm angle. It is optimized for desk ergonomics (video calls, notifications, charging) within a compact footprint.' },
+    { q: 'Will MagSafe charging still work?', a: 'Yes. The open rear design allows airflow and cable management. Use an official MagSafe or Qi2 puck if you want active charging; route the cable through the rear channel for a clean look.' },
+    { q: 'What surfaces does the base work on?', a: 'The weighted base with non‑slip silicone holds on wood, laminate, metal, and most smooth desk mats. Avoid very dusty or oily surfaces; wipe clean for best grip.' },
+    { q: 'Warranty & support?', a: 'Register your stand to activate the 10‑year magnetic system warranty and contact support for replacement pads or accessories.' },
+  ] : isUniversal ? [
+    { q: 'Where can I use it?', a: 'On e‑bikes, bikes, scooters, strollers, shopping carts, gym equipment and any magnetic/steel surface. The silicone band secures it to non‑magnetic bars.' },
+    { q: 'How strong is the magnet?', a: 'It delivers roughly five times the holding force of common mounts. With the safety ring applied and band engaged, accidental drops are extremely unlikely.' },
+    { q: 'Is setup really under 30 seconds?', a: 'Yes. Loop the band or stick to metal, snap on your phone. First time only: apply the ring to non‑MagSafe phones (align, press 30s, wait 2h for full cure).' },
+    { q: 'Does it affect my phone or battery?', a: 'No. The magnetic field is contained and does not harm electronics or signal. Wireless charging works normally with MagSafe phones/rings removed when needed.' },
+    { q: 'Travel & holidays?', a: 'Lightweight and pocket friendly. Move it from rental bikes to gym machines to strollers without tools.' },
+    { q: 'What is included?', a: 'Mount body, 2 safety rings, silicone security band, travel pouch, quick start guide.' },
+  ] : isGym ? [
+    { q: 'Where can I place it in a gym?', a: 'On most steel uprights, cable machine frames, squat racks, storage posts, plate trees, or any flat ferrous surface. Always test the magnetic hold before letting go fully.' },
+    { q: 'Will vibration make it slip?', a: 'Normal machine vibration is fine. For intense drops or heavy rack pulls, ensure the surface is clean of chalk/sweat. Use the optional nano‑suction pad for extra friction if needed.' },
+    { q: 'Is it safe for my phone filming longer sets?', a: 'Yes. Magnets are aligned for MagSafe; they do not harm your battery or camera. Avoid placing directly on hot surfaces (e.g., near heat vents).' },
+    { q: 'Android compatibility?', a: 'Works with any phone using the included magnetic alignment ring. Center it once; after curing you get repeatable snap alignment.' },
+    { q: 'Can I use it for live streaming?', a: 'Absolutely. Portrait or landscape orientation swaps instantly. Stable hold keeps the frame steady for workouts, classes or coaching calls.' },
+    { q: 'What is included?', a: 'Mount body, magnetic ring, optional nano‑suction pad, cleaning wipe, quick start guide.' },
+  ] : [
     {q: 'Does it really hold up? Can the phone fall?', a: 'The magnetic system has been wind‑tunnel tested and validated by thousands of users. Properly centered, it will not drop your phone under normal riding conditions.'},
     {q: 'Can someone steal my phone?', a: 'Like any accessory, a motivated thief could grab it. The strong magnetic hold resists casual bumps, but we recommend removing your phone when leaving the vehicle unattended.'},
     {q: 'Are magnets dangerous for my phone?', a: 'Modern smartphones are safe: magnets are placed so that they do not affect memory or signal. Wireless charging works with MagSafe-ready setups (see compatibility).'},

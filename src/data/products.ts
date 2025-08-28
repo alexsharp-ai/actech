@@ -31,8 +31,8 @@ export const products: Product[] = [
   {
     slug: 'pro-moto-holder',
     id: 'prod_1',
-    title: 'Professional motorcycle phone holder with metal plate',
-    subtitle: 'Magnetic system with screwed fixing for motorcycle handlebars, steel plate included.',
+  title: 'Ultra‑strong universal magnetic phone mount',
+  subtitle: 'For e‑bikes, bikes, scooters, strollers, shopping carts, gym equipment & any metal surface – 5× stronger than competitors.',
     media: [
       { type: 'video', src: '/v2.mp4', poster: '/head.png' },
       { type: 'image', src: '/p1.png' },
@@ -54,19 +54,16 @@ export const products: Product[] = [
       },
       {
         id: 'support',
-        name: 'Select your support:',
+        name: 'Choose your activity anchor:',
         options: [
-          { id: 'support_moto', label: 'MOTO', image: '/b1.webp' },
-          { id: 'support_bike_pro', label: 'BIKE PRO', image: '/IMG_8007.webp' },
-          { id: 'support_moto_boost', label: 'MOTO PRO BOOST', image: '/IMG_7742-2.webp' }
+          { id: 'support_moto', label: 'E‑BIKE / BIKE', image: '/b1.webp' },
+          { id: 'support_bike_pro', label: 'SCOOTER / STROLLER', image: '/IMG_8007.webp' },
+          { id: 'support_moto_boost', label: 'GYM / METAL SURFACE', image: '/IMG_7742-2.webp' }
         ]
       }
     ],
     upsells: [
-      { id: 'upsell_anti_vibe', name: 'ANTI-VIBRATIONS', price: 7.47, originalPrice: 14.95, image: '/b1.webp' },
-      { id: 'upsell_steel_plate', name: 'ADHESIVE STEEL PLATE', price: 4.97, originalPrice: 9.95, image: '/p2.png' },
-  { id: 'upsell_phone_leash', name: 'PHONE LEASH', price: 4.97, originalPrice: 9.95, image: '/p3.png' },
-  // Cross product upsell (desk stand)
+  { id: 'upsell_steel_plate', name: 'ADHESIVE STEEL PLATE', price: 4.97, originalPrice: 9.95, image: '/p2.png' },
   { id: 'upsell_magsafe_desk_stand', name: 'MAGSAFE DESK STAND', price: 34.95, originalPrice: 39.95, image: '/a3.png' }
     ],
     thresholds: [
@@ -166,6 +163,36 @@ export const products: Product[] = [
   { id: 'upsell_wall_adapter', name: '20W wall adapter', price: 9.95, originalPrice: 14.95, image: '/p3.png' },
   // Cross product upsell (pro moto holder)
   { id: 'upsell_pro_moto_holder', name: 'PRO MOTO HOLDER', price: 39.95, originalPrice: 49.95, image: '/p1.png' }
+    ],
+    thresholds: [
+      { amount: 35, label: '1 accessory -50%' },
+      { amount: 49, label: 'Free delivery' },
+      { amount: 65, label: '5€ offered' }
+    ]
+  }
+  ,{
+    slug: 'magsafe-gym-stream',
+    id: 'prod_5',
+    title: 'MagSafe GYM & STREAM Mount',
+    subtitle: 'High-grip MagSafe mount for gym machines, indoor bikes, metal racks & streaming setups – sweat resistant, ultra stable.',
+    media: [
+  { type: 'image', src: '/g4.png' }, // main
+  { type: 'image', src: '/g1.png' },
+  { type: 'image', src: '/g2.png' },
+  { type: 'image', src: '/g3.png' }
+    ],
+    basePrice: 36.95,
+    reviewCount: 42,
+    rating: 5,
+    variantGroups: [
+      { id: 'finish', name: 'Choose finish:', options: [
+        { id: 'matte_black', label: 'Matte Black', image: '/g1.png' },
+        { id: 'stealth_grey', label: 'Stealth Grey', image: '/g2.png' }
+      ]}
+    ],
+    upsells: [
+      { id: 'upsell_pro_moto_holder_bundle', name: 'UNIVERSAL MOUNT', price: 34.95, originalPrice: 39.95, image: '/p1.png' },
+      { id: 'upsell_cable_gym', name: 'USB‑C braided cable', price: 7.95, originalPrice: 12.95, image: '/p2.png' }
     ],
     thresholds: [
       { amount: 35, label: '1 accessory -50%' },
