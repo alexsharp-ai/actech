@@ -57,9 +57,9 @@ export default function SupportChat(){
       try {
         const r = await fetch(`/api/internal-support/conversations/${bridge.conversationId}/human`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ action:'status' }) });
         const d = await r.json();
-        if(r.ok && d.conversation?.needsHuman === false){
+        if(r.ok && d.conversation?.humanActive){
           setHumanAccepted(true);
-          setMessages(m=> [...m, { role:'assistant', content:'A human agent has joined. Please continue.', ts: Date.now() }]);
+          setMessages(m=> m.some(msg=> msg.content.startsWith('A human agent has joined'))? m : [...m, { role:'assistant', content:'A human agent has joined. Please continue.', ts: Date.now() }]);
           clearInterval(t);
         }
       } catch {}
@@ -130,7 +130,6 @@ export default function SupportChat(){
           });
           if(newAssistant.length){
             setMessages(prev => [...prev, ...newAssistant]);
-            if(humanRequested && !humanAccepted) setHumanAccepted(true);
           }
           // Detect closure
           if(d.status === 'closed' && bridge.conversationId){
