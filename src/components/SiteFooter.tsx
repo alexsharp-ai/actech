@@ -40,7 +40,10 @@ export default function SiteFooter(){
         <div className="max-w-7xl mx-auto px-4 sm:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <span>© {new Date().getFullYear()} AdamCoTech. All rights reserved.</span>
           <div className="flex gap-4">
-            {['Privacy','Terms','Cookies','Imprint'].map(i => <a key={i} href="#" className="hover:text-gray-300">{i}</a>)}
+            <a href="/privacy-policy" className="hover:text-gray-300">Privacy</a>
+            <a href="#" className="hover:text-gray-300">Terms</a>
+            <a href="#" className="hover:text-gray-300">Cookies</a>
+            <a href="#" className="hover:text-gray-300">Imprint</a>
           </div>
         </div>
       </div>
