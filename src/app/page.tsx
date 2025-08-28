@@ -95,26 +95,7 @@ export default function Home() {
           </h1>
           <h2 className="text-base sm:text-xl md:text-2xl font-light mb-8 text-center px-4 max-w-3xl">the most strong, safe and universal magnetic holder is here!</h2>
           {/* Product Boxes */}
-          {/* Mobile: single horizontal row of 4 category boxes */}
-          <div className="mt-6 flex md:hidden gap-3 w-full max-w-5xl px-4 overflow-x-auto snap-x snap-mandatory no-scrollbar">
-            {[
-              {src:'/IMG_8007.webp', label:'E-Bikes & Scooters'},
-              {src:'/b1.webp', label:'Bikes & Strollers'},
-              {src:'/IMG_7742-2.webp', label:'Gym & Lifestyle'},
-              {src:'/l1.webp', label:'Endless possibilities'}
-            ].map(cat => (
-              <a key={cat.src} href="#" className="relative rounded-lg overflow-hidden shadow-lg group flex-shrink-0 w-48 h-32 snap-start">
-                <Image src={cat.src} alt={cat.label} width={192} height={128} className="w-full h-full object-cover group-hover:scale-105 transition" />
-                <div className="absolute inset-0 bg-black/35 flex items-end p-2">
-                  <span className="text-[11px] font-semibold text-white leading-snug">{cat.label}</span>
-                </div>
-              </a>
-            ))}
-            <style jsx>{`
-              .no-scrollbar::-webkit-scrollbar{display:none}
-              .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
-            `}</style>
-          </div>
+          {/* Mobile category boxes moved below hero to keep hero clean */}
           {/* Desktop / tablet: grid */}
           <div className="mt-8 hidden md:grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 w-full max-w-5xl px-4">
             {/* Box 1 */}
@@ -147,6 +128,29 @@ export default function Home() {
             </a>
           </div>
         </div>
+      </section>
+
+      {/* Mobile Categories (moved from hero) */}
+      <section className="md:hidden w-full bg-black pb-4 pt-2">
+        <div className="mt-2 flex gap-3 w-full max-w-5xl px-4 overflow-x-auto snap-x snap-mandatory no-scrollbar">
+          {[
+            {src:'/IMG_8007.webp', label:'E-Bikes & Scooters'},
+            {src:'/b1.webp', label:'Bikes & Strollers'},
+            {src:'/IMG_7742-2.webp', label:'Gym & Lifestyle'},
+            {src:'/l1.webp', label:'Endless possibilities'}
+          ].map(cat => (
+            <a key={cat.src} href="#" className="relative rounded-lg overflow-hidden shadow-lg group flex-shrink-0 w-48 h-32 snap-start">
+              <Image src={cat.src} alt={cat.label} width={192} height={128} className="w-full h-full object-cover group-hover:scale-105 transition" />
+              <div className="absolute inset-0 bg-black/35 flex items-end p-2">
+                <span className="text-[11px] font-semibold text-white leading-snug">{cat.label}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+        <style jsx>{`
+          .no-scrollbar::-webkit-scrollbar{display:none}
+          .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+        `}</style>
       </section>
 
       {/* Info Icons Section */}
