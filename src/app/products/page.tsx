@@ -27,7 +27,67 @@ export default function ProductsPage(){
             </div>
           ))}
         </div>
+        {/* Customer Reviews preview */}
+        <ProductsReviewsPreview />
       </div>
     </div>
+  );
+}
+
+// Lightweight reviews preview (static sample) reused from product page design
+function ProductsReviewsPreview(){
+  const sample = [
+    { id:'r1', name:'Ulrich Borrmann', date:'2025-04-12', body:'Bicycle phone holder with metal plate', verified:true, rating:5 },
+    { id:'r2', name:'Arnaud Petoux', date:'2025-04-12', body:'Easy installation and fast delivery, thank you', verified:true, rating:5 },
+    { id:'r3', name:'Dorin Grama', date:'2025-04-09', body:"Ok, when I received it I thought that the magnets couldn't possibly be so strong in such a small space. I was wrong – if you're not careful and slowly bring the phone closer to the holder...", verified:true, rating:5, short:'Read more' },
+  ];
+  return (
+    <section className="mt-24">
+      <div className="bg-[#fafafa] border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+        <div className="px-10 py-12 flex flex-col gap-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+            <div className="text-center md:text-left flex-1">
+              <h2 className="text-xl font-semibold mb-2 text-gray-800">Customer Reviews</h2>
+              <div className="flex flex-col items-center md:items-start text-sm text-gray-600">
+                <div className="flex items-center gap-2">
+                  <span className="text-red-500">★★★★★</span>
+                  <a href="/product/pro-moto-holder#reviews" className="underline decoration-dotted hover:text-black transition">4.83 out of 5</a>
+                </div>
+                <div>Based on 3769 reviews <span className="inline-block text-green-600">✔️</span></div>
+              </div>
+            </div>
+            <div className="flex justify-center md:justify-end w-full md:w-auto">
+              <Link href="/product/pro-moto-holder#reviews" className="bg-red-500 hover:bg-red-600 text-white rounded-full px-10 py-4 text-sm font-semibold shadow">Write a review</Link>
+            </div>
+          </div>
+          <div className="border-t pt-8">
+            <div className="flex items-center justify-between mb-6 text-sm font-medium text-red-600">
+              <div className="flex items-center gap-1 cursor-default">Most Recent <span className="text-gray-400">▾</span></div>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {sample.map(r => (
+                <div key={r.id} className="bg-white border border-gray-200 rounded-lg shadow-sm p-5 flex flex-col gap-3 text-sm">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-red-500">{'★★★★★'.slice(0, r.rating)}</span>
+                    <span className="text-[10px] text-gray-400">{new Date(r.date).toLocaleDateString()}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">{r.name}</span>
+                    {r.verified && <span className="bg-black text-white text-[10px] px-2 py-0.5 rounded">Verified</span>}
+                  </div>
+                  <div className="text-gray-700 leading-relaxed text-[13px]">{r.body}</div>
+                  {r.short && <button className="self-start text-[11px] underline decoration-dotted text-gray-500 hover:text-black">{r.short}</button>}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="flex items-center justify-center gap-6 text-sm pt-4">
+            {[1,2,3].map(p => (
+              <Link key={p} href="/product/pro-moto-holder#reviews" className={`px-1 ${p===1? 'font-semibold text-black':'text-gray-400 hover:text-black'}`}>{p}</Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
