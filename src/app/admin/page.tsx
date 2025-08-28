@@ -1,9 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import dynamic from 'next/dynamic';
-
-// Lazy load widget only after login to avoid exposing token pre-auth
-const ChatwootWidget = dynamic(()=>import('@/components/ChatwootWidget'), { ssr:false });
+// Chatwoot & external widget removed; internal support only
 
 const ADMIN_USER = 'admin';
 const ADMIN_PASS = 'adamcotech020';
@@ -43,10 +40,8 @@ export default function AdminPage(){
 }
 
 function AdminDashboard(){
-  const [tab, setTab] = React.useState<'overview'|'conversations'|'widget'|'internal'>('overview');
-  interface Conversation { id:number; status:string; contact?: { name?:string; email?:string }; last_activity_at?: number; updated_at?: number; }
+  const [tab, setTab] = React.useState<'overview'|'internal'>('overview');
   interface InternalConvo { id:string; userName?:string; userEmail?:string; status:string; createdAt:number; updatedAt:number; }
-  const [convos, setConvos] = React.useState<Conversation[]>([]);
   const [internalConvos, setInternalConvos] = React.useState<InternalConvo[]>([]);
   const [selectedInternal, setSelectedInternal] = React.useState<InternalConvo | null>(null);
   const [internalMessages, setInternalMessages] = React.useState<{id:string; role:string; content:string; ts:number}[]>([]);
@@ -54,18 +49,7 @@ function AdminDashboard(){
   const [error, setError] = React.useState('');
 
   React.useEffect(()=>{
-    if(tab === 'conversations'){
-      setLoading(true); setError('');
-      fetch('/api/support/conversations').then(r=>r.json()).then(d=>{
-        if(!d.ok){
-          const statusText = d.status ? ` (status ${d.status})` : '';
-          const apiMsg = d.data?.message || d.data?.error || '';
-          setError('Failed fetching conversations' + statusText + (apiMsg? `: ${apiMsg}`:''));
-        }
-        const list = d.data?.payload || d.data?.data || [];
-        setConvos(list);
-      }).catch(e=> setError(String(e))).finally(()=> setLoading(false));
-    } else if(tab === 'internal'){
+    if(tab === 'internal'){
       setLoading(true); setError('');
       fetch('/api/internal-support/conversations').then(r=>r.json()).then(d=>{
         if(!d.ok) setError('Failed fetching internal conversations');
@@ -88,9 +72,7 @@ function AdminDashboard(){
       <div className="flex gap-3 mb-6">
         {[
           {k:'overview' as const, label:'Overview'},
-          {k:'conversations' as const, label:'Chatwoot'},
-          {k:'internal' as const, label:'Internal'},
-          {k:'widget' as const, label:'Widget Test'}
+          {k:'internal' as const, label:'Internal'}
         ].map(t=> (
           <button key={t.k} onClick={()=>setTab(t.k)} className={`px-4 py-2 rounded text-sm font-medium border ${tab===t.k? 'bg-black text-white':'bg-white hover:bg-gray-100'}`}>{t.label}</button>
         ))}
@@ -104,46 +86,7 @@ function AdminDashboard(){
           </ul>
         </div>
       )}
-      {tab==='conversations' && (
-        <div>
-          {loading && <div className="text-sm">Loading…</div>}
-            {error && <div className="text-sm text-red-600 mb-2">{error}</div>}
-          <div className="overflow-x-auto border rounded">
-            <table className="min-w-full text-sm">
-              <thead className="bg-gray-50 text-gray-600">
-                <tr>
-                  <th className="text-left py-2 px-3">ID</th>
-                  <th className="text-left py-2 px-3">Contact</th>
-                  <th className="text-left py-2 px-3">Status</th>
-                  <th className="text-left py-2 px-3">Updated</th>
-                  <th className="py-2 px-3" />
-                </tr>
-              </thead>
-              <tbody>
-                {convos.map(c=> {
-                  const contact = c.contact || {}; const lastActivity = c.last_activity_at || c.updated_at;
-                  return (
-                    <tr key={c.id} className="border-t">
-                      <td className="py-2 px-3 font-mono text-xs">{c.id}</td>
-                      <td className="py-2 px-3">{contact.name || contact.email || '—'}</td>
-                      <td className="py-2 px-3 capitalize">{c.status}</td>
-                      <td className="py-2 px-3 text-xs text-gray-500">{lastActivity ? new Date(lastActivity*1000).toLocaleString(): ''}</td>
-                      <td className="py-2 px-3 text-right"><a className="text-blue-600 underline" href="#" target="_blank" rel="noreferrer">Open</a></td>
-                    </tr>
-                  );
-                })}
-                {!loading && !convos.length && <tr><td colSpan={5} className="py-6 text-center text-gray-500 text-sm">No conversations</td></tr>}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-      {tab==='widget' && (
-        <div className="space-y-4">
-          <p className="text-sm text-gray-600">The Chatwoot widget should already have loaded globally after login (if configured).</p>
-          <ChatwootWidget />
-        </div>
-      )}
+  {error && tab==='internal' && <div className="text-sm text-red-600 mb-2">{error}</div>}
       {tab==='internal' && (
         <div className="grid md:grid-cols-3 gap-6">
           <div className="md:col-span-1 space-y-2">
