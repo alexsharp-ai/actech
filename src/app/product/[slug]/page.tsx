@@ -27,6 +27,7 @@ export default function ProductPage({ params }: Props) {
       </div>
   <FeaturesAndTrust />
   <ProductAssembly slug={product.slug} />
+  <ProductCompatibility slug={product.slug} />
   <ProductReviews slug={product.slug} />
     </div>
   );
@@ -375,6 +376,50 @@ function ProductAssembly({ slug }: { slug: string }) {
                 ))}
               </div>
             </>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Compatibility Section (adhesive metal plate)
+function ProductCompatibility({ slug }: { slug: string }) {
+  // simple reuse of images (first image from product media considered compatible)
+  const product = getProductBySlug(slug);
+  const images = (product?.media || []).filter(m=>m.type==='image').slice(0,4);
+  const [tab,setTab]=useState<'assembly'|'inside'>('assembly');
+  return (
+    <section className="max-w-7xl mx-auto px-4 pt-10 pb-24">
+      <div className="grid md:grid-cols-2 gap-12 items-start">
+        {/* Left visuals */}
+        <div className="flex items-center justify-center gap-6 flex-wrap md:flex-nowrap">
+          {images.map((m,i)=>(
+            <div key={i} className="relative w-32 h-56 flex items-center justify-center">
+              <Image src={m.src} alt={product?.title || 'phone case'} fill sizes="128px" className="object-contain" />
+            </div>
+          ))}
+        </div>
+        {/* Right copy */}
+        <div className="flex flex-col gap-6">
+          <div className="text-[11px] tracking-[2px] font-medium text-red-600 uppercase">Adhesive metal plate</div>
+          <h2 className="text-2xl md:text-3xl font-semibold">Compatible with your phone</h2>
+          <div className="flex gap-2 text-[11px] tracking-wide">
+            <button onClick={()=>setTab('assembly')} className={`px-4 py-2 border text-[11px] font-semibold ${tab==='assembly'? 'bg-black text-white border-black':'bg-white text-gray-600 border-gray-300 hover:border-black'}`}>ASSEMBLY</button>
+            <button onClick={()=>setTab('inside')} className={`px-4 py-2 border text-[11px] font-semibold ${tab==='inside'? 'bg-black text-white border-black':'bg-white text-gray-600 border-gray-300 hover:border-black'}`}>WHAT&apos;S INSIDE</button>
+          </div>
+          {tab==='assembly' && (
+            <div className="space-y-5 text-[13px] leading-relaxed max-w-md">
+              <p>The adhesive metal plate can be installed on the protective shell of any smartphone. Thanks to the adhesive metal plate, enjoy optimal visibility to use your phone during your activities.</p>
+              <p><strong>Please note:</strong> depending on the phone cases, the adhesive will stick more or less well (on textured cases), or not at all (on textile protections, anti-dust case).</p>
+            </div>
+          )}
+          {tab==='inside' && (
+            <ul className="space-y-2 text-[13px] leading-relaxed max-w-md list-disc ml-4">
+              <li>1 x Adhesive metal plate</li>
+              <li>Cleaning wipe</li>
+              <li>Quick start guide</li>
+            </ul>
           )}
         </div>
       </div>
