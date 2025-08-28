@@ -39,6 +39,7 @@ export const LazyVideo: React.FC<LazyVideoProps> = ({ src, poster, inline = true
       muted
       playsInline={inline}
       loop
+      autoPlay
       preload="none"
       poster={poster}
       className={className + " transition-opacity duration-500 " + (loaded ? "opacity-100" : "opacity-0")}
