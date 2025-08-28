@@ -2,6 +2,7 @@
 "use client";
 import React, { useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import LazyVideo from "@/components/LazyVideo";
 
 
@@ -140,7 +141,7 @@ export default function Home() {
                   <span className="font-semibold">3769</span> <span className="text-gray-600 ml-1">reviews</span>
                 </div>
               </div>
-              <a href="/product/pro-moto-holder" className="w-full bg-black text-white py-3 rounded font-semibold text-lg hover:bg-gray-900 transition text-center">View product 39,95 €</a>
+              <Link href="/product/pro-moto-holder" className="w-full bg-black text-white py-3 rounded font-semibold text-lg hover:bg-gray-900 transition text-center">View product 39,95 €</Link>
             </div>
             {/* Product 2 */}
             <div className="bg-white rounded-lg shadow p-4 flex flex-col h-full">
@@ -155,7 +156,7 @@ export default function Home() {
                   <span className="font-semibold">3315</span> <span className="text-gray-600 ml-1">reviews</span>
                 </div>
               </div>
-              <a href="/product/pro-moto-holder" className="w-full bg-black text-white py-3 rounded font-semibold text-lg hover:bg-gray-900 transition text-center">View product 29,95 €</a>
+              <Link href="/product/pro-moto-holder" className="w-full bg-black text-white py-3 rounded font-semibold text-lg hover:bg-gray-900 transition text-center">View product 29,95 €</Link>
             </div>
             {/* Product 3 */}
             <div className="bg-white rounded-lg shadow p-4 flex flex-col h-full">
@@ -170,7 +171,7 @@ export default function Home() {
                   <span className="font-semibold">3235</span> <span className="text-gray-600 ml-1">reviews</span>
                 </div>
               </div>
-              <a href="/product/pro-moto-holder" className="w-full bg-black text-white py-3 rounded font-semibold text-lg hover:bg-gray-900 transition text-center">View product 49,95 €</a>
+              <Link href="/product/pro-moto-holder" className="w-full bg-black text-white py-3 rounded font-semibold text-lg hover:bg-gray-900 transition text-center">View product 49,95 €</Link>
             </div>
           </div>
         </div>

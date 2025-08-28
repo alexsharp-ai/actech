@@ -51,7 +51,7 @@ function ProductsReviewsPreview(){
               <div className="flex flex-col items-center md:items-start text-sm text-gray-600">
                 <div className="flex items-center gap-2">
                   <span className="text-red-500">★★★★★</span>
-                  <a href="/product/pro-moto-holder#reviews" className="underline decoration-dotted hover:text-black transition">4.83 out of 5</a>
+                  <Link href="/product/pro-moto-holder#reviews" className="underline decoration-dotted hover:text-black transition">4.83 out of 5</Link>
                 </div>
                 <div>Based on 3769 reviews <span className="inline-block text-green-600">✔️</span></div>
               </div>
