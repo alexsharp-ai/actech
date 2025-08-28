@@ -24,8 +24,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+  <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <link rel="preload" as="video" href="/v2.mp4" />
+    <link rel="preload" as="image" href="/head.png" />
         {children}
         <SupportChat />
       </body>

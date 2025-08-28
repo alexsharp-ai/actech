@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import LazyVideo from "@/components/LazyVideo";
 
 
 export default function Home() {
@@ -72,31 +73,20 @@ export default function Home() {
         </div>
       )}
 
-      {/* Hero Section with responsive video/image */}
+      {/* Hero Section with video on all devices (optimized) */}
       <section className="relative flex flex-col items-center justify-center min-h-[60vh] md:min-h-[70vh] w-full overflow-hidden">
-        {/* Mobile: static image (no autoplay video for perf/data) */}
-        <div className="absolute inset-0 w-full h-full sm:hidden">
-          <Image
-            src="/head.png"
-            alt="AdamCoTech hero"
-            fill
-            priority
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-black/55" />
-        </div>
-        {/* Desktop / tablet: video */}
         <video
-          className="hidden sm:block absolute inset-0 w-full h-full object-cover z-0"
+          className="absolute inset-0 w-full h-full object-cover z-0"
           autoPlay
           loop
           muted
           playsInline
           poster="/head.png"
+          preload="metadata"
         >
           <source src="/v2.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-black/60 z-10 hidden sm:block" />
+        <div className="absolute inset-0 bg-black/55 z-10" />
         {/* Hero Content */}
         <div className="relative z-20 flex flex-col items-center justify-center w-full h-full pt-24 pb-12">
           <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 text-center px-4">
@@ -309,13 +299,11 @@ export default function Home() {
         <div className="grid md:grid-cols-2 min-h-[380px]">
           <div className="relative flex items-center justify-center p-8 overflow-hidden">
             {/* Brand story media: static image on mobile, video on md+ */}
-            <div className="absolute inset-0 md:hidden">
-              <Image src="/head.png" alt="Brand story" fill className="object-cover" />
-              <div className="absolute inset-0 bg-white/20" />
-            </div>
-            <video className="hidden md:block absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline poster="/head.png">
-              <source src="/v2.mp4" type="video/mp4" />
-            </video>
+            <LazyVideo
+              src="/v2.mp4"
+              poster="/head.png"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
             <div className="absolute inset-0 bg-white/15" />
             <div className="relative p-6 md:p-10 max-w-xl w-full rounded bg-white/80 shadow">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6 text-black">Simple, effective, long-lasting products</h2>
