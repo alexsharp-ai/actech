@@ -3,12 +3,13 @@ import type { NextConfig } from "next";
 const securityHeaders = [
   { key: 'Content-Security-Policy', value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://app.chatwoot.com",
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob: https:",
+      "img-src 'self' data: blob: https: https://app.chatwoot.com",
       "media-src 'self' data: blob: https:",
       "font-src 'self' data:",
-      "connect-src 'self' https:",
+      "connect-src 'self' https: https://app.chatwoot.com wss://app.chatwoot.com",
+      "frame-src 'self' https://app.chatwoot.com",
       "frame-ancestors 'self'",
     ].join('; ') },
   { key: 'X-DNS-Prefetch-Control', value: 'on' },
