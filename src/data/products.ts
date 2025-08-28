@@ -65,7 +65,9 @@ export const products: Product[] = [
     upsells: [
       { id: 'upsell_anti_vibe', name: 'ANTI-VIBRATIONS', price: 7.47, originalPrice: 14.95, image: '/b1.webp' },
       { id: 'upsell_steel_plate', name: 'ADHESIVE STEEL PLATE', price: 4.97, originalPrice: 9.95, image: '/p2.png' },
-      { id: 'upsell_phone_leash', name: 'PHONE LEASH', price: 4.97, originalPrice: 9.95, image: '/p3.png' }
+  { id: 'upsell_phone_leash', name: 'PHONE LEASH', price: 4.97, originalPrice: 9.95, image: '/p3.png' },
+  // Cross product upsell (desk stand)
+  { id: 'upsell_magsafe_desk_stand', name: 'MAGSAFE DESK STAND', price: 34.95, originalPrice: 39.95, image: '/a3.png' }
     ],
     thresholds: [
       { amount: 30, label: '1 accessory at -50%' },
@@ -161,7 +163,9 @@ export const products: Product[] = [
     ],
     upsells: [
       { id: 'upsell_cable_usb_c', name: 'USB‑C braided cable', price: 7.95, originalPrice: 12.95, image: '/p2.png' },
-      { id: 'upsell_wall_adapter', name: '20W wall adapter', price: 9.95, originalPrice: 14.95, image: '/p3.png' }
+  { id: 'upsell_wall_adapter', name: '20W wall adapter', price: 9.95, originalPrice: 14.95, image: '/p3.png' },
+  // Cross product upsell (pro moto holder)
+  { id: 'upsell_pro_moto_holder', name: 'PRO MOTO HOLDER', price: 39.95, originalPrice: 49.95, image: '/p1.png' }
     ],
     thresholds: [
       { amount: 35, label: '1 accessory -50%' },
