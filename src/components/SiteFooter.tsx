@@ -32,7 +32,17 @@ export default function SiteFooter(){
         <div>
           <h4 className="text-white font-semibold mb-4">Support</h4>
             <ul className="space-y-2 text-sm">
-              {[{label:'FAQ',href:'/faq'},{label:'Warranty',href:'/warranty'},{label:'Returns',href:'/returns'},{label:'Contact',href:'/contact'}].map(i => <li key={i.label}><a href={i.href} className="hover:text-white transition">{i.label}</a></li>)}
+              {[{label:'FAQ',href:'/faq'},{label:'Warranty',href:'/warranty'},{label:'Returns',href:'/returns'},{label:'Contact',href:'/contact'}].map(i => {
+                const highlight = ['FAQ','Returns','Contact'].includes(i.label);
+                const base = 'transition';
+                const normal = 'hover:text-white';
+                const pill = 'bg-white text-black rounded px-2 py-1 font-medium hover:bg-white hover:text-black shadow-sm';
+                return (
+                  <li key={i.label}>
+                    <a href={i.href} className={base + ' ' + (highlight ? pill : normal)}>{i.label}</a>
+                  </li>
+                );
+              })}
             </ul>
         </div>
         <div>
