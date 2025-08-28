@@ -53,27 +53,27 @@ export default function WarrantyPage(){
             Thank you! Your warranty extension request has been received. Keep your proof of purchase for any future claim.
           </div>
         ) : (
-          <form onSubmit={(e)=>{e.preventDefault();setSubmitted(true);}} className="grid gap-6 bg-white border rounded-xl p-8 shadow-sm">
+          <form onSubmit={async (e)=>{e.preventDefault(); const fd = new FormData(e.currentTarget as HTMLFormElement); const payload = Object.fromEntries(fd.entries()); try { const res = await fetch('/api/warranty', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)}); const j = await res.json(); if(j.ok){ setSubmitted(true);} } catch { /* ignore */ } }} className="grid gap-6 bg-white border rounded-xl p-8 shadow-sm">
             <div className="grid md:grid-cols-2 gap-6">
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-semibold tracking-wide uppercase text-gray-600">First name</label>
-                <input required className="border rounded px-3 py-2 text-sm" placeholder="Jane" />
+                <input required name="firstName" className="border rounded px-3 py-2 text-sm" placeholder="Jane" />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-semibold tracking-wide uppercase text-gray-600">Last name</label>
-                <input required className="border rounded px-3 py-2 text-sm" placeholder="Doe" />
+                <input required name="lastName" className="border rounded px-3 py-2 text-sm" placeholder="Doe" />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-semibold tracking-wide uppercase text-gray-600">Email</label>
-                <input required type="email" className="border rounded px-3 py-2 text-sm" placeholder="you@example.com" />
+                <input required name="email" type="email" className="border rounded px-3 py-2 text-sm" placeholder="you@example.com" />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-semibold tracking-wide uppercase text-gray-600">Order / receipt number</label>
-                <input required className="border rounded px-3 py-2 text-sm" placeholder="#A12345" />
+                <input required name="orderNumber" className="border rounded px-3 py-2 text-sm" placeholder="#A12345" />
               </div>
               <div className="flex flex-col gap-2 md:col-span-2">
                 <label className="text-xs font-semibold tracking-wide uppercase text-gray-600">Product</label>
-                <select required className="border rounded px-3 py-2 text-sm bg-white">
+                <select required name="product" className="border rounded px-3 py-2 text-sm bg-white">
                   <option value="">Select a product</option>
                   <option>Ultra‑strong universal magnetic phone mount</option>
                   <option>MagSafe Desk Stand</option>
@@ -84,7 +84,7 @@ export default function WarrantyPage(){
               </div>
               <div className="flex flex-col gap-2 md:col-span-2">
                 <label className="text-xs font-semibold tracking-wide uppercase text-gray-600">Message (optional)</label>
-                <textarea rows={4} className="border rounded px-3 py-2 text-sm" placeholder="Extra info or feedback" />
+                <textarea name="message" rows={4} className="border rounded px-3 py-2 text-sm" placeholder="Extra info or feedback" />
               </div>
             </div>
             <div className="flex items-start gap-2 text-xs text-gray-600">
