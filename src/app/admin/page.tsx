@@ -1,5 +1,9 @@
 "use client";
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
+
+// Lazy load widget only after login to avoid exposing token pre-auth
+const ChatwootWidget = dynamic(()=>import('@/components/ChatwootWidget'), { ssr:false });
 
 const ADMIN_USER = 'admin';
 const ADMIN_PASS = 'adamcotech020';
@@ -36,8 +40,13 @@ export default function AdminPage(){
   return (
     <div className="min-h-screen bg-white text-black p-6">
       <h1 className="text-2xl font-bold mb-4">Customer Support Console</h1>
-      <p className="text-sm mb-6 text-gray-600">(Placeholder) Integrate Chatwoot widget or API here.</p>
-      <div className="border rounded p-4 bg-gray-50 text-sm">Chatwoot integration pending.</div>
+      <p className="text-sm mb-6 text-gray-600">Chat agent widget loads below (self‑hosted Docker Chatwoot).</p>
+      <div className="border rounded p-4 bg-gray-50 text-sm mb-10">
+        If the chat bubble does not appear, ensure the environment variables
+        <code className="bg-black/10 px-1 ml-1">NEXT_PUBLIC_CHATWOOT_BASE_URL</code> and
+        <code className="bg-black/10 px-1 ml-1">NEXT_PUBLIC_CHATWOOT_WEBSITE_TOKEN</code> are set.
+      </div>
+      <ChatwootWidget />
     </div>
   );
 }
