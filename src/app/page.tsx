@@ -10,6 +10,15 @@ import { products as allProducts } from '@/data/products';
 export default function Home() {
   // legacy mobile menu removed; ensure body scroll always enabled
   useEffect(()=>{ document.body.style.overflow = ''; },[]);
+  async function checkout(slug: string){
+    try {
+      const r = await fetch('/api/checkout', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ items: [{ slug, quantity: 1 }] }) });
+      const d = await r.json();
+      if(d.url){ window.location.href = d.url; } else alert(d.error || 'Checkout error');
+    } catch {
+      alert('Network error');
+    }
+  }
   return (
   <div className="font-sans bg-black text-white min-h-screen flex flex-col">
 
@@ -152,7 +161,10 @@ export default function Home() {
                   <span className="font-semibold">{p.reviewCount}</span> <span className="text-gray-600 ml-1">reviews</span>
                 </div>
               </div>
-              <Link href={`/product/${p.slug}`} className="w-full bg-black text-white py-3 rounded font-semibold text-lg hover:bg-gray-900 transition text-center">View product {price} €</Link>
+              <div className="mt-2 flex flex-col gap-3">
+                <button onClick={()=>checkout(p.slug)} className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded font-semibold text-sm transition">Buy now {price} €</button>
+                <Link href={`/product/${p.slug}`} className="w-full bg-black text-white py-3 rounded font-semibold text-sm hover:bg-gray-900 transition text-center">View</Link>
+              </div>
             </div>
           );
         })}
