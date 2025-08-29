@@ -32,7 +32,7 @@ export default function SiteHeader(){
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-white">
           <Link href="/warranty" className="hover:text-red-500 transition">Warranty</Link>
           <Link href="/admin" className="hover:text-red-500 transition">Admin</Link>
-          <Link href="/#faq" className="hover:text-red-500 transition">FAQ</Link>
+          <Link href="/faq" className="hover:text-red-500 transition">FAQ</Link>
           <button className="hover:text-red-500 transition" aria-label="Search">
             <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </button>
