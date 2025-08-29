@@ -7,11 +7,16 @@ export interface SupportConversation { id: string; createdAt: number; updatedAt:
 
 interface DataShape { conversations: SupportConversation[] }
 
-const dataFile = process.env.SUPPORT_DATA_FILE || path.join(process.cwd(), 'support-data.json');
+// In Vercel production the filesystem is read-only except /tmp. Use /tmp there.
+const runtimeDataPath = (process.env.VERCEL && process.env.NODE_ENV === 'production')
+  ? path.join('/tmp', 'support-data.json')
+  : path.join(process.cwd(), 'support-data.json');
+const dataFile = process.env.SUPPORT_DATA_FILE || runtimeDataPath;
 // Always reload file per operation to avoid stale state across route executions.
 // (For higher throughput, introduce a small in-memory TTL cache later.)
 let data: DataShape = { conversations: [] };
 let writeInFlight: Promise<void> | null = null;
+let lastWriteError: string | null = null;
 
 async function load(){
   try {
@@ -25,7 +30,10 @@ async function load(){
 
 async function persist(){
   if(writeInFlight) return writeInFlight;
-  const p = fs.writeFile(dataFile, JSON.stringify(data, null, 2), 'utf8').catch(()=>{}).finally(()=>{ writeInFlight = null; });
+  const p = fs.writeFile(dataFile, JSON.stringify(data, null, 2), 'utf8')
+    .then(()=> { lastWriteError = null; })
+    .catch(err=> { lastWriteError = err?.message || 'write_failed'; if(process.env.NODE_ENV !== 'production') console.error('[supportStore] persist error', err); })
+    .finally(()=>{ writeInFlight = null; });
   writeInFlight = p;
   return p;
 }
@@ -138,5 +146,10 @@ export async function purgeAll(){
   data.conversations = [];
   await persist();
   return true;
+}
+
+// Diagnostics helper (used by status endpoint)
+export function _diagnostics(){
+  return { file: dataFile, conversationCount: data.conversations.length, lastWriteError };
 }
 
