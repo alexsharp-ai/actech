@@ -111,6 +111,16 @@ function VariantSelectors({ productSlug }: { productSlug: string }) {
 function AddToCartBlock({ slug }: { slug: string }) {
   const product = useProduct(slug);
   const [qty,setQty]=useState(1);
+  async function checkout(){
+    try {
+      const r = await fetch('/api/checkout', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ items: [{ slug, quantity: qty }] }) });
+      const d = await r.json();
+      if(d.url){ window.location.href = d.url; }
+      else alert(d.error || 'Checkout error');
+  } catch {
+      alert('Network error');
+    }
+  }
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-3">
@@ -121,6 +131,7 @@ function AddToCartBlock({ slug }: { slug: string }) {
         </div>
         <button className="flex-1 bg-black text-white py-4 rounded font-semibold hover:bg-gray-800 transition text-sm">Add to cart - {product.basePrice.toFixed(2).replace('.',',')}€</button>
       </div>
+      <button onClick={checkout} className="bg-red-600 hover:bg-red-700 text-white py-3 rounded font-semibold text-sm">Buy now with Stripe</button>
     </div>
   );
 }
