@@ -1,6 +1,84 @@
 {
   "conversations": [
     {
+      "id": "0b16c7e1-9d3b-457b-92ff-bcf233ac313b",
+      "createdAt": 1756473068195,
+      "updatedAt": 1756473131732,
+      "status": "closed",
+      "needsHuman": false,
+      "humanActive": true,
+      "unread": false,
+      "source": "chat",
+      "messages": [
+        {
+          "id": "8bca59da-43fb-4772-b195-8419e90e8c12",
+          "role": "user",
+          "content": "What are the shipping times?",
+          "ts": 1756473068195
+        },
+        {
+          "id": "f06f3d9c-8ea2-44f2-bb44-fef7a1525d2e",
+          "role": "assistant",
+          "content": "We ship orders within 24h. Delivery typically takes 2-5 business days in the EU.",
+          "ts": 1756473068694
+        },
+        {
+          "id": "35141165-58d8-4de8-aafd-7d0bf2196c7b",
+          "role": "user",
+          "content": "I want to talk to a human agent",
+          "ts": 1756473085762
+        },
+        {
+          "id": "e6ac5c07-3944-4667-bd35-d20d67698ef4",
+          "role": "assistant",
+          "content": "We'll connect you with a human agent now. Please hold on a moment.",
+          "ts": 1756473086347
+        },
+        {
+          "id": "014136a1-7a4d-4c34-8abf-113d017d382e",
+          "role": "assistant",
+          "content": "jfhgdhjflj",
+          "ts": 1756473119476
+        }
+      ]
+    },
+    {
+      "id": "4519997b-1732-455c-9509-2697b7e5dc82",
+      "createdAt": 1756472906495,
+      "updatedAt": 1756472950094,
+      "status": "closed",
+      "needsHuman": false,
+      "humanActive": true,
+      "unread": false,
+      "source": "chat",
+      "messages": [
+        {
+          "id": "de7eef19-37e5-420d-addd-d46cea29d110",
+          "role": "user",
+          "content": "What are the shipping times?",
+          "ts": 1756472906495
+        },
+        {
+          "id": "0f6dd4e2-ce41-4678-af30-4c024b1292fd",
+          "role": "assistant",
+          "content": "We ship orders within 24h. Delivery typically takes 2-5 business days in the EU.",
+          "ts": 1756472908268
+        },
+        {
+          "id": "0731dfd5-d81d-4894-a9e3-fe50cf13428f",
+          "role": "user",
+          "content": "I want to talk to a human agent",
+          "ts": 1756472926421
+        },
+        {
+          "id": "aedb3801-fac9-4996-9e23-a16d1f9c84eb",
+          "role": "assistant",
+          "content": "We'll connect you with a human agent now. Please hold on a moment.",
+          "ts": 1756472927376
+        }
+      ]
+    },
+    {
       "id": "23fc7a72-8793-41fb-a48d-34879385b003",
       "createdAt": 1756415627259,
       "updatedAt": 1756419274163,
