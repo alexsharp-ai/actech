@@ -4,7 +4,7 @@ import { getProductBySlug } from '@/data/products';
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 let stripe: Stripe | null = null;
-if (stripeKey) stripe = new Stripe(stripeKey, { apiVersion: '2024-06-20' as any });
+if (stripeKey) stripe = new Stripe(stripeKey);
 
 export async function POST(req: NextRequest){
   try {
@@ -21,8 +21,9 @@ export async function POST(req: NextRequest){
       metadata: { slug, quantity: String(quantity) }
     });
     return NextResponse.json({ clientSecret: intent.client_secret });
-  } catch (e:any){
-    console.error(e);
-    return NextResponse.json({ error: e.message || 'Server error' }, { status: 500 });
+  } catch (e: unknown){
+    const msg = e instanceof Error ? e.message : 'Server error';
+    console.error('PI create error', e);
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }

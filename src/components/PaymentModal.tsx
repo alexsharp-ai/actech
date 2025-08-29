@@ -1,11 +1,14 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe, StripePaymentElementChangeEvent } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
-const stripePromise = typeof window !== 'undefined' && process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-  ? loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
-  : Promise.resolve(null);
+const stripePromise = ((): ReturnType<typeof loadStripe> | null => {
+  if (typeof window === 'undefined') return null;
+  const pk = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+  if (!pk) return null;
+  return loadStripe(pk);
+})();
 
 interface WrapperProps { slug: string; quantity?: number; onClose: () => void; }
 
@@ -30,7 +33,7 @@ export function PaymentModalWrapper(props: WrapperProps){
   if(!clientSecret) return <div className='p-6 text-sm text-gray-400'>Preparing payment…</div>;
 
   return (
-    <Elements options={{ clientSecret, appearance:{ theme:'flat' } }} stripe={stripePromise as any}>
+    <Elements options={{ clientSecret, appearance:{ theme:'flat' } }} stripe={stripePromise ?? undefined}>
       <PaymentModal {...props} timeoutHit={timeoutHit} />
     </Elements>
   );
@@ -58,13 +61,29 @@ function PaymentModal({ onClose, timeoutHit }: WrapperProps & { timeoutHit?: boo
   }
 
   const showDiag = timeoutHit && !elementReady;
+  useEffect(()=>{
+    if(timeoutHit && !elementReady){
+      console.warn('[PaymentModal] Element not ready after timeout. Check publishable key & payment methods.');
+    }
+  }, [timeoutHit, elementReady]);
 
   return (
     <form onSubmit={handleSubmit} className='flex flex-col gap-4 p-6 w-full max-w-md'>
-      <PaymentElement onReady={()=> setElementReady(true)} onChange={(e:any)=>{ if(e?.complete) setMessage(undefined); }} />
+      <PaymentElement onReady={()=> setElementReady(true)} onChange={(e: StripePaymentElementChangeEvent)=>{ if(e.complete) setMessage(undefined); }} />
       {showDiag && (
         <div className='text-[11px] text-amber-600 bg-amber-50 border border-amber-200 rounded p-2'>
           Payment form not loading: verify you are using the correct <code className='font-mono'>NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY</code> (pk_...), that the Card payment method is enabled in your Stripe dashboard, and you are not blocking third‑party scripts (extensions / ad blockers). Try using test keys first.</div>
+      )}
+      {showDiag && (
+        <button type='button' onClick={async()=>{
+          try {
+            const r = await fetch('/api/checkout', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ items: [{ slug: 'pro-moto-holder', quantity: 1 }] }) });
+            const d = await r.json();
+            if(d.url) window.location.href = d.url; else alert(d.error || 'Redirect checkout failed');
+          } catch {
+            alert('Network error creating fallback checkout');
+          }
+        }} className='mt-2 text-xs underline text-black/70 hover:text-black self-start'>Open full checkout instead</button>
       )}
       {message && <div className='text-xs text-center text-red-500'>{message}</div>}
       <div className='flex gap-3'>

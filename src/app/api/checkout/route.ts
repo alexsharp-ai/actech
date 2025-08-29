@@ -6,7 +6,8 @@ import { getProductBySlug } from '@/data/products';
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 let stripe: Stripe | null = null;
 if (stripeKey) {
-  stripe = new Stripe(stripeKey, { apiVersion: '2024-06-20' as any });
+  // Omit explicit apiVersion to avoid type mismatch & keep SDK updated automatically
+  stripe = new Stripe(stripeKey);
 }
 
 export async function POST(req: NextRequest) {
@@ -38,8 +39,9 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ id: session.id, url: session.url });
-  } catch (e: any) {
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : 'Server error';
     console.error('Checkout error', e);
-    return NextResponse.json({ error: e.message || 'Server error' }, { status: 500 });
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
