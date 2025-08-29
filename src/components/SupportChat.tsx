@@ -38,7 +38,7 @@ export default function SupportChat(){
   const [open, setOpen] = useState(false);
   // Always start fresh: no persisted conversation from previous page load
   const [bridge, setBridge] = useState<Bridge>({ conversationId: undefined });
-  const [messages, setMessages] = useState<ChatMessage[]>([{ role:'assistant', content: WELCOME, ts: Date.now() }]);
+  const [messages, setMessages] = useState<ChatMessage[]>([{ role:'assistant', content: WELCOME, ts: Date.now(), id: 'welcome' }]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [humanRequested, setHumanRequested] = useState(false);
@@ -81,7 +81,12 @@ export default function SupportChat(){
     if(/human|agent/i.test(text)) setHumanRequested(true);
     if(!humanAccepted){
       const answer = await askBackend(text, convId || bridge.conversationId);
-      setMessages(m=> [...m, { role:'assistant', content: answer, ts: Date.now() }]);
+      // Prevent duplicate assistant message (sometimes both backend push + poll retrieval)
+      setMessages(m=> {
+        const last = [...m].reverse().find(x=> x.role==='assistant');
+        if(last && last.content.trim() === answer.trim()) return m; // skip duplicate
+        return [...m, { role:'assistant', content: answer, ts: Date.now() }];
+      });
       if(/we will connect you now with our agent|connect you with a human agent/i.test(answer)) setHumanRequested(true);
       if(convId) await sendToInternal(convId, 'assistant', answer);
     }
@@ -161,7 +166,7 @@ export default function SupportChat(){
           </div>
           <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3 text-sm custom-scrollbar">
             {messages.map(m=> (
-              <div key={m.ts} className={(m.role==='user'?'ml-auto bg-red-500/90':'mr-auto bg-white/10')+" px-3 py-2 rounded-lg max-w-[85%] whitespace-pre-wrap leading-relaxed"}>{m.content}</div>
+              <div key={m.id || m.ts} className={(m.role==='user'?'ml-auto bg-red-500/90':'mr-auto bg-white/10')+" px-3 py-2 rounded-lg max-w-[85%] whitespace-pre-wrap leading-relaxed"}>{m.content}</div>
             ))}
             {loading && <div className='mr-auto bg-white/10 px-3 py-2 rounded-lg text-gray-300 animate-pulse'>Thinking…</div>}
             {humanRequested && !humanAccepted && <div className='mr-auto bg-yellow-500/20 border border-yellow-500/30 text-yellow-300 px-3 py-2 rounded-lg text-xs'>Connecting you to a human…</div>}
