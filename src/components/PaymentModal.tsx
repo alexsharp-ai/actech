@@ -1,14 +1,19 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { loadStripe, StripePaymentElementChangeEvent } from '@stripe/stripe-js';
+import { loadStripe, StripePaymentElementChangeEvent, Stripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
-const stripePromise = ((): ReturnType<typeof loadStripe> | null => {
-  if (typeof window === 'undefined') return null;
-  const pk = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-  if (!pk) return null;
-  return loadStripe(pk);
-})();
+// Load Stripe (client only). We keep a union so we can pass either a Promise or null to <Elements />.
+const stripePromise: Promise<Stripe | null> | null = typeof window !== 'undefined'
+  ? (() => {
+      const pk = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+      if (!pk) {
+        if (process.env.NODE_ENV !== 'production') console.warn('[Stripe] Missing NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY');
+        return Promise.resolve(null);
+      }
+      return loadStripe(pk);
+    })()
+  : null;
 
 interface WrapperProps { slug: string; quantity?: number; onClose: () => void; }
 
@@ -33,13 +38,13 @@ export function PaymentModalWrapper(props: WrapperProps){
   if(!clientSecret) return <div className='p-6 text-sm text-gray-400'>Preparing payment…</div>;
 
   return (
-    <Elements options={{ clientSecret, appearance:{ theme:'flat' } }} stripe={stripePromise ?? undefined}>
+    <Elements options={{ clientSecret, appearance:{ theme:'flat' } }} stripe={stripePromise}>
       <PaymentModal {...props} timeoutHit={timeoutHit} />
     </Elements>
   );
 }
 
-function PaymentModal({ onClose, timeoutHit }: WrapperProps & { timeoutHit?: boolean }){
+function PaymentModal({ onClose, timeoutHit, slug }: WrapperProps & { timeoutHit?: boolean }){
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
@@ -75,15 +80,19 @@ function PaymentModal({ onClose, timeoutHit }: WrapperProps & { timeoutHit?: boo
           Payment form not loading: verify you are using the correct <code className='font-mono'>NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY</code> (pk_...), that the Card payment method is enabled in your Stripe dashboard, and you are not blocking third‑party scripts (extensions / ad blockers). Try using test keys first.</div>
       )}
       {showDiag && (
-        <button type='button' onClick={async()=>{
-          try {
-            const r = await fetch('/api/checkout', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ items: [{ slug: 'pro-moto-holder', quantity: 1 }] }) });
-            const d = await r.json();
-            if(d.url) window.location.href = d.url; else alert(d.error || 'Redirect checkout failed');
-          } catch {
-            alert('Network error creating fallback checkout');
-          }
-        }} className='mt-2 text-xs underline text-black/70 hover:text-black self-start'>Open full checkout instead</button>
+        <button
+          type='button'
+          onClick={async()=>{
+            try {
+              const r = await fetch('/api/checkout', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ items: [{ slug, quantity: 1 }] }) });
+              const d = await r.json();
+              if(d.url) window.location.href = d.url; else alert(d.error || 'Redirect checkout failed');
+            } catch {
+              alert('Network error creating fallback checkout');
+            }
+          }}
+          className='mt-2 text-xs underline text-black/70 hover:text-black self-start'
+        >Open full checkout instead</button>
       )}
       {message && <div className='text-xs text-center text-red-500'>{message}</div>}
       <div className='flex gap-3'>
