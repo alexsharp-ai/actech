@@ -13,6 +13,7 @@ export function PaymentModalWrapper(props: WrapperProps){
   const { slug, quantity = 1 } = props;
   const [clientSecret, setClientSecret] = useState<string|undefined>();
   const [error, setError] = useState<string|undefined>();
+  const [timeoutHit,setTimeoutHit]=useState(false);
   useEffect(()=>{
     (async()=>{
       try{
@@ -21,6 +22,8 @@ export function PaymentModalWrapper(props: WrapperProps){
         if(d.clientSecret) setClientSecret(d.clientSecret); else setError(d.error || 'Unable to start payment');
       }catch{ setError('Network error'); }
     })();
+    const t=setTimeout(()=> setTimeoutHit(true), 5000);
+    return ()=> clearTimeout(t);
   }, [slug, quantity]);
 
   if(error) return <div className='p-6 text-sm text-red-500'>Error: {error}</div>;
@@ -28,16 +31,17 @@ export function PaymentModalWrapper(props: WrapperProps){
 
   return (
     <Elements options={{ clientSecret, appearance:{ theme:'flat' } }} stripe={stripePromise as any}>
-      <PaymentModal {...props} />
+      <PaymentModal {...props} timeoutHit={timeoutHit} />
     </Elements>
   );
 }
 
-function PaymentModal({ onClose }: WrapperProps){
+function PaymentModal({ onClose, timeoutHit }: WrapperProps & { timeoutHit?: boolean }){
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string|undefined>();
+  const [elementReady,setElementReady]=useState(false);
 
   async function handleSubmit(e: React.FormEvent){
     e.preventDefault();
@@ -53,9 +57,15 @@ function PaymentModal({ onClose }: WrapperProps){
     setLoading(false);
   }
 
+  const showDiag = timeoutHit && !elementReady;
+
   return (
     <form onSubmit={handleSubmit} className='flex flex-col gap-4 p-6 w-full max-w-md'>
-      <PaymentElement />
+      <PaymentElement onReady={()=> setElementReady(true)} onChange={(e:any)=>{ if(e?.complete) setMessage(undefined); }} />
+      {showDiag && (
+        <div className='text-[11px] text-amber-600 bg-amber-50 border border-amber-200 rounded p-2'>
+          Payment form not loading: verify you are using the correct <code className='font-mono'>NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY</code> (pk_...), that the Card payment method is enabled in your Stripe dashboard, and you are not blocking third‑party scripts (extensions / ad blockers). Try using test keys first.</div>
+      )}
       {message && <div className='text-xs text-center text-red-500'>{message}</div>}
       <div className='flex gap-3'>
         <button type='button' onClick={onClose} className='flex-1 py-3 rounded border border-gray-300 text-sm font-semibold hover:bg-gray-50'>Cancel</button>
