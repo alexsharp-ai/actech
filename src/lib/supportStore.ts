@@ -87,7 +87,15 @@ export async function listMessages(conversationId: string): Promise<SupportMessa
 export async function closeConversation(id: string){
   await load();
   const c = data.conversations.find(c=>c.id===id);
-  if(c){ c.status = 'closed'; c.updatedAt = Date.now(); await persist(); }
+  if(c){
+    // When closing a conversation ensure we clear transient flags so UI reflects final state
+    c.status = 'closed';
+    if(c.humanActive) c.humanActive = false;
+    if(c.needsHuman) c.needsHuman = false;
+    if(c.unread) c.unread = false;
+    c.updatedAt = Date.now();
+    await persist();
+  }
   return c;
 }
 

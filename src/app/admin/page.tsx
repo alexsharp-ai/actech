@@ -230,7 +230,7 @@ function Dashboard(){
                     <div className="text-[11px] text-gray-500 font-mono">{selected.id}</div>
                   </div>
                   {selected.status==='open' && !selected.humanActive && <button onClick={takeOver} className="text-[11px] px-4 py-2 rounded-md border border-gray-300 bg-white hover:bg-gray-50 font-medium">Take over</button>}
-                  {selected.humanActive && <span className="text-[11px] px-3 py-1 rounded bg-green-600 text-white font-medium">Active</span>}
+                  {selected.humanActive && selected.status==='open' && <span className="text-[11px] px-3 py-1 rounded bg-green-600 text-white font-medium">Active</span>}
                   <button onClick={closeSelected} disabled={selected.status==='closed'} className="text-[11px] px-4 py-2 rounded-md border border-gray-300 bg-white hover:bg-gray-50 disabled:opacity-40 font-medium">Close</button>
                 </div>
                 {/* Compact scrollable messages area */}

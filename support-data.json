@@ -1,6 +1,60 @@
 {
   "conversations": [
     {
+      "id": "4b6d712d-c31e-4433-a2ea-f5cdcfb90bb0",
+      "createdAt": 1756484715817,
+      "updatedAt": 1756484731639,
+      "status": "closed",
+      "needsHuman": false,
+      "humanActive": false,
+      "unread": false,
+      "source": "chat",
+      "messages": [
+        {
+          "id": "e73d5261-7c84-4065-8405-9fd5591cee57",
+          "role": "user",
+          "content": "I want to talk to a human agent",
+          "ts": 1756484715817
+        },
+        {
+          "id": "fd94f36d-54fe-4062-a48a-aaac27140996",
+          "role": "assistant",
+          "content": "We'll connect you with a human agent now. Please hold on a moment.",
+          "ts": 1756484716474
+        }
+      ]
+    },
+    {
+      "id": "d4842137-6481-4f5d-9196-1b2531c5ac5e",
+      "createdAt": 1756475068030,
+      "updatedAt": 1756475093534,
+      "status": "closed",
+      "needsHuman": false,
+      "humanActive": true,
+      "unread": false,
+      "source": "chat",
+      "messages": [
+        {
+          "id": "7c405934-23e1-4916-bd6c-187aab50108c",
+          "role": "user",
+          "content": "I want to talk to a human agent",
+          "ts": 1756475068030
+        },
+        {
+          "id": "12275f40-bb4c-4233-8db4-7c3452615a19",
+          "role": "assistant",
+          "content": "We'll connect you with a human agent now. Please hold on a moment.",
+          "ts": 1756475069584
+        },
+        {
+          "id": "2656fb39-18fa-40ac-85a8-a07e228c075d",
+          "role": "assistant",
+          "content": "hello",
+          "ts": 1756475085358
+        }
+      ]
+    },
+    {
       "id": "0b16c7e1-9d3b-457b-92ff-bcf233ac313b",
       "createdAt": 1756473068195,
       "updatedAt": 1756473131732,
