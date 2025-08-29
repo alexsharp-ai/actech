@@ -5,15 +5,23 @@ import Image from "next/image";
 import Link from "next/link";
 import LazyVideo from "@/components/LazyVideo";
 import { products as allProducts } from '@/data/products';
-import PaymentModalContainer from '@/components/PaymentModal';
 
 
 export default function Home() {
   // legacy mobile menu removed; ensure body scroll always enabled
   useEffect(()=>{ document.body.style.overflow = ''; },[]);
-  const [modalProduct,setModalProduct]=useState<string|undefined>();
-  function openModal(slug:string){ setModalProduct(slug); }
-  function closeModal(){ setModalProduct(undefined); }
+  // Direct Stripe Checkout (redirect) instead of in-page modal
+  const [buying,setBuying]=useState<string|undefined>();
+  async function buyNow(slug:string){
+    if(buying) return; // prevent parallel
+    setBuying(slug);
+    try {
+      const r = await fetch('/api/checkout', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ items: [{ slug, quantity: 1 }] }) });
+      const d = await r.json();
+      if(d.url) window.location.href = d.url; else alert(d.error || 'Checkout error');
+    } catch { alert('Network error'); }
+    finally { setBuying(undefined); }
+  }
   return (
   <div className="font-sans bg-black text-white min-h-screen flex flex-col">
 
@@ -157,7 +165,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="mt-2 flex flex-col gap-3">
-                <button onClick={()=>openModal(p.slug)} className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded font-semibold text-sm transition">Buy now {price} €</button>
+                <button onClick={()=>buyNow(p.slug)} disabled={buying===p.slug} className="w-full bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed text-white py-3 rounded font-semibold text-sm transition">{buying===p.slug? 'Redirecting…' : `Buy now ${price} €`}</button>
                 <Link href={`/product/${p.slug}`} className="w-full bg-black text-white py-3 rounded font-semibold text-sm hover:bg-gray-900 transition text-center">View</Link>
               </div>
             </div>
@@ -325,7 +333,6 @@ export default function Home() {
         </div>
       </section>
 
-  {modalProduct && <PaymentModalContainer slug={modalProduct} onClose={closeModal} />}
   {/* Footer removed (now global) */}
     </div>
   );

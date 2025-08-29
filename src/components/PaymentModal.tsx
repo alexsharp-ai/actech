@@ -1,19 +1,8 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { loadStripe, StripePaymentElementChangeEvent, Stripe } from '@stripe/stripe-js';
+import { StripePaymentElementChangeEvent } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
-
-// Load Stripe (client only). We keep a union so we can pass either a Promise or null to <Elements />.
-const stripePromise: Promise<Stripe | null> | null = typeof window !== 'undefined'
-  ? (() => {
-      const pk = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-      if (!pk) {
-        if (process.env.NODE_ENV !== 'production') console.warn('[Stripe] Missing NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY');
-        return Promise.resolve(null);
-      }
-      return loadStripe(pk);
-    })()
-  : null;
+import { stripePromise } from '@/lib/stripeClient';
 
 interface WrapperProps { slug: string; quantity?: number; onClose: () => void; }
 
