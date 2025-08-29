@@ -117,9 +117,37 @@ function Dashboard(){
     return ()=> clearInterval(t);
   }, [selected]);
 
+  // Poll selected conversation status flags (humanActive / needsHuman) separately (lighter payload)
+  React.useEffect(()=>{
+    if(!selected) return;
+    const id = selected.id;
+    const t = setInterval(async ()=>{
+      try {
+        const r = await fetch(`/api/internal-support/conversations/${id}/human`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ action:'status' }) });
+        const d = await r.json();
+        if(r.ok && d?.conversation){
+          setSelected(s => s && s.id===id ? { ...s, humanActive: d.conversation.humanActive, needsHuman: d.conversation.needsHuman } : s);
+        }
+      } catch{}
+    }, 6000);
+    return ()=> clearInterval(t);
+  }, [selected]);
+
   async function takeOver(){
     if(!selected) return;
-    await fetch(`/api/internal-support/conversations/${selected.id}/human`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ action:'takeover' }) });
+    try {
+      const res = await fetch(`/api/internal-support/conversations/${selected.id}/human`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ action:'takeover' }) });
+      if(res.ok){
+        const d = await res.json().catch(()=>({}));
+        if(d?.conversation){
+          setSelected(s => s && s.id===selected.id ? { ...s, humanActive: d.conversation.humanActive, needsHuman: d.conversation.needsHuman } : s);
+        }
+      } else {
+        pushToast('Take over failed');
+      }
+    } catch {
+      pushToast('Take over error');
+    }
     fetchList();
   }
 
